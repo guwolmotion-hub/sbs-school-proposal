@@ -278,7 +278,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 </head>
 <body>
 
-<div id="progress-bar" style="width: 9.09%;"></div>
+<div id="progress-bar" style="width: 8.33%;"></div>
 
 <div id="dots-nav">
   <div class="dot active" onclick="goTo(0)"></div>
@@ -292,11 +292,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <div class="dot" onclick="goTo(8)"></div>
   <div class="dot" onclick="goTo(9)"></div>
   <div class="dot" onclick="goTo(10)"></div>
+  <div class="dot" onclick="goTo(11)"></div>
 </div>
 
 <div id="nav-pill">
   <button onclick="prevSlide()">&#8592;</button>
-  <div id="slide-counter">1 / 11</div>
+  <div id="slide-counter">1 / 12</div>
   <button onclick="nextSlide()">&#8594;</button>
 </div>
 
@@ -379,7 +380,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
         <div class="toc-card-title">교육 커리큘럼 · 성과</div>
         <div class="toc-card-desc">8개 과정별 교육 내용, 자격증 합격률, 수강생 후기</div>
       </div>
-      <div class="toc-card" onclick="goTo(9)">
+      <div class="toc-card" onclick="goTo(10)">
         <div class="toc-num">06</div>
         <div class="toc-card-title">제휴 · 협력 제안 · 비전</div>
         <div class="toc-card-desc">학교 연계 협력 프로그램, 핵심 목표, 문의처 안내</div>
@@ -670,66 +671,153 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
       <div class="curr-card">
         <div class="curr-icon">🎨</div>
         <div>
-          <div class="curr-name">광고편집 과정</div>
-          <div class="curr-tools">포토샵, 일러스트, 인디자인, 그래픽디자인, 컴퓨터그래픽기능사 → 시각편집 결과물 및 포트폴리오 제작</div>
-        </div>
-      </div>
-      <div class="curr-card c-purple">
-        <div class="curr-icon">✏️</div>
-        <div>
-          <div class="curr-name">아트웍 과정</div>
-          <div class="curr-tools">기초디자인, 핸드드로잉, 심화드로잉, 디지털드로잉 → 드로잉 실력 향상 및 작품 결과물 제작</div>
-        </div>
-      </div>
-      <div class="curr-card c-navy">
-        <div class="curr-icon">🎬</div>
-        <div>
-          <div class="curr-name">모션그래픽 과정</div>
-          <div class="curr-tools">프리미어, 애프터이펙트, C4D, 영상 포트폴리오 → 영상 콘텐츠 제작 및 모션그래픽 포트폴리오 완성</div>
+          <div class="curr-name">시각/편집디자인학과</div>
+          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 블렌더1-2 → 그래픽디자인1-2 → UXUI(피그마) → 인디자인 → ACP/GTQ1급/컴그기능사 → AI자격증 → AI프롬프트 엔지니어링 → AI크리에이터 시각편집 → 시각/편집 포폴</div>
         </div>
       </div>
       <div class="curr-card c-teal">
         <div class="curr-icon">🌐</div>
         <div>
-          <div class="curr-name">웹 과정</div>
-          <div class="curr-tools">웹퍼블리싱, UX/UI디자인, 웹포트폴리오 → 웹사이트 제작 및 웹 결과물 구성</div>
+          <div class="curr-name">웹디자인학과</div>
+          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 블렌더1-2 → 그래픽디자인1-2 → 웹1→웹2→웹3→웹4 → UXUI(피그마) → ACP/GTQ1급 → 실전OA → AI자격증 → AI바이브코딩 웹 → 웹포폴</div>
+        </div>
+      </div>
+      <div class="curr-card c-purple">
+        <div class="curr-icon">✏️</div>
+        <div>
+          <div class="curr-name">아트웍학과</div>
+          <div class="curr-tools">핸드드로잉1-2 → 핸드드로잉PO → 심화드로잉(예) → 심화드로잉 → 기초디자인 → 디-드로잉1-2 → 디-드로잉PO → 영상 크리에이터 Goal / 핸드드로잉 → 포토샵 → 일러스트 → 프리미어 → 에펙1-3 → 유튜브 기초/심화 → AI크리에이터 → 2D모션포폴</div>
+        </div>
+      </div>
+      <div class="curr-card c-navy">
+        <div class="curr-icon">🎬</div>
+        <div>
+          <div class="curr-name">영상/모션디자인학과</div>
+          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 디일러 → 블렌더1-2 → 그래픽디자인1-2 → 프리미어 → 에펙1-3 → C4D1-4 → 서브스탠스 페인터 → 언리얼엔진 → ACP/GTQ1급 → 실전OA → AI자격증 → AI프롬프트 → AI크리에이터 → 2D/3D모션포폴</div>
+        </div>
+      </div>
+      <div class="curr-card c-orange">
+        <div class="curr-icon">🎥</div>
+        <div>
+          <div class="curr-name">마야/CG학과</div>
+          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 디일러 → 프리미어 → 에펙1-3 → 마야1-6 → Asset1-3 → 서브스탠스 페인터 → 언리얼엔진 → ACP/GTQ1급 → AI자격증 → AI프롬프트 엔지니어링 → AI크리에이터 CG마야 → 마야포폴</div>
         </div>
       </div>
       <div class="curr-card c-green">
         <div class="curr-icon">🏠</div>
         <div>
-          <div class="curr-name">인테리어 과정</div>
-          <div class="curr-tools">캐드, 스케치업, 제도, BIM, 인테리어 실무 → 설계 도면 및 공간 디자인 결과물 제작</div>
+          <div class="curr-name">인테리어/BIM학과</div>
+          <div class="curr-tools">제도 → 포토샵 → 일러스트 → 포토웍스 → 디일러 → 캐드1-2(CAT2급) → 스케치업1-2(엔스케이프) → 3DMAX1-3 → 레빗1-2 → 인테리어 실무 → 실내건축자격증(기능사/산업기사/기사) → ACP/GTQ1급 → 실전OA → AI자격증 → AI크리에이터 인테리어 → 인포폴</div>
         </div>
       </div>
       <div class="curr-card c-gold">
         <div class="curr-icon">📋</div>
         <div>
-          <div class="curr-name">자격증 과정</div>
-          <div class="curr-tools">컴퓨터활용능력, MOS, ITQ, 전산회계, 전산세무 → 실무 자격증 취득</div>
-        </div>
-      </div>
-      <div class="curr-card c-orange">
-        <div class="curr-icon">💻</div>
-        <div>
-          <div class="curr-name">프로그래밍 과정</div>
-          <div class="curr-tools">파이썬, 자바, C언어, C++, AI 프롬프트 엔지니어링 → 기초 프로그래밍 역량 및 실습 중심 학습</div>
+          <div class="curr-name">OA/자격증학과</div>
+          <div class="curr-tools">컴퓨터 베이직/AI → 실전OA(OA/AI/노션) → AI자격증대비(뤼튼, AI-POT) → 모스365 → 컴활2급 → 컴활1급 / 케이랩&더존1급(전산회계+FAT) → 케이랩1급(전산회계) → 케이랩&더존2급(전산세무+TAT) → 케이랩2급(전산세무)</div>
         </div>
       </div>
       <div class="curr-card c-ai">
-        <div class="curr-icon">🤖</div>
+        <div class="curr-icon">💻</div>
         <div>
-          <div class="curr-name">AI 융합 과정</div>
-          <div class="curr-tools">생성형 AI 활용 시각편집, 영상 콘텐츠, 인테리어 실무, AI 자격증 대비, AI 프롬프트 엔지니어링 → 학과별 융합 과정 운영</div>
+          <div class="curr-name">IT / 기계설계학과</div>
+          <div class="curr-tools">【IT】 C언어 → JAVA → Python / 【기계설계】 캐드1 → 캐드2(CAT2급) → 인벤터(전산응용기계제도기능사 주간반) → 전산응용기계제도기능사(전응기)</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 8 — 교육 성과 -->
+
+  <!-- SLIDE 8 — 입시 로드맵 -->
+  <div class="slide" id="slide-8-new">
+    <div class="slide-header">
+      <div class="slide-num">06</div>
+      <div class="slide-title">입시 <span>로드맵</span></div>
+      <div class="slide-subtitle">College Entrance · 대학 입시 전문 과정</div>
+    </div>
+    <div class="slide-subheader">특성화고 진학전형 · 예비전형 · 포트폴리오 전형 · 실기전형 전문 대비 — 모든 포트폴리오 과정은 전문 상담을 통해 교육기간이 결정됩니다.</div>
+    <div class="slide-body" style="gap:1rem;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; flex:1; min-height:0;">
+        <div style="display:flex; flex-direction:column; gap:0.8rem;">
+          <div style="background:var(--blue-light); border:2px solid rgba(37,99,235,0.3); border-radius:14px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:0.55rem; flex:1;">
+            <div style="display:flex; align-items:center; gap:0.7rem;">
+              <span style="font-size:1.4rem;">🎭</span>
+              <div>
+                <div style="font-size:1.0rem; font-weight:800; color:var(--navy);">만화/애니메이션과</div>
+                <div style="font-size:0.77rem; font-weight:700; color:var(--blue);">핸드드로잉 · 디-드로잉 중심</div>
+              </div>
+            </div>
+            <div style="font-size:0.82rem; color:var(--gray-600); line-height:1.6; font-weight:400;">
+              <span style="font-weight:700; color:var(--navy);">중1~중3:</span> 핸드드로잉1→2→PO / 예비심화드로잉<br>
+              <span style="font-weight:700; color:var(--navy);">고1,2 (진학전형):</span> 핸드드로잉1→2→PO / 포토샵 / 디-드로잉1→2→PO<br>
+              <span style="font-weight:700; color:var(--navy);">고3 (실기전형):</span> 심화드로잉(고3) → <strong>Goal</strong>
+            </div>
+          </div>
+          <div style="background:var(--purple-light); border:2px solid rgba(124,58,237,0.2); border-radius:14px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:0.55rem; flex:1;">
+            <div style="display:flex; align-items:center; gap:0.7rem;">
+              <span style="font-size:1.4rem;">✏️</span>
+              <div>
+                <div style="font-size:1.0rem; font-weight:800; color:var(--navy);">만화컨텐츠학과</div>
+                <div style="font-size:0.77rem; font-weight:700; color:var(--purple);">핸드드로잉 + 디-드로잉</div>
+              </div>
+            </div>
+            <div style="font-size:0.82rem; color:var(--gray-600); line-height:1.6; font-weight:400;">
+              <span style="font-weight:700; color:var(--navy);">시작~고2:</span> 핸드드로잉1→2→PO / 포토샵 → 일러스트 → 포토웍스<br>
+              <span style="font-weight:700; color:var(--navy);">디-드로잉:</span> 디-드로잉1→2→PO → <strong>Goal</strong><br>
+              <span style="font-weight:700; color:var(--navy);">고3:</span> 심화드로잉(고3) 병행
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.8rem;">
+          <div style="background:var(--gold-light); border:2px solid rgba(245,158,11,0.3); border-radius:14px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:0.55rem; flex:1;">
+            <div style="display:flex; align-items:center; gap:0.7rem;">
+              <span style="font-size:1.4rem;">🎬</span>
+              <div>
+                <div style="font-size:1.0rem; font-weight:800; color:var(--navy);">영상컨텐츠학과</div>
+                <div style="font-size:0.77rem; font-weight:700; color:#92400E;">에펙 / C4D 중심</div>
+              </div>
+            </div>
+            <div style="font-size:0.82rem; color:var(--gray-600); line-height:1.6; font-weight:400;">
+              <span style="font-weight:700; color:var(--navy);">고1,2 비전공자:</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→일러스트→포토웍스→디일러→GTQ1급(포토/일러)→프리미어→에펙1→2→3→C4D1→2→3→4→언리얼엔진<br>
+              <span style="font-weight:700; color:var(--navy);">전공자(시작~고2):</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→포토웍스→일러스트→디일러→에펙1→C4D1→2→3→4→언리얼엔진→프리미어→에펙2→3 → 2D/3D모션포폴 → <strong>Goal</strong>
+            </div>
+          </div>
+          <div style="background:var(--green-light); border:2px solid rgba(22,163,74,0.2); border-radius:14px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:0.55rem; flex:1;">
+            <div style="display:flex; align-items:center; gap:0.7rem;">
+              <span style="font-size:1.4rem;">🎥</span>
+              <div>
+                <div style="font-size:1.0rem; font-weight:800; color:var(--navy);">애니/컨텐츠학과</div>
+                <div style="font-size:0.77rem; font-weight:700; color:#14532D;">CG / 마야 / VFX</div>
+              </div>
+            </div>
+            <div style="font-size:0.82rem; color:var(--gray-600); line-height:1.6; font-weight:400;">
+              <span style="font-weight:700; color:var(--navy);">시작~고2 비전공자:</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→일러스트→포토웍스→디일러→GTQ1급(포토/일러)→프리미어→에펙1→2→3→마야1→2→3→4→5→6→언리얼엔진<br>
+              <span style="font-weight:700; color:var(--navy);">전공자:</span> 포토샵→포토웍스→일러스트→디일러→프리미어→에펙1→2→3→마야1→2→3→4→5→6→언리얼엔진 → 마야포폴/언리얼 → <strong>Goal</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--navy); border-radius:12px; padding:1.1rem 2.5rem; flex-shrink:0; display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; align-items:center;">
+        <div>
+          <div style="font-size:0.72rem; font-weight:700; color:var(--blue-mid); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.35rem;">📅 특강 시스템</div>
+          <div style="font-size:0.82rem; color:rgba(255,255,255,0.8); line-height:1.65;">1월 겨울방학 특강 · 7월 여름방학 특강<br>8~11월 고3 수시 특강 운영</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem; font-weight:700; color:var(--blue-mid); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.35rem;">🎤 모의면접 시스템</div>
+          <div style="font-size:0.82rem; color:rgba(255,255,255,0.8); line-height:1.65;">포트폴리오·면접 전형 대비 상시 진행<br>1:1 개별 / 그룹 모의면접 · 영상 피드백</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem; font-weight:700; color:var(--blue-mid); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.35rem;">🏆 자격증 & 공모전</div>
+          <div style="font-size:0.82rem; color:rgba(255,255,255,0.8); line-height:1.65;">GTQ, 컴그기능사 등 입시 자격증 취득<br>대학 입시 공모전 · 실기대회 출전 지원</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 (구 8) — 교육 성과 -->
   <div class="slide" id="slide-8">
     <div class="slide-header">
-      <div class="slide-num">05</div>
+      <div class="slide-num">07</div>
       <div class="slide-title">교육 <span>성과</span></div>
       <div class="slide-subtitle">Results &amp; Reviews</div>
     </div>
@@ -786,7 +874,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <!-- SLIDE 9 — 수강 안내 -->
   <div class="slide" id="slide-9">
     <div class="slide-header">
-      <div class="slide-num">06</div>
+      <div class="slide-num">08</div>
       <div class="slide-title">수강 <span>안내</span></div>
       <div class="slide-subtitle">Enrollment Guide</div>
     </div>
@@ -854,7 +942,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <!-- SLIDE 10 — 제휴 & 협력 제안 -->
   <div class="slide" id="slide-10">
     <div class="slide-header">
-      <div class="slide-num">07</div>
+      <div class="slide-num">09</div>
       <div class="slide-title">제휴 <span>&amp; 협력 제안</span></div>
       <div class="slide-subtitle">Partnership Proposal</div>
     </div>
@@ -895,7 +983,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <!-- SLIDE 11 — 비전 & 문의처 -->
   <div class="slide" id="slide-11">
     <div class="slide-header">
-      <div class="slide-num">08</div>
+      <div class="slide-num">10</div>
       <div class="slide-title">비전 <span>&amp; 문의처</span></div>
       <div class="slide-subtitle">Vision &amp; Contact</div>
     </div>
