@@ -15,7 +15,7 @@
   --mid:   #555;
   --soft:  #888;
   --ghost: #bbb;
-  --line:  #dedede;
+  --line:  #e0e0e0;
   --bg:    #f5f5f3;
   --white: #fff;
 }
@@ -88,7 +88,6 @@ html, body {
   font-size: .88rem; color: var(--soft); flex-shrink: 0;
 }
 
-/* content area — fills remaining height */
 .s-body {
   flex: 1; padding: 2.8rem 5rem;
   display: flex; flex-direction: column; gap: 1.6rem;
@@ -141,18 +140,14 @@ html, body {
 .cv-sub-s { font-size: .82rem; color: rgba(255,255,255,.3); }
 
 /* ══════════════════════════════════════════════
-   COMMON COMPONENTS — NO COLOR FILLS IN CONTENT
+   COMMON COMPONENTS
 ══════════════════════════════════════════════ */
-
-/* Card: white bg + border only */
 .card {
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 2rem 2.4rem;
 }
-/* Top-ruled card: 2px black top line only */
 .card.ruled { border-top: 2px solid var(--black); }
-
 .card-lbl {
   font-size: .68rem; font-weight: 700; letter-spacing: .14em;
   text-transform: uppercase; color: var(--ghost); margin-bottom: .9rem;
@@ -164,15 +159,31 @@ html, body {
 .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
 .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
 
-/* Meta row */
+/* Meta bar */
 .meta-bar {
   display: grid; grid-template-columns: repeat(5, 1fr);
   border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+  flex-shrink: 0;
 }
 .meta-cell { padding: 1.2rem 1.6rem; border-right: 1px solid var(--line); }
 .meta-cell:last-child { border-right: none; }
 .ml { font-size: .63rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--ghost); margin-bottom: .4rem; }
 .mv { font-size: .92rem; font-weight: 600; color: var(--black); }
+
+/* Feature bar — replaces 3 bland cards in slide 3 */
+.feat-bar {
+  display: flex; align-items: stretch;
+  border: 1px solid var(--line); border-radius: 6px;
+  overflow: hidden; flex-shrink: 0;
+}
+.feat-item { flex: 1; display: flex; align-items: center; gap: 1.2rem; padding: 1.4rem 2rem; }
+.feat-div { width: 1px; background: var(--line); align-self: stretch; }
+.feat-no {
+  font-family: 'Inter', monospace;
+  font-size: 1.8rem; font-weight: 800; color: var(--line);
+  line-height: 1; letter-spacing: -.04em; flex-shrink: 0;
+}
+.feat-tx { font-size: .9rem; font-weight: 600; color: var(--dark); line-height: 1.4; }
 
 /* Tag box */
 .tag-box { border: 1px solid var(--line); border-radius: 6px; padding: 1.4rem 1.8rem; }
@@ -193,41 +204,57 @@ html, body {
 .ul li { font-size: .9rem; color: var(--mid); padding-left: 1rem; position: relative; line-height: 1.6; }
 .ul li::before { content: '—'; position: absolute; left: 0; color: var(--line); }
 
-/* Collab grid */
-.collab-g { display: grid; grid-template-columns: 1fr 30px 1fr 30px 1fr; align-items: stretch; }
-.c-arr { display: flex; align-items: center; justify-content: center; color: var(--ghost); }
+/* Collab (slide 4) — flex with CSS arrow separators */
+.collab-g {
+  display: flex; align-items: stretch; gap: 0; flex: 1;
+}
+.collab-g > .card { flex: 1; }
+.c-arr {
+  display: flex; align-items: center; justify-content: center;
+  width: 2.6rem; flex-shrink: 0; position: relative;
+}
+.c-arr::before {
+  content: '';
+  position: absolute; left: 4px; right: 4px; top: 50%;
+  height: 1px; background: var(--ghost);
+}
+.c-arr::after {
+  content: '';
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 0; height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid var(--ghost);
+}
 .p-type { font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ghost); margin-bottom: .5rem; }
 .p-name { font-size: 1.25rem; font-weight: 700; color: var(--black); margin-bottom: .15rem; }
 .p-org { font-size: .82rem; color: var(--soft); margin-bottom: .7rem; }
 .p-rule { border: none; border-top: 1px solid var(--line); margin-bottom: .7rem; }
 
-/* Big number — no fill */
+/* Big number */
 .big-num {
   font-family: 'Inter', monospace;
   font-size: clamp(4rem, 6vw, 6rem); font-weight: 800;
   letter-spacing: -.04em; line-height: 1; color: var(--black);
 }
-.big-num.secondary { color: var(--soft); }   /* 작은 쪽 숫자: 같은 크기지만 회색 */
 
 /* Rule line */
 .rule { border: none; border-top: 1px solid var(--line); margin: 1rem 0; }
 
-/* Bar chart */
+/* Bar chart — all fills same color */
 .bar-item { display: flex; flex-direction: column; gap: .4rem; }
 .bar-row { display: flex; justify-content: space-between; font-size: .88rem; font-weight: 500; color: var(--black); }
 .bar-track { height: 4px; background: #f0f0f0; border-radius: 10px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 10px; background: var(--black); }
-.bar-fill.light { background: var(--ghost); }
 
-/* Flow bar */
+/* Flow bar — no fills */
 .flow {
   display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
   padding: 1.1rem 1.6rem;
   border: 1px solid var(--line); border-radius: 6px; flex-shrink: 0;
 }
 .fn { border: 1px solid var(--black); color: var(--black); padding: .35rem 1rem; border-radius: 4px; font-size: .82rem; font-weight: 600; white-space: nowrap; }
-.fn.filled { background: var(--black); color: #fff; border-color: var(--black); }
-.fa { color: var(--ghost); }
+.fa { color: var(--ghost); font-size: .9rem; }
 .fn-note { font-size: .78rem; color: var(--soft); margin-left: auto; }
 
 /* TOC */
@@ -257,49 +284,70 @@ html, body {
   display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
   gap: 1.6rem; flex: 1;
 }
-.ec { border: 1px solid var(--line); border-radius: 6px; padding: 2rem 2.4rem; }
+.ec { border: 1px solid var(--line); border-radius: 6px; padding: 2rem 2.4rem; display: flex; flex-direction: column; gap: .6rem; }
 .ec.ruled { border-top: 2px solid var(--black); }
-.ec-num { font-size: 2.4rem; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; margin-bottom: .5rem; }
-.ec-ttl { font-size: 1rem; font-weight: 700; color: var(--black); margin-bottom: .75rem; }
+.ec-idx {
+  font-family: 'Inter', monospace;
+  font-size: .65rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--ghost);
+}
+.ec-ttl { font-size: 1rem; font-weight: 700; color: var(--black); }
+.ec-num { font-size: 2rem; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; }
 
-/* Timeline */
-.steps { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; flex: 1; }
-.step { padding: 1.8rem 1.4rem; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: .6rem; }
-.step:last-child { border-right: none; }
-.step:nth-child(odd) { background: var(--black); }
-.step:nth-child(even) { background: #fafafa; }
-.sn2 { font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
-.step:nth-child(odd) .sn2 { color: rgba(255,255,255,.2); }
-.step:nth-child(even) .sn2 { color: var(--ghost); }
-.sttl { font-size: .92rem; font-weight: 700; line-height: 1.4; }
-.step:nth-child(odd) .sttl { color: #fff; }
-.step:nth-child(even) .sttl { color: var(--black); }
-.sorg { font-size: .75rem; line-height: 1.5; margin-top: auto; }
-.step:nth-child(odd) .sorg { color: rgba(255,255,255,.3); }
-.step:nth-child(even) .sorg { color: var(--soft); }
+/* Timeline — clean horizontal flow, no piano keys */
+.tl-wrap {
+  flex: 1; display: flex; flex-direction: column;
+  border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+}
+.tl-steps {
+  flex: 1; display: grid; grid-template-columns: repeat(7, 1fr);
+}
+.tl-step {
+  padding: 2rem 1.4rem;
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: .7rem;
+  background: var(--white);
+}
+.tl-step:last-child { border-right: none; }
+.tl-num {
+  font-family: 'Inter', monospace;
+  font-size: .58rem; font-weight: 800; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ghost);
+  display: flex; align-items: center; gap: .5rem;
+}
+.tl-num::before {
+  content: '';
+  display: block; width: 1.4rem; height: 1.4rem;
+  border-radius: 50%; border: 1.5px solid var(--line);
+  flex-shrink: 0;
+}
+.tl-step:first-child .tl-num::before { border-color: var(--black); }
+.tl-ttl { font-size: .88rem; font-weight: 700; color: var(--black); line-height: 1.4; }
+.tl-org { font-size: .72rem; color: var(--soft); line-height: 1.55; margin-top: auto; }
 
+/* Note bar */
 .note-bar {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem; border: 1px solid var(--line); border-radius: 6px; padding: 1.2rem 1.8rem;
+  gap: 1rem; border-top: 1px solid var(--line); padding: 1.2rem 1.8rem;
   flex-shrink: 0;
 }
 .nb-lbl { font-size: .63rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--ghost); margin-bottom: .35rem; }
-.nb-val { font-size: .9rem; color: var(--black); line-height: 1.55; }
+.nb-val { font-size: .88rem; color: var(--black); line-height: 1.55; }
 
-/* Revenue num display — text only, no fill */
+/* Revenue numbers */
 .rev-num {
   display: flex; align-items: baseline; gap: .8rem;
   padding: 1.4rem 0; border-bottom: 1px solid var(--line);
 }
 .rev-num:last-child { border-bottom: none; }
 .rev-num-label { font-size: .72rem; font-weight: 600; color: var(--ghost); text-transform: uppercase; letter-spacing: .1em; min-width: 90px; }
-.rev-num-val { font-size: 2.8rem; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; }
+.rev-num-val { font-size: 2.6rem; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; }
 .rev-num-detail { font-size: .78rem; color: var(--soft); margin-left: auto; }
 
 @media print {
   #nav-pill, #dots-nav, #progress-bar { display: none !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .slide, .card, .ec, .step, .toc-item { page-break-inside: avoid; break-inside: avoid; }
+  .slide, .card, .ec, .tl-step, .toc-item { page-break-inside: avoid; break-inside: avoid; }
   h1, .s-title { page-break-after: avoid; }
   a[href]::after { content: none !important; }
 }
@@ -424,15 +472,20 @@ html, body {
       <div class="meta-cell"><div class="ml">교육 기간</div><div class="mv">960h+ / 6개월</div></div>
       <div class="meta-cell"><div class="ml">교육 방식</div><div class="mv">프로젝트 기반</div></div>
     </div>
-    <div class="g3">
-      <div class="card" style="text-align:center; padding:1.2rem 1rem;">
-        <div style="font-size:.92rem; font-weight:600; color:var(--dark);">기업 수요 반영 교육과정</div>
+    <div class="feat-bar">
+      <div class="feat-item">
+        <div class="feat-no">01</div>
+        <div class="feat-tx">기업 수요 반영 교육과정</div>
       </div>
-      <div class="card" style="text-align:center; padding:1.2rem 1rem;">
-        <div style="font-size:.92rem; font-weight:600; color:var(--dark);">프로젝트 기반 실무 교육</div>
+      <div class="feat-div"></div>
+      <div class="feat-item">
+        <div class="feat-no">02</div>
+        <div class="feat-tx">프로젝트 기반 실무 교육</div>
       </div>
-      <div class="card" style="text-align:center; padding:1.2rem 1rem;">
-        <div style="font-size:.92rem; font-weight:600; color:var(--dark);">취업 연계 중심 훈련과정</div>
+      <div class="feat-div"></div>
+      <div class="feat-item">
+        <div class="feat-no">03</div>
+        <div class="feat-tx">취업 연계 중심 훈련과정</div>
       </div>
     </div>
   </div>
@@ -447,7 +500,7 @@ html, body {
   </div>
   <div class="s-sub">산업 수요 기반 교육과정 공동 설계 · 프로젝트 중심 실무 교육 · 산학협력 기반 디지털 인재 양성</div>
   <div class="s-body">
-    <div class="collab-g" style="flex:1;">
+    <div class="collab-g">
       <div class="card" style="padding:2rem 2.2rem;">
         <div class="p-type">Partner A</div>
         <div class="p-name">대학교</div>
@@ -460,7 +513,7 @@ html, body {
           <li>사업 신청 및 행정 협력</li>
         </ul>
       </div>
-      <div class="c-arr">→</div>
+      <div class="c-arr"></div>
       <div class="card" style="padding:2rem 2.2rem;">
         <div class="p-type">Partner B</div>
         <div class="p-name">참여기업</div>
@@ -473,7 +526,7 @@ html, body {
           <li>취업 연계 협력</li>
         </ul>
       </div>
-      <div class="c-arr">→</div>
+      <div class="c-arr"></div>
       <div class="card" style="padding:2rem 2.2rem;">
         <div class="p-type">Partner C</div>
         <div class="p-name">훈련기관</div>
@@ -552,18 +605,18 @@ html, body {
         <div class="big-num">1.9억</div>
         <hr class="rule" style="margin:0;">
         <div style="font-size:.88rem;color:var(--soft);line-height:1.8;">30명 × 960시간 × 70% × 9,400원<br>1회차 기준 189,504,000원</div>
-        <div style="margin-top:auto;font-size:.85rem;font-weight:600;color:var(--dark);border:1px solid var(--line);border-radius:4px;padding:.55rem 1rem;">▲ 연 2회 약 3.8억 (379,008,000원)</div>
+        <div style="margin-top:auto;font-size:.85rem;font-weight:600;color:var(--dark);border:1px solid var(--line);border-radius:4px;padding:.55rem 1rem;">연 2회 약 3.8억 (379,008,000원)</div>
       </div>
       <div class="card ruled" style="display:flex;flex-direction:column;gap:1.2rem;">
         <div class="card-lbl">디지털 신기술 / 융합 분야</div>
         <div class="big-num">3.6억</div>
         <hr class="rule" style="margin:0;">
         <div style="font-size:.88rem;color:var(--soft);line-height:1.8;">30명 × 960시간 × 70% × 18,150원<br>1회차 기준 365,904,000원</div>
-        <div style="margin-top:auto;font-size:.85rem;font-weight:600;color:var(--dark);border:1px solid var(--line);border-radius:4px;padding:.55rem 1rem;">▲ 연 2회 약 7.3억 (731,808,000원)</div>
+        <div style="margin-top:auto;font-size:.85rem;font-weight:600;color:var(--dark);border:1px solid var(--line);border-radius:4px;padding:.55rem 1rem;">연 2회 약 7.3억 (731,808,000원)</div>
       </div>
     </div>
     <div class="flow">
-      <div class="fn filled">고용노동부 (주관)</div>
+      <div class="fn">고용노동부 (주관)</div>
       <div class="fa">→</div>
       <div class="fn">대학교 (수령, 대외 표방 85%)</div>
       <div class="fa">→</div>
@@ -583,7 +636,6 @@ html, body {
   <div class="s-sub">융합 분야 기준 연 7.3억 (731,808,000원) — 세부 비율은 협의에 따라 조정 가능</div>
   <div class="s-body">
     <div class="g2" style="flex:1;">
-      <!-- 배분 비율 -->
       <div class="card" style="display:flex;flex-direction:column;gap:1.4rem;">
         <div class="card-lbl">배분 비율</div>
         <div style="display:flex;flex-direction:column;gap:1rem;">
@@ -593,13 +645,12 @@ html, body {
           </div>
           <div class="bar-item">
             <div class="bar-row"><span>대학교</span><span style="color:var(--soft);">15% · 약 1.1억</span></div>
-            <div class="bar-track"><div class="bar-fill light" style="width:15%;"></div></div>
+            <div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div>
           </div>
         </div>
         <div style="font-size:.83rem;color:var(--soft);line-height:1.85;padding-top:.4rem;border-top:1px solid var(--line);">
           * 대외 표방: 대학 85% / 훈련기관 15%<br>* 실제 집행: 훈련기관 85% / 대학 15%
         </div>
-        <!-- 수익 숫자 — 색 채움 없이 텍스트만 -->
         <div style="border-top:1px solid var(--line);margin-top:auto;">
           <div class="rev-num">
             <span class="rev-num-label">대학교 수익</span>
@@ -613,16 +664,33 @@ html, body {
           </div>
         </div>
       </div>
-      <!-- 운영비 세부 -->
       <div class="card" style="display:flex;flex-direction:column;gap:1.2rem;">
         <div class="card-lbl">훈련기관 운영비 세부 내역</div>
         <div style="display:flex;flex-direction:column;gap:.95rem;">
-          <div class="bar-item"><div class="bar-row"><span>행정 운영</span><span style="color:var(--soft);">20%</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>마케팅 용역</span><span style="color:var(--soft);">20%</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>관리 용역</span><span style="color:var(--soft);">20%</span></div><div class="bar-track"><div class="bar-fill light" style="width:20%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>교육운영비(참여기업)</span><span style="color:var(--soft);">15%</span></div><div class="bar-track"><div class="bar-fill light" style="width:15%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>강사비</span><span style="color:var(--soft);">15%</span></div><div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>장비 / 인프라</span><span style="color:var(--soft);">10%</span></div><div class="bar-track"><div class="bar-fill light" style="width:10%;"></div></div></div>
+          <div class="bar-item">
+            <div class="bar-row"><span>행정 운영</span><span style="color:var(--soft);">20%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-row"><span>마케팅 용역</span><span style="color:var(--soft);">20%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-row"><span>관리 용역</span><span style="color:var(--soft);">20%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-row"><span>교육운영비(참여기업)</span><span style="color:var(--soft);">15%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-row"><span>강사비</span><span style="color:var(--soft);">15%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-row"><span>장비 / 인프라</span><span style="color:var(--soft);">10%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:10%;"></div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -639,19 +707,23 @@ html, body {
   <div class="s-body">
     <div class="effect-g">
       <div class="ec ruled">
+        <div class="ec-idx">대학 · 훈련기관 공통</div>
         <div class="ec-num">1.1억+</div>
         <div class="ec-ttl">안정적 고수익 창출</div>
         <ul class="ul"><li>등록금 외 추가 수익 확보</li><li>모객 보장 안정적 고수익</li><li>최대 3년 지속 운영</li></ul>
       </div>
       <div class="ec">
+        <div class="ec-idx">시장 포지셔닝</div>
         <div class="ec-ttl">낮은 진입 경쟁률 확보</div>
         <ul class="ul"><li>특화 과정 전략적 준비</li><li>AI 기반 융합 교육으로 시장 선도</li><li>디지털 신기술 교육 역량 강화</li></ul>
       </div>
       <div class="ec">
+        <div class="ec-idx">협력 기반 확대</div>
         <div class="ec-ttl">산학협력 네트워크 구축</div>
         <ul class="ul"><li>산학협력 기반 취업 연계 확대</li><li>대학 파트너십 협력사업 이력</li><li>기타 교육사업 추가 획득 기반</li></ul>
       </div>
       <div class="ec">
+        <div class="ec-idx">브랜드 · 신뢰도</div>
         <div class="ec-ttl">대학 브랜드 이미지 제고</div>
         <ul class="ul"><li>디지털 인재 양성 대학 이미지</li><li>정부 주도 사업 참여 신뢰도</li><li>지역 산업계 협력 강화</li></ul>
       </div>
@@ -668,19 +740,49 @@ html, body {
   </div>
   <div class="s-sub">사업공고부터 성과평가까지 7단계 프로세스</div>
   <div class="s-body">
-    <div class="steps">
-      <div class="step"><div class="sn2">Step 01</div><div class="sttl">사업공고</div><div class="sorg">직업능력심사평가원<br>(고용노동부)</div></div>
-      <div class="step"><div class="sn2">Step 02</div><div class="sttl">사업신청</div><div class="sorg">훈련기관</div></div>
-      <div class="step"><div class="sn2">Step 03</div><div class="sttl">훈련과정 심사</div><div class="sorg">직업능력심사평가원</div></div>
-      <div class="step"><div class="sn2">Step 04</div><div class="sttl">훈련과정 인정</div><div class="sorg">지방고용노동관서<br>(고용노동부)</div></div>
-      <div class="step"><div class="sn2">Step 05</div><div class="sttl">훈련생 선발 및 훈련실시</div><div class="sorg">훈련기관</div></div>
-      <div class="step"><div class="sn2">Step 06</div><div class="sttl">훈련비 및 훈련장려금 지급</div><div class="sorg">지방고용노동관서<br>(고용노동부)</div></div>
-      <div class="step"><div class="sn2">Step 07</div><div class="sttl">성과평가</div><div class="sorg">직업능력심사평가원</div></div>
-    </div>
-    <div class="note-bar">
-      <div><div class="nb-lbl">훈련비 지급 경로</div><div class="nb-val">고용노동부 → 대학교 → 훈련기관</div></div>
-      <div><div class="nb-lbl">지속 운영</div><div class="nb-val">훈련 개시 후 최대 3년 · 보통 연 2회 운영</div></div>
-      <div><div class="nb-lbl">협력 문의</div><div class="nb-val">SBS아카데미컴퓨터아트학원 구월</div></div>
+    <div class="tl-wrap">
+      <div class="tl-steps">
+        <div class="tl-step">
+          <div class="tl-num">Step 01</div>
+          <div class="tl-ttl">사업공고</div>
+          <div class="tl-org">직업능력심사평가원<br>(고용노동부)</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">Step 02</div>
+          <div class="tl-ttl">사업신청</div>
+          <div class="tl-org">훈련기관</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">Step 03</div>
+          <div class="tl-ttl">훈련과정 심사</div>
+          <div class="tl-org">직업능력심사평가원</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">Step 04</div>
+          <div class="tl-ttl">훈련과정 인정</div>
+          <div class="tl-org">지방고용노동관서<br>(고용노동부)</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">Step 05</div>
+          <div class="tl-ttl">훈련생 선발 및 훈련실시</div>
+          <div class="tl-org">훈련기관</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">Step 06</div>
+          <div class="tl-ttl">훈련비 및 훈련장려금 지급</div>
+          <div class="tl-org">지방고용노동관서<br>(고용노동부)</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">Step 07</div>
+          <div class="tl-ttl">성과평가</div>
+          <div class="tl-org">직업능력심사평가원</div>
+        </div>
+      </div>
+      <div class="note-bar">
+        <div><div class="nb-lbl">훈련비 지급 경로</div><div class="nb-val">고용노동부 → 대학교 → 훈련기관</div></div>
+        <div><div class="nb-lbl">지속 운영</div><div class="nb-val">훈련 개시 후 최대 3년 · 보통 연 2회 운영</div></div>
+        <div><div class="nb-lbl">협력 문의</div><div class="nb-val">SBS아카데미컴퓨터아트학원 구월</div></div>
+      </div>
     </div>
   </div>
 </div>
