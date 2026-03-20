@@ -1223,7 +1223,7 @@ html, body {
 </head>
 <body>
 
-<div id="progress-bar" style="width: 8.33%;"></div>
+<div id="progress-bar" style="width: 11.11%;"></div>
 
 <div id="dots-nav">
   <div class="dot active" onclick="goTo(0)"></div>
@@ -1235,14 +1235,11 @@ html, body {
   <div class="dot" onclick="goTo(6)"></div>
   <div class="dot" onclick="goTo(7)"></div>
   <div class="dot" onclick="goTo(8)"></div>
-  <div class="dot" onclick="goTo(9)"></div>
-  <div class="dot" onclick="goTo(10)"></div>
-  <div class="dot" onclick="goTo(11)"></div>
 </div>
 
 <div id="nav-pill">
   <button onclick="prevSlide()">&#8592;</button>
-  <div id="slide-counter">1 / 12</div>
+  <div id="slide-counter">1 / 9</div>
   <button onclick="nextSlide()">&#8594;</button>
 </div>
 
@@ -1312,17 +1309,17 @@ html, body {
         <div class="toc-card-title">과정 운영 방안</div>
         <div class="toc-card-desc">신기술 9개·첨단 12개 분야, 과정 예시 2종</div>
       </div>
-      <div class="toc-card" onclick="goTo(8)">
+      <div class="toc-card" onclick="goTo(5)">
         <div class="toc-num">04</div>
         <div class="toc-card-title">수익 구조 및 배분</div>
         <div class="toc-card-desc">일반/융합 수익 산정, 지급 구조, 세부 운영비 배분</div>
       </div>
-      <div class="toc-card" onclick="goTo(10)">
+      <div class="toc-card" onclick="goTo(7)">
         <div class="toc-num">05</div>
         <div class="toc-card-title">기대효과</div>
         <div class="toc-card-desc">대학·훈련기관 기대효과, 사업 전략적 가치</div>
       </div>
-      <div class="toc-card" onclick="goTo(11)">
+      <div class="toc-card" onclick="goTo(8)">
         <div class="toc-num">06</div>
         <div class="toc-card-title">사업 추진 일정</div>
         <div class="toc-card-desc">사업공고 → 성과평가 7단계, 단계별 주관기관</div>
@@ -1478,157 +1475,6 @@ html, body {
           </div>
           <div class="fusion-badge">융합: 인공지능 + 일반 S/W</div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 6 — 웹/콘텐츠 계열 -->
-  <div class="slide" id="slide-6">
-    <div class="slide-header">
-      <div class="slide-num">03</div>
-      <div class="slide-title">웹 / 콘텐츠 계열 추가 과정</div>
-      <div class="slide-subtitle">Web &amp; Content Courses</div>
-    </div>
-    <div class="slide-subheader">학과 특성에 맞게 연계 가능한 교육과정</div>
-    <div class="big-two-col">
-      <div class="big-card blue-card-full">
-        <span class="big-card-badge">정규 과정 &middot; 자격증 연계</span>
-        <div class="big-card-title">HTML · CSS · JavaScript 입문</div>
-        <div class="big-card-desc">웹 프론트엔드 기초부터 실전까지. 웹 표준 기술을 체계적으로 학습하고, 실무에 바로 적용 가능한 웹사이트 제작 능력을 배양합니다.</div>
-        <div class="big-card-meta">
-          <div class="meta-row" style="color:#fff;">
-            <span class="meta-label">연계 자격증</span>
-          </div>
-          <div class="cert-badge">웹디자인기능사</div>
-        </div>
-      </div>
-      <div class="big-card light-card">
-        <span class="big-card-badge dark">신규 과정 &middot; AI</span>
-        <div class="big-card-title" style="color:var(--navy);">AI 바이브코딩</div>
-        <div class="big-card-desc" style="color:var(--gray-600);">생성형 AI와 디자인 툴로 코딩 없이 웹 구현. 프로그래밍 경험이 없어도 AI를 활용해 웹페이지를 설계하고 제작하는 혁신적인 과정입니다.</div>
-        <div class="big-card-meta">
-          <div class="meta-row" style="color:var(--navy);">
-            <span class="meta-label" style="color:var(--blue);">핵심 도구</span>
-            <span class="meta-value">생성형 AI · 디자인 툴</span>
-          </div>
-          <div class="meta-row" style="color:var(--navy);">
-            <span class="meta-label" style="color:var(--blue);">주요 결과물</span>
-            <span class="meta-value">AI 기반 웹페이지</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 7 — AI 콘텐츠 제작 계열 -->
-  <div class="slide" id="slide-7">
-    <div class="slide-header">
-      <div class="slide-num">06</div>
-      <div class="slide-title">AI 활용 콘텐츠 제작 계열 추가 과정</div>
-      <div class="slide-subtitle">AI Content Creation Courses</div>
-    </div>
-    <div class="slide-subheader">06 분야 — 생성형 AI 도구 활용 실무 중심 5개 과정 신규 편성</div>
-    <div class="full-table-wrap">
-      <table class="styled-table">
-        <thead>
-          <tr>
-            <th style="width:28%;">과정명</th>
-            <th style="width:25%;">핵심 도구</th>
-            <th style="width:14%;">수강 형태</th>
-            <th>주요 결과물</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>AI 바이브코딩</td>
-            <td>생성형 AI · 디자인 툴</td>
-            <td><span class="type-badge">정규</span></td>
-            <td>AI 기반 웹페이지</td>
-          </tr>
-          <tr>
-            <td>AI 프롬프트 엔지니어링</td>
-            <td>ChatGPT · 생성형 AI</td>
-            <td><span class="type-badge">정규</span></td>
-            <td>AI 콘텐츠 제작 결과물</td>
-          </tr>
-          <tr>
-            <td>AI 크리에이터 과정</td>
-            <td>Midjourney · 생성형 AI</td>
-            <td><span class="type-badge">정규</span></td>
-            <td>AI 기반 콘텐츠 포트폴리오</td>
-          </tr>
-          <tr>
-            <td>AI 기반 콘텐츠 제작</td>
-            <td>생성형 AI · 디자인 툴</td>
-            <td><span class="type-badge">정규</span></td>
-            <td>영상 · 디자인 콘텐츠</td>
-          </tr>
-          <tr>
-            <td>AI 디자인 활용</td>
-            <td>Photoshop · 생성형 AI</td>
-            <td><span class="type-badge special">특강</span></td>
-            <td>AI 디자인 결과물</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- SLIDE 8 — 국비지원 과정 -->
-  <div class="slide" id="slide-8">
-    <div class="slide-header">
-      <div class="slide-num">04</div>
-      <div class="slide-title">국비지원 과정 추가 편성</div>
-      <div class="slide-subtitle">Government-funded Courses</div>
-    </div>
-    <div class="three-col-cards">
-      <div class="course-big-card card-blue">
-        <div class="course-level">심화 과정</div>
-        <div class="course-big-title">편집 디자인</div>
-        <div class="course-tools">포토샵 · 일러스트 · 인디자인</div>
-        <div class="course-info-grid">
-          <div class="course-info-item">
-            <div class="course-info-label">수강대상</div>
-            <div class="course-info-value">취업 준비생</div>
-          </div>
-          <div class="course-info-item">
-            <div class="course-info-label">운영 방식</div>
-            <div class="course-info-value">주 5회</div>
-          </div>
-        </div>
-        <div class="result-box">결과물: 취업 포트폴리오</div>
-      </div>
-      <div class="course-big-card card-navy">
-        <div class="course-level">심화 과정</div>
-        <div class="course-big-title">프론트엔드 · 웹퍼블리셔 UI/UX 엔지니어링</div>
-        <div class="course-tools">실무 웹 개발 디자인 통합</div>
-        <div class="course-info-grid">
-          <div class="course-info-item">
-            <div class="course-info-label">수강대상</div>
-            <div class="course-info-value">취업 준비생</div>
-          </div>
-          <div class="course-info-item">
-            <div class="course-info-label">운영 방식</div>
-            <div class="course-info-value">주 5회</div>
-          </div>
-        </div>
-        <div class="result-box">결과물: 취업 포트폴리오</div>
-      </div>
-      <div class="course-big-card card-light">
-        <div class="course-level" style="color:var(--gray-600);">중급 과정</div>
-        <div class="course-big-title" style="color:var(--navy);">시각디자인 양성과정</div>
-        <div class="course-tools" style="color:var(--gray-600);">[일반고] 고등학생 특화</div>
-        <div class="course-info-grid">
-          <div class="course-info-item dark-item">
-            <div class="course-info-label" style="color:var(--gray-600);">수강대상</div>
-            <div class="course-info-value" style="color:var(--navy);">고등학생</div>
-          </div>
-          <div class="course-info-item dark-item">
-            <div class="course-info-label" style="color:var(--gray-600);">운영 방식</div>
-            <div class="course-info-value" style="color:var(--navy);">주 5회</div>
-          </div>
-        </div>
-        <div class="result-box" style="background:var(--navy); color:#fff;">컴퓨터그래픽스운용기능사, GTQ 1급</div>
       </div>
     </div>
   </div>
