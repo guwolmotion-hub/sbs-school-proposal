@@ -28,8 +28,7 @@
 html, body {
   width: 100%; height: 100%; overflow: hidden;
   font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  font-size: 18px;
-  background: #000;
+  font-size: 18px; background: #000;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -62,12 +61,12 @@ html, body {
 #slide-counter { color: rgba(255,255,255,.45); font-size: .75rem; min-width: 52px; text-align: center; letter-spacing: .06em; }
 
 /* ── Dots ── */
-#dots-nav { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 7px; z-index: 1000; }
+#dots-nav { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 6px; z-index: 1000; }
 .dot { width: 4px; height: 4px; border-radius: 50%; background: #b0b0b0; cursor: pointer; transition: all .25s; }
 .dot.active { background: var(--blue-b); height: 18px; border-radius: 2px; }
 
 /* ══════════════════════════
-   COVER
+   COVER (SLIDE 1)
 ══════════════════════════ */
 #slide-1 { display: grid; grid-template-columns: 56% 44%; }
 
@@ -98,32 +97,24 @@ html, body {
 .stat-sub { font-size: .78rem; color: rgba(255,255,255,.3); }
 
 /* ══════════════════════════
-   SLIDE HEADER
+   SLIDE HEADER (공통)
 ══════════════════════════ */
 .slide-header {
-  padding: 1.5rem 4rem;
-  border-bottom: 1px solid var(--line);
-  display: flex; align-items: center; gap: 1.4rem;
-  flex-shrink: 0;
+  padding: 1.5rem 4rem; border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 1.4rem; flex-shrink: 0;
 }
 .slide-num {
   font-family: 'Inter', sans-serif;
   font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
   color: var(--blue); background: var(--blue-l);
-  padding: .22rem .75rem; border-radius: 4px; border: 1px solid var(--blue-m);
-  flex-shrink: 0;
+  padding: .22rem .75rem; border-radius: 4px; border: 1px solid var(--blue-m); flex-shrink: 0;
 }
 .slide-title { font-size: 1.65rem; font-weight: 700; color: var(--ink); letter-spacing: -.025em; }
 .slide-subtitle { font-size: .72rem; color: var(--ghost); margin-left: auto; letter-spacing: .12em; text-transform: uppercase; }
 .slide-subheader {
-  padding: .6rem 4rem;
-  background: var(--bg); border-bottom: 1px solid var(--line);
+  padding: .6rem 4rem; background: var(--bg); border-bottom: 1px solid var(--line);
   font-size: .88rem; color: var(--soft); flex-shrink: 0;
 }
-
-/* ══════════════════════════
-   COMMON BODY
-══════════════════════════ */
 .slide-body { flex: 1; display: flex; flex-direction: column; padding: 1.6rem 4rem 1.2rem; gap: 1.2rem; overflow: hidden; min-height: 0; }
 
 /* ══════════════════════════
@@ -131,7 +122,7 @@ html, body {
 ══════════════════════════ */
 .toc-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; flex: 1; padding: 1.8rem 4rem; gap: 1.1rem; }
 .toc-card {
-  border: 1px solid var(--line); border-radius: 8px; padding: 1.6rem 2rem;
+  border: 1px solid var(--line); border-radius: 6px; padding: 1.6rem 2rem;
   cursor: pointer; transition: background .15s;
   display: flex; flex-direction: column; gap: .5rem;
   border-top: 2px solid var(--blue);
@@ -141,9 +132,10 @@ html, body {
 .toc-card:hover .toc-num { color: var(--blue); }
 .toc-card-title { font-size: 1.02rem; font-weight: 700; color: var(--ink); }
 .toc-card-desc { font-size: .84rem; color: var(--soft); line-height: 1.65; }
+.toc-badge { display: inline-block; font-size: .67rem; font-weight: 700; color: var(--blue); background: var(--blue-l); border: 1px solid var(--blue-m); padding: .12rem .5rem; border-radius: 3px; margin-top: .2rem; align-self: flex-start; }
 
 /* ══════════════════════════
-   INTRO (SLIDE 3)
+   ABOUT (SLIDE 3)
 ══════════════════════════ */
 .intro-desc {
   background: var(--blue-l); border-radius: 8px; padding: 1.4rem 2rem;
@@ -151,7 +143,6 @@ html, body {
   border-left: 3px solid var(--blue); flex-shrink: 0;
 }
 .intro-desc strong { color: var(--blue); font-weight: 700; }
-
 .timeline-section { flex-shrink: 0; }
 .timeline-label { font-size: .67rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .12em; margin-bottom: .85rem; }
 .timeline-row { display: flex; position: relative; }
@@ -160,7 +151,6 @@ html, body {
 .t-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--blue); border: 3px solid var(--white); box-shadow: 0 0 0 2px var(--blue-m); z-index: 1; flex-shrink: 0; }
 .t-year { font-size: .82rem; font-weight: 700; color: var(--blue); text-align: center; margin-top: .2rem; }
 .t-text { font-size: .72rem; color: var(--soft); text-align: center; line-height: 1.45; }
-
 .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; flex-shrink: 0; }
 .kpi-mini {
   background: var(--navy); border-radius: 8px; padding: 1.2rem 1rem;
@@ -171,20 +161,80 @@ html, body {
 .kpi-mini-badge { font-size: .7rem; color: var(--blue-m); font-weight: 600; margin-top: .05rem; }
 
 /* ══════════════════════════
-   STRENGTH (SLIDE 4)
+   STRENGTH SLIDES (SLIDES 4–9)
 ══════════════════════════ */
-.strength-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: .9rem; flex: 1; padding: 1.2rem 4rem; }
-.strength-card {
-  border: 1px solid var(--line); border-radius: 8px; padding: 1.4rem 1.6rem;
-  display: flex; flex-direction: column; gap: .55rem;
-  border-top: 2px solid var(--blue);
+.str-header-strip {
+  flex-shrink: 0; padding: .75rem 4.5rem; border-bottom: 1px solid var(--line);
+  background: var(--white); display: flex; align-items: center; gap: 1.2rem;
 }
-.strength-icon { font-size: 1.6rem; line-height: 1; }
-.strength-title { font-size: 1rem; font-weight: 700; color: var(--ink); }
-.strength-body { font-size: .87rem; color: var(--mid); line-height: 1.7; flex: 1; }
+.str-section-badge {
+  font-family: 'Inter', sans-serif;
+  font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--blue); background: var(--blue-l); padding: .2rem .7rem;
+  border-radius: 4px; border: 1px solid var(--blue-m);
+}
+.str-section-title { font-size: .88rem; font-weight: 600; color: var(--mid); }
+.str-section-counter { font-size: .72rem; color: var(--ghost); margin-left: auto; letter-spacing: .1em; }
+
+.str-layout { display: grid; grid-template-columns: 36% 64%; flex: 1; min-height: 0; overflow: hidden; }
+
+.str-left {
+  background: var(--navy); display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 4rem 3.5rem 4.5rem 4.5rem;
+  position: relative; overflow: hidden;
+}
+.str-ghost-num {
+  position: absolute; right: -1.5rem; bottom: -3rem;
+  font-family: 'Inter', sans-serif; font-size: 16rem; font-weight: 900;
+  color: rgba(255,255,255,.04); line-height: 1; letter-spacing: -.06em;
+  user-select: none; pointer-events: none;
+}
+.str-tag {
+  font-size: .6rem; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--blue-m); margin-bottom: 1.8rem;
+}
+.str-title {
+  font-size: 2.2rem; font-weight: 800; color: #fff; line-height: 1.12;
+  letter-spacing: -.05em; margin-bottom: 1.2rem;
+}
+.str-rule { width: 28px; height: 2px; background: var(--blue-m); margin-bottom: 1.4rem; }
+.str-desc { font-size: .88rem; color: rgba(255,255,255,.42); line-height: 1.85; }
+.str-kpi { margin-top: 2.5rem; padding-top: 1.8rem; border-top: 1px solid rgba(255,255,255,.08); }
+.str-kpi-num {
+  font-family: 'Inter', sans-serif; font-size: 2.8rem; font-weight: 800;
+  color: #fff; letter-spacing: -.06em; line-height: 1;
+}
+.str-kpi-label { font-size: .7rem; color: rgba(255,255,255,.32); margin-top: .38rem; letter-spacing: .06em; text-transform: uppercase; }
+
+.str-right {
+  display: flex; flex-direction: column;
+  padding: 3.5rem 4.5rem 4rem 4rem; overflow: hidden;
+}
+.str-right-header {
+  font-size: .6rem; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--blue);
+  padding-bottom: 1rem; border-bottom: 1.5px solid var(--ink);
+  flex-shrink: 0;
+}
+.str-points { display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
+.str-point { display: grid; grid-template-columns: 2.4rem 1fr; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+.str-point:last-child { border-bottom: none; }
+.str-pt-idx {
+  font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 700;
+  color: var(--ghost); letter-spacing: .04em; padding-top: .18rem;
+}
+.str-pt-content { display: flex; flex-direction: column; gap: .28rem; }
+.str-pt-title { font-size: 1rem; font-weight: 700; color: var(--ink); line-height: 1.3; }
+.str-pt-body { font-size: .86rem; color: var(--mid); line-height: 1.72; }
+.str-pt-tags { display: flex; flex-wrap: wrap; gap: .28rem; margin-top: .4rem; }
+.str-pt-tag {
+  font-size: .67rem; font-weight: 600; color: var(--soft);
+  background: var(--bg); border: 1px solid var(--line);
+  padding: .12rem .5rem; border-radius: 3px;
+}
 
 /* ══════════════════════════
-   DEPT TABLE (SLIDE 5)
+   DEPT TABLE (SLIDE 10)
 ══════════════════════════ */
 .dept-table-wrap { flex: 1; padding: 1.2rem 4rem; display: flex; flex-direction: column; min-height: 0; }
 .dept-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 8px; overflow: hidden; flex: 1; }
@@ -203,53 +253,54 @@ html, body {
 .dept-badge.gold { background: #f6f2e6; color: #6b5320; border-color: #d4c48a; }
 
 /* ══════════════════════════
-   INSTRUCTORS (SLIDE 6)
+   INSTRUCTORS (SLIDE 11)
 ══════════════════════════ */
-.instructor-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: .9rem; flex: 1; padding: 1.2rem 4rem; }
-.instructor-card { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.5rem; display: flex; flex-direction: column; gap: .35rem; }
-.inst-header { display: flex; align-items: flex-start; gap: .9rem; margin-bottom: .25rem; }
-.inst-avatar {
-  width: 42px; height: 42px; border-radius: 50%;
-  background: var(--blue); display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; font-weight: 800; color: #fff; flex-shrink: 0;
+.instructor-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: .85rem; flex: 1; padding: 1.2rem 4rem; }
+.instructor-card {
+  border: 1px solid var(--line); border-radius: 6px; padding: 1.4rem 1.8rem;
+  display: flex; flex-direction: column; gap: .55rem;
+  border-top: 2px solid var(--blue);
 }
-.inst-name { font-size: 1rem; font-weight: 700; color: var(--ink); }
-.inst-dept { font-size: .77rem; font-weight: 600; color: var(--blue); margin-top: .12rem; }
-.inst-role { font-size: .75rem; color: var(--soft); }
-.inst-career { list-style: none; display: flex; flex-direction: column; gap: .25rem; margin-top: .2rem; }
-.inst-career li { font-size: .8rem; color: var(--mid); padding-left: .9rem; position: relative; line-height: 1.5; }
-.inst-career li::before { content: '·'; position: absolute; left: 0; color: var(--blue-m); font-weight: 900; font-size: 1.1rem; line-height: 1.1; }
+.inst-name { font-size: 1.1rem; font-weight: 700; color: var(--ink); letter-spacing: -.02em; }
+.inst-dept { font-size: .8rem; font-weight: 700; color: var(--blue); margin-top: .1rem; }
+.inst-role { font-size: .75rem; color: var(--soft); margin-bottom: .2rem; }
+.inst-divider { height: 1px; background: var(--line); margin: .1rem 0; }
+.inst-career { list-style: none; display: flex; flex-direction: column; gap: .22rem; }
+.inst-career li { font-size: .8rem; color: var(--mid); padding-left: 1.1rem; position: relative; line-height: 1.5; }
+.inst-career li::before { content: '—'; position: absolute; left: 0; color: var(--ghost); font-size: .75rem; }
 
 /* ══════════════════════════
-   CURRICULUM (SLIDE 7)
+   CURRICULUM (SLIDE 12)
 ══════════════════════════ */
 .curr-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, 1fr); gap: .6rem; flex: 1; padding: .9rem 4rem; }
 .curr-card {
-  border: 1px solid var(--line); border-radius: 7px; padding: .75rem 1.1rem;
+  border: 1px solid var(--line); border-radius: 6px; padding: .75rem 1.1rem;
   display: flex; gap: .75rem; align-items: flex-start;
   border-left: 3px solid var(--blue);
 }
-.curr-icon { font-size: 1.3rem; flex-shrink: 0; line-height: 1; margin-top: .05rem; }
+.curr-card-num {
+  font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 800;
+  color: var(--blue-m); flex-shrink: 0; margin-top: .08rem; width: 1.5rem; text-align: right;
+}
 .curr-name { font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: .18rem; }
 .curr-tools { font-size: .73rem; color: var(--soft); line-height: 1.5; }
 
 /* ══════════════════════════
-   ADMISSION MAP (SLIDE 8)
+   ADMISSION MAP (SLIDE 13)
 ══════════════════════════ */
 .adm-card {
-  border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.5rem;
+  border: 1px solid var(--line); border-radius: 6px; padding: 1.2rem 1.5rem;
   display: flex; flex-direction: column; gap: .5rem; flex: 1;
   border-top: 2px solid var(--blue);
 }
-.adm-card-head { display: flex; align-items: center; gap: .65rem; }
-.adm-icon { font-size: 1.2rem; line-height: 1; }
+.adm-card-head { margin-bottom: .15rem; }
 .adm-title { font-size: .97rem; font-weight: 700; color: var(--ink); }
-.adm-sub { font-size: .72rem; font-weight: 600; color: var(--blue); }
-.adm-body { font-size: .8rem; color: var(--mid); line-height: 1.65; }
+.adm-sub { font-size: .72rem; font-weight: 600; color: var(--blue); margin-top: .15rem; }
+.adm-body { font-size: .8rem; color: var(--mid); line-height: 1.7; }
 .adm-body span { font-weight: 700; color: var(--ink); }
 
 /* ══════════════════════════
-   RESULTS (SLIDE 9)
+   RESULTS (SLIDE 14)
 ══════════════════════════ */
 .results-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; flex: 1; padding: 1.4rem 4rem; }
 .results-section { display: flex; flex-direction: column; gap: .75rem; }
@@ -259,74 +310,62 @@ html, body {
 .cert-pct { color: var(--blue); font-weight: 700; }
 .cert-track { height: 7px; background: var(--bg); border-radius: 6px; overflow: hidden; margin-top: .15rem; }
 .cert-fill { height: 100%; border-radius: 6px; background: var(--blue); }
-
 .outcome-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: .3rem; }
 .outcome-box { background: var(--navy); border-radius: 8px; padding: .9rem 1rem; text-align: center; }
 .outcome-num { font-family: 'Inter', sans-serif; font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; }
 .outcome-label { font-size: .74rem; color: rgba(255,255,255,.55); margin-top: .2rem; }
-
-.review-cards { display: flex; flex-direction: column; gap: .75rem; flex: 1; }
-.review-card { background: var(--bg); border-radius: 7px; padding: 1rem 1.3rem; border-left: 3px solid var(--blue-m); flex: 1; }
-.review-quote-mark { font-size: 1.4rem; color: var(--line); font-weight: 900; line-height: 1; margin-bottom: .2rem; }
-.review-text { font-size: .83rem; color: var(--mid); line-height: 1.75; }
+.award-block {
+  background: var(--navy); border-radius: 8px; padding: 1.1rem 1.6rem;
+  display: flex; align-items: center; gap: 1.4rem;
+}
+.award-num { font-family: 'Inter', sans-serif; font-size: 2.2rem; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -.04em; flex-shrink: 0; }
+.award-detail { display: flex; flex-direction: column; gap: .2rem; }
+.award-title { font-size: .88rem; font-weight: 700; color: #fff; }
+.award-sub { font-size: .76rem; color: rgba(255,255,255,.45); line-height: 1.5; }
+.review-cards { display: flex; flex-direction: column; gap: .7rem; flex: 1; }
+.review-card { background: var(--bg); border-radius: 6px; padding: 1rem 1.3rem; border-left: 3px solid var(--blue-m); flex: 1; display: flex; flex-direction: column; gap: .3rem; }
+.review-mark { font-family: 'Inter', sans-serif; font-size: 1.6rem; color: var(--line); font-weight: 900; line-height: 1; }
+.review-text { font-size: .83rem; color: var(--mid); line-height: 1.75; flex: 1; }
 
 /* ══════════════════════════
-   VISION / CONTACT (SLIDE 10)
+   VISION / CONTACT (SLIDE 15)
 ══════════════════════════ */
 .vision-grid {
-  flex: 1; display: grid;
-  grid-template-columns: 1fr 1fr;
+  flex: 1; display: grid; grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto 1fr auto;
   gap: 0; padding: 1.3rem 3.5rem 0; min-height: 0; overflow: hidden;
 }
 .vision-header {
-  grid-column: span 2;
-  background: var(--navy); border-radius: 10px;
+  grid-column: span 2; background: var(--navy); border-radius: 8px;
   padding: 1.3rem 2rem; margin-bottom: .9rem;
   display: flex; flex-direction: column; gap: .45rem; flex-shrink: 0;
 }
 .vision-headline { font-size: 1.2rem; font-weight: 800; color: #fff; line-height: 1.35; }
 .vision-headline span { color: var(--blue-m); }
 .vision-desc { font-size: .87rem; color: rgba(255,255,255,.6); line-height: 1.75; }
-
-.vision-programs {
-  grid-column: span 2;
-  display: flex; flex-direction: column; gap: .4rem;
-  margin-bottom: .9rem; flex-shrink: 0;
-}
+.vision-programs { grid-column: span 2; display: flex; flex-direction: column; gap: .4rem; margin-bottom: .9rem; flex-shrink: 0; }
 .prog-item {
   display: flex; align-items: center; gap: .7rem;
   font-size: .88rem; font-weight: 600; color: var(--dark);
-  padding: .45rem .9rem;
-  background: var(--blue-l); border: 1px solid var(--blue-m);
-  border-radius: 6px;
+  padding: .45rem .9rem; background: var(--blue-l); border: 1px solid var(--blue-m); border-radius: 5px;
 }
 .prog-item::before { content: '—'; color: var(--blue); font-weight: 700; flex-shrink: 0; }
-
 .vision-left { display: flex; flex-direction: column; gap: .85rem; padding-right: .65rem; min-height: 0; }
 .vision-right { display: flex; flex-direction: column; gap: .85rem; padding-left: .65rem; min-height: 0; }
-
-.op-hours {
-  background: var(--navy); border-radius: 8px; padding: 1.1rem 1.5rem; color: #fff; flex-shrink: 0;
-}
+.op-hours { background: var(--navy); border-radius: 8px; padding: 1.1rem 1.5rem; color: #fff; flex-shrink: 0; }
 .op-title { font-size: .9rem; font-weight: 700; margin-bottom: .7rem; }
 .op-grid { display: grid; grid-template-columns: auto 1fr; gap: .3rem .9rem; font-size: .86rem; }
 .op-label { font-weight: 600; opacity: .65; }
-
-.proc-box {
-  background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
-  padding: 1.1rem 1.5rem; flex: 1; min-height: 0;
-}
+.proc-box { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.5rem; flex: 1; min-height: 0; }
 .proc-title { font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: .7rem; }
 .proc-steps { display: flex; flex-direction: column; gap: .5rem; }
 .proc-step { display: flex; align-items: center; gap: .75rem; }
 .proc-step-num {
-  background: var(--blue); border-radius: 50%;
-  width: 22px; height: 22px; font-size: .7rem; font-weight: 700;
-  color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: var(--blue); border-radius: 50%; width: 22px; height: 22px;
+  font-size: .7rem; font-weight: 700; color: #fff;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .proc-step-text { font-size: .86rem; font-weight: 600; color: var(--ink); }
-
 .goal-label { font-size: .67rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .1em; flex-shrink: 0; }
 .goals { display: flex; flex-direction: column; gap: .7rem; flex: 1; min-height: 0; }
 .goal-card {
@@ -336,13 +375,10 @@ html, body {
 }
 .goal-num { font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--blue); line-height: 1; }
 .goal-desc { font-size: .82rem; color: var(--soft); line-height: 1.5; }
-
 .contact-bar {
-  grid-column: span 2;
-  background: var(--navy); border-radius: 8px;
+  grid-column: span 2; background: var(--navy); border-radius: 8px;
   padding: 1rem 2rem; margin-top: .9rem; margin-bottom: .9rem;
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;
-  flex-shrink: 0;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; flex-shrink: 0;
 }
 .contact-item { display: flex; flex-direction: column; gap: .18rem; }
 .contact-lbl { font-size: .67rem; font-weight: 600; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .08em; }
@@ -351,15 +387,15 @@ html, body {
 @media print {
   #nav-pill, #dots-nav, #progress-bar { display: none !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .slide, .toc-card, .strength-card, .instructor-card, .curr-card, tr { page-break-inside: avoid; break-inside: avoid; }
-  h1, .slide-title { page-break-after: avoid; }
+  .slide, .toc-card, .instructor-card, .curr-card, tr { page-break-inside: avoid; break-inside: avoid; }
+  h1, .slide-title, .str-title { page-break-after: avoid; }
   a[href]::after { content: none !important; }
 }
 </style>
 </head>
 <body>
 
-<div id="progress-bar" style="width:10%;"></div>
+<div id="progress-bar" style="width:6.67%;"></div>
 
 <div id="dots-nav">
   <div class="dot active" onclick="goTo(0)"></div>
@@ -372,17 +408,24 @@ html, body {
   <div class="dot" onclick="goTo(7)"></div>
   <div class="dot" onclick="goTo(8)"></div>
   <div class="dot" onclick="goTo(9)"></div>
+  <div class="dot" onclick="goTo(10)"></div>
+  <div class="dot" onclick="goTo(11)"></div>
+  <div class="dot" onclick="goTo(12)"></div>
+  <div class="dot" onclick="goTo(13)"></div>
+  <div class="dot" onclick="goTo(14)"></div>
 </div>
 
 <div id="nav-pill">
   <button onclick="prevSlide()">&#8592;</button>
-  <div id="slide-counter">1 / 10</div>
+  <div id="slide-counter">1 / 15</div>
   <button onclick="nextSlide()">&#8594;</button>
 </div>
 
 <div id="slider">
 
-  <!-- SLIDE 1 — 표지 -->
+  <!-- ═══════════════════════════════════════════
+       SLIDE 1 — 표지
+  ═══════════════════════════════════════════ -->
   <div class="slide active" id="slide-1">
     <div class="cover-left">
       <div class="cover-stripe"></div>
@@ -392,12 +435,12 @@ html, body {
       <p class="cover-tagline">진로탐색부터 자격증 취득, 포트폴리오 완성, 취업까지<br>학생의 성장을 함께 설계하는 교육 파트너</p>
       <div class="cover-tags">
         <span class="cover-tag">학원 소개</span>
-        <span class="cover-tag">교육 강점</span>
-        <span class="cover-tag">학과 연계</span>
+        <span class="cover-tag">교육 강점 6</span>
+        <span class="cover-tag">학과별 연계</span>
         <span class="cover-tag">전문 강사진</span>
         <span class="cover-tag">교육 커리큘럼</span>
+        <span class="cover-tag">입시 로드맵</span>
         <span class="cover-tag">교육 성과</span>
-        <span class="cover-tag">제휴 &amp; 협력</span>
         <span class="cover-tag">비전 · 문의</span>
       </div>
       <div class="cover-brand">SBS아카데미컴퓨터아트학원 구월점 · 코리아교육그룹</div>
@@ -405,14 +448,14 @@ html, body {
     </div>
     <div class="cover-right">
       <div class="stat-box">
+        <div class="stat-lbl">전국 직영 지점</div>
+        <div class="stat-num">18개</div>
+        <div class="stat-sub">100% 법인 직영 운영</div>
+      </div>
+      <div class="stat-box">
         <div class="stat-lbl">누적 수강생</div>
         <div class="stat-num">8,500명+</div>
         <div class="stat-sub">설립 이후 누계</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-lbl">자격증 합격</div>
-        <div class="stat-num">3,200건+</div>
-        <div class="stat-sub">누계 합격 건수</div>
       </div>
       <div class="stat-box">
         <div class="stat-lbl">취업 · 진학 연계율</div>
@@ -420,14 +463,16 @@ html, body {
         <div class="stat-sub">포트폴리오 기반 연계</div>
       </div>
       <div class="stat-box">
-        <div class="stat-lbl">수강생 만족도</div>
-        <div class="stat-num">98%</div>
-        <div class="stat-sub">자체 설문 기준</div>
+        <div class="stat-lbl">올해의 브랜드대상</div>
+        <div class="stat-num">9년 연속</div>
+        <div class="stat-sub">2017 – 2025 취업교육서비스 부문</div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 2 — 목차 -->
+  <!-- ═══════════════════════════════════════════
+       SLIDE 2 — 목차
+  ═══════════════════════════════════════════ -->
   <div class="slide" id="slide-2">
     <div class="slide-header">
       <div class="slide-num">Index</div>
@@ -442,33 +487,36 @@ html, body {
       </div>
       <div class="toc-card" onclick="goTo(3)">
         <div class="toc-num">02</div>
-        <div class="toc-card-title">교육 강점 및 차별점</div>
-        <div class="toc-card-desc">실무 중심, 자격증·포트폴리오·취업 연계, AI 기반 교육 등 6대 강점</div>
-      </div>
-      <div class="toc-card" onclick="goTo(4)">
-        <div class="toc-num">03</div>
-        <div class="toc-card-title">학과별 연계 가능 과정</div>
-        <div class="toc-card-desc">8개 학과 + AI 융합 과정, 전공 연계 가능 학과 안내</div>
-      </div>
-      <div class="toc-card" onclick="goTo(5)">
-        <div class="toc-num">04</div>
-        <div class="toc-card-title">전문 강사진</div>
-        <div class="toc-card-desc">현장 실무 경력 보유 전문 강사 소개 및 주요 경력</div>
-      </div>
-      <div class="toc-card" onclick="goTo(6)">
-        <div class="toc-num">05</div>
-        <div class="toc-card-title">교육 커리큘럼 · 성과</div>
-        <div class="toc-card-desc">8개 과정별 교육 내용, 자격증 합격률, 수강생 후기</div>
+        <div class="toc-card-title">교육 강점 &amp; 차별점</div>
+        <div class="toc-card-desc">실무 중심 · 자격증·취업 · 맞춤 교육 · AI 융합 · 유연한 운영 · 학생 관리</div>
+        <div class="toc-badge">6개 항목 전용 슬라이드</div>
       </div>
       <div class="toc-card" onclick="goTo(9)">
+        <div class="toc-num">03</div>
+        <div class="toc-card-title">학과별 연계 가능 과정</div>
+        <div class="toc-card-desc">9개 학과 + AI 융합 과정, 전공 연계 학과 및 교육 내용 안내</div>
+      </div>
+      <div class="toc-card" onclick="goTo(10)">
+        <div class="toc-num">04</div>
+        <div class="toc-card-title">전문 강사진</div>
+        <div class="toc-card-desc">현장 실무 경력 보유 전문 강사 소개 및 주요 경력 사항</div>
+      </div>
+      <div class="toc-card" onclick="goTo(11)">
+        <div class="toc-num">05</div>
+        <div class="toc-card-title">교육 커리큘럼 &amp; 입시 로드맵</div>
+        <div class="toc-card-desc">8개 과정별 교육 내용, 대학 입시 전형별 교육 경로 안내</div>
+      </div>
+      <div class="toc-card" onclick="goTo(13)">
         <div class="toc-num">06</div>
-        <div class="toc-card-title">수강 안내 · 비전 · 문의처</div>
-        <div class="toc-card-desc">학교 연계 협력 프로그램, 핵심 목표, 문의처 안내</div>
+        <div class="toc-card-title">교육 성과 &amp; 비전 · 문의처</div>
+        <div class="toc-card-desc">자격증 합격률, 수상 실적, 협력 프로그램, 핵심 목표 및 문의처</div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 3 — 학원 소개 -->
+  <!-- ═══════════════════════════════════════════
+       SLIDE 3 — 학원 소개
+  ═══════════════════════════════════════════ -->
   <div class="slide" id="slide-3">
     <div class="slide-header">
       <div class="slide-num">01</div>
@@ -477,71 +525,405 @@ html, body {
     </div>
     <div class="slide-body">
       <div class="intro-desc">
-        SBS아카데미컴퓨터아트학원 구월지점은 <strong>코리아교육그룹</strong> 산하 교육기관으로, 디자인·영상·웹·IT·건축 등 다양한 디지털 분야 전문 교육을 운영합니다. 학생들이 <strong>진로탐색 단계에서부터 실무역량을 키울 수 있도록</strong> 체계적인 교육 환경을 제공하며, 자격증 취득과 포트폴리오 제작을 통해 취업연계까지 이어지는 교육 시스템을 운영하고 있습니다. 전공 연계 기반의 체험형 교육을 통해 <strong>디지털 역량과 AI 활용 역량</strong>을 함께 강화할 수 있도록 지원합니다.
+        SBS아카데미컴퓨터아트학원 구월지점은 <strong>코리아교육그룹</strong> 산하 100% 법인 직영 교육기관으로, 전국 18개 지점을 운영합니다. 디자인·영상·웹·IT·건축 등 디지털 분야 전문 교육을 통해 학생들의 <strong>진로탐색부터 실무역량 강화, 자격증 취득, 포트폴리오 제작, 취업 연계</strong>까지 이어지는 체계적인 교육 시스템을 운영하고 있습니다. <strong>2017년부터 2025년까지 9년 연속 올해의 브랜드대상</strong>(취업교육서비스 부문)을 수상한 검증된 교육 브랜드입니다.
       </div>
       <div class="timeline-section">
         <div class="timeline-label">연혁 타임라인</div>
         <div class="timeline-row">
           <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2010</div><div class="t-text">학원 설립</div></div>
           <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2013</div><div class="t-text">직업능력개발<br>훈련기관 인증</div></div>
-          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2016</div><div class="t-text">강의실 확장<br>영상디자인 전문관</div></div>
+          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2017</div><div class="t-text">올해의<br>브랜드대상 첫 수상</div></div>
           <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2019</div><div class="t-text">우수 직업훈련<br>기관 선정</div></div>
           <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2022</div><div class="t-text">웹개발 · AI<br>과정 도입</div></div>
+          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2025</div><div class="t-text">브랜드대상<br>9년 연속 수상</div></div>
           <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2026</div><div class="t-text">학교 연계<br>교육 확대 운영</div></div>
         </div>
       </div>
       <div class="kpi-row">
+        <div class="kpi-mini"><div class="kpi-mini-num">18개</div><div class="kpi-mini-label">전국 직영 지점</div><div class="kpi-mini-badge">100% 법인 직영</div></div>
         <div class="kpi-mini"><div class="kpi-mini-num">8,500명+</div><div class="kpi-mini-label">누적 수강생</div><div class="kpi-mini-badge">설립 이후 누계</div></div>
-        <div class="kpi-mini"><div class="kpi-mini-num">3,200건+</div><div class="kpi-mini-label">자격증 합격</div><div class="kpi-mini-badge">누계 합격 건수</div></div>
         <div class="kpi-mini"><div class="kpi-mini-num">72%</div><div class="kpi-mini-label">취업 · 진학 연계율</div><div class="kpi-mini-badge">포트폴리오 기반</div></div>
-        <div class="kpi-mini"><div class="kpi-mini-num">98%</div><div class="kpi-mini-label">수강생 만족도</div><div class="kpi-mini-badge">자체 설문 기준</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-num">9년</div><div class="kpi-mini-label">브랜드대상 연속 수상</div><div class="kpi-mini-badge">2017–2025</div></div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 4 — 교육 강점 -->
+  <!-- ═══════════════════════════════════════════
+       SLIDE 4 — 강점 01: 실무 중심 교육
+  ═══════════════════════════════════════════ -->
   <div class="slide" id="slide-4">
-    <div class="slide-header">
-      <div class="slide-num">02</div>
-      <div class="slide-title">교육 강점 &amp; 차별점</div>
-      <div class="slide-subtitle">Our Strengths</div>
+    <div class="str-header-strip">
+      <div class="str-section-badge">02</div>
+      <div class="str-section-title">교육 강점 &amp; 차별점</div>
+      <div class="str-section-counter">강점 1 / 6</div>
     </div>
-    <div class="strength-grid">
-      <div class="strength-card">
-        <div class="strength-icon">🎯</div>
-        <div class="strength-title">실무 중심 교육</div>
-        <div class="strength-body">이론이 아닌 프로젝트 기반의 체험형 교육을 통해 실무역량을 자연스럽게 향상시킬 수 있도록 구성되어 있습니다.</div>
+    <div class="str-layout">
+      <div class="str-left">
+        <div class="str-ghost-num">01</div>
+        <div class="str-tag">Strength 01 · 교육 방식</div>
+        <div class="str-title">실무 중심<br>교육</div>
+        <div class="str-rule"></div>
+        <div class="str-desc">이론이 아닌 현장의 방식으로 가르칩니다. 업계에서 실제 사용하는 도구와 프로세스를 교육에 그대로 적용합니다.</div>
+        <div class="str-kpi">
+          <div class="str-kpi-num">100%</div>
+          <div class="str-kpi-label">현업 소프트웨어 적용률</div>
+        </div>
       </div>
-      <div class="strength-card">
-        <div class="strength-icon">🏆</div>
-        <div class="strength-title">자격증 · 포트폴리오 · 취업 연계</div>
-        <div class="strength-body">자격증 취득과 동시에 포트폴리오 제작을 진행하며, 이를 기반으로 취업 및 진학 연계까지 이어지는 체계적 지원 시스템을 운영합니다.</div>
-      </div>
-      <div class="strength-card">
-        <div class="strength-icon">📚</div>
-        <div class="strength-title">학과 맞춤형 교육 가능</div>
-        <div class="strength-body">학교 전공과 연계된 커리큘럼으로 진로탐색 단계부터 방향성을 설정할 수 있도록 돕습니다. 학과별 맞춤 교육 설계가 가능합니다.</div>
-      </div>
-      <div class="strength-card">
-        <div class="strength-icon">🤖</div>
-        <div class="strength-title">디지털 · AI 기반 교육</div>
-        <div class="strength-body">디지털 역량 강화와 함께 AI 활용 역량을 포함한 최신 교육을 반영하여 변화하는 산업 환경에 대응하는 실무 경쟁력을 높입니다.</div>
-      </div>
-      <div class="strength-card">
-        <div class="strength-icon">🖥️</div>
-        <div class="strength-title">온 · 오프라인 교육 운영</div>
-        <div class="strength-body">학원 수강, 학교 출강, 온라인 병행 수업 등 학교 상황에 맞는 다양한 운영 방식으로 유연한 교육 진행이 가능합니다.</div>
-      </div>
-      <div class="strength-card">
-        <div class="strength-icon">👥</div>
-        <div class="strength-title">학생 관리 · 상담 체계</div>
-        <div class="strength-body">출결 관리, 학습 현황 공유, 1대1 진로 상담 및 코칭을 지원하여 학생 개개인의 성장을 체계적으로 관리합니다.</div>
+      <div class="str-right">
+        <div class="str-right-header">핵심 역량 · Key Features</div>
+        <div class="str-points">
+          <div class="str-point">
+            <div class="str-pt-idx">01</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">현장 경력 강사진 직접 지도</div>
+              <div class="str-pt-body">업계에서 실제 프로젝트를 수행한 현직·경력 전문가가 강사로 구성됩니다. 실무에서 요구하는 퀄리티 기준과 작업 프로세스를 직접 지도하여 교육과 현장의 간극을 최소화합니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">02</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">프로젝트 기반 학습 (PBL)</div>
+              <div class="str-pt-body">단순 반복 실습이 아닌, 실제 결과물을 완성하는 과제 중심 수업을 진행합니다. 기획 → 시안 → 피드백 → 수정 → 납품의 실무 워크플로우를 수업 과정에 그대로 적용합니다. 완성된 결과물은 포트폴리오로 즉시 활용됩니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">03</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">현업 소프트웨어 100% 적용</div>
+              <div class="str-pt-body">실제 현업에서 사용하는 도구만으로 교육합니다. 수료 후 별도 적응 기간 없이 현장에 즉시 투입될 수 있는 실무 역량을 갖추게 됩니다.</div>
+              <div class="str-pt-tags">
+                <span class="str-pt-tag">Adobe CC</span><span class="str-pt-tag">Maya</span><span class="str-pt-tag">Blender</span>
+                <span class="str-pt-tag">AutoCAD</span><span class="str-pt-tag">Figma</span><span class="str-pt-tag">Unreal Engine</span>
+                <span class="str-pt-tag">ChatGPT</span><span class="str-pt-tag">Midjourney</span>
+              </div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">04</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">실습 70% · 이론 30% 교육 구조</div>
+              <div class="str-pt-body">전체 교육 시간의 70% 이상을 직접 제작하고 수정하는 실습으로 운영합니다. 짧은 이론 설명 이후 바로 실습으로 전환되는 구조로, 학생이 빠르게 체화하고 스스로 문제를 해결하는 역량을 키웁니다.</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 5 — 학과별 연계 가능 과정 -->
+  <!-- ═══════════════════════════════════════════
+       SLIDE 5 — 강점 02: 자격증·포트폴리오·취업 연계
+  ═══════════════════════════════════════════ -->
   <div class="slide" id="slide-5">
+    <div class="str-header-strip">
+      <div class="str-section-badge">02</div>
+      <div class="str-section-title">교육 강점 &amp; 차별점</div>
+      <div class="str-section-counter">강점 2 / 6</div>
+    </div>
+    <div class="str-layout">
+      <div class="str-left">
+        <div class="str-ghost-num">02</div>
+        <div class="str-tag">Strength 02 · 성과 연계</div>
+        <div class="str-title">자격증 ·<br>포트폴리오 ·<br>취업 일원화</div>
+        <div class="str-rule"></div>
+        <div class="str-desc">한 과정 안에서 자격증 취득, 포트폴리오 제작, 취업 연계까지 완결됩니다. 수료 후 추가 준비 없이 다음 단계로 나아갑니다.</div>
+        <div class="str-kpi">
+          <div class="str-kpi-num">3,200건+</div>
+          <div class="str-kpi-label">누계 자격증 합격</div>
+        </div>
+      </div>
+      <div class="str-right">
+        <div class="str-right-header">핵심 역량 · Key Features</div>
+        <div class="str-points">
+          <div class="str-point">
+            <div class="str-pt-idx">01</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">국가공인 자격증 취득 지원</div>
+              <div class="str-pt-body">GTQ 1급, 컴퓨터그래픽기능사, AutoCAD, 컴퓨터활용능력 1·2급, ITQ, 웹디자인기능사, 실내건축기능사, 전산세무·회계 등 현장에서 인정받는 국가공인 자격증 취득을 커리큘럼 내에서 병행 지원합니다.</div>
+              <div class="str-pt-tags">
+                <span class="str-pt-tag">GTQ 1급</span><span class="str-pt-tag">컴그기능사</span><span class="str-pt-tag">AutoCAD</span>
+                <span class="str-pt-tag">컴활 1·2급</span><span class="str-pt-tag">ITQ</span><span class="str-pt-tag">웹디자인기능사</span>
+              </div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">02</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">과정 수료 = 포트폴리오 완성</div>
+              <div class="str-pt-body">교육 커리큘럼 최종 단계에 포트폴리오 완성 과정이 내장되어 있습니다. 별도 준비 없이 수료와 동시에 취업·진학에 즉시 활용 가능한 완성도 높은 포트폴리오가 완성됩니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">03</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">1:1 취업 지원 서비스</div>
+              <div class="str-pt-body">이력서 첨삭, 자기소개서 교정, 모의면접 피드백, 면접 영상 분석까지 개인 맞춤형 취업 지원 서비스를 제공합니다. 취업처 DB 연계를 통해 실질적인 취업 연결을 지원합니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">04</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">2017–2025 올해의 브랜드대상 9년 연속 수상</div>
+              <div class="str-pt-body">취업교육서비스 부문 올해의 브랜드대상, 퍼스트브랜드 대상을 9년 연속 수상했습니다. 실질적인 취업 성과로 업계에서 가장 공신력 있는 평가 기관에 의해 반복 검증된 교육 브랜드입니다.</div>
+              <div class="str-pt-tags">
+                <span class="str-pt-tag">올해의 브랜드대상 2017–2025</span><span class="str-pt-tag">퍼스트브랜드 대상 2017–2020</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 6 — 강점 03: 학과 맞춤형 교육
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-6">
+    <div class="str-header-strip">
+      <div class="str-section-badge">02</div>
+      <div class="str-section-title">교육 강점 &amp; 차별점</div>
+      <div class="str-section-counter">강점 3 / 6</div>
+    </div>
+    <div class="str-layout">
+      <div class="str-left">
+        <div class="str-ghost-num">03</div>
+        <div class="str-tag">Strength 03 · 맞춤 설계</div>
+        <div class="str-title">학과<br>맞춤형<br>교육 설계</div>
+        <div class="str-rule"></div>
+        <div class="str-desc">학교 전공과 연계된 최적의 커리큘럼을 설계합니다. 진로탐색 단계부터 방향을 함께 설정하고, 학생 수준에 맞는 개인별 로드맵을 구성합니다.</div>
+        <div class="str-kpi">
+          <div class="str-kpi-num">9개</div>
+          <div class="str-kpi-label">연계 가능 전공 학과</div>
+        </div>
+      </div>
+      <div class="str-right">
+        <div class="str-right-header">핵심 역량 · Key Features</div>
+        <div class="str-points">
+          <div class="str-point">
+            <div class="str-pt-idx">01</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">9개 전공 학과별 특화 커리큘럼</div>
+              <div class="str-pt-body">광고편집, 아트웍, 모션그래픽, 웹디자인, 인테리어, 자격증/OA, 프로그래밍, CG, AI 융합 등 9개 학과별로 최적화된 커리큘럼을 운영합니다. 학교 전공 수업과 시너지를 극대화하도록 설계합니다.</div>
+              <div class="str-pt-tags">
+                <span class="str-pt-tag">광고편집</span><span class="str-pt-tag">아트웍</span><span class="str-pt-tag">모션그래픽</span>
+                <span class="str-pt-tag">웹디자인</span><span class="str-pt-tag">인테리어</span><span class="str-pt-tag">CG</span><span class="str-pt-tag">AI 융합</span>
+              </div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">02</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">개인 수준 진단 후 맞춤 로드맵 설정</div>
+              <div class="str-pt-body">입학 전 1:1 진로 상담을 통해 각 학생의 시작점, 목표, 전공 방향을 파악합니다. 진단 결과에 따라 개인별 최적 교육 경로를 설정하고, 단계별 학습 목표를 구체적으로 제시합니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">03</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">진로 탐색 체험 프로그램 운영</div>
+              <div class="str-pt-body">아직 진로를 결정하지 못한 학생을 위한 단기 체험 과정을 별도 운영합니다. 디자인, 영상, 웹, CG 등 다양한 분야를 체험하면서 적성과 흥미에 맞는 방향을 찾을 수 있도록 돕습니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">04</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">학교 전공 수업과 연계 가능한 커리큘럼 구성</div>
+              <div class="str-pt-body">학교 교육과정과 중복되지 않으면서 보완·심화할 수 있도록 커리큘럼을 구성합니다. 학교 담당 교사와 협의하여 교육 내용·일정·방식을 학교 상황에 맞게 유연하게 조율합니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 7 — 강점 04: AI · 디지털 융합 교육
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-7">
+    <div class="str-header-strip">
+      <div class="str-section-badge">02</div>
+      <div class="str-section-title">교육 강점 &amp; 차별점</div>
+      <div class="str-section-counter">강점 4 / 6</div>
+    </div>
+    <div class="str-layout">
+      <div class="str-left">
+        <div class="str-ghost-num">04</div>
+        <div class="str-tag">Strength 04 · AI 교육</div>
+        <div class="str-title">AI · 디지털<br>융합 교육</div>
+        <div class="str-rule"></div>
+        <div class="str-desc">변화하는 산업 환경에 앞서가는 교육을 제공합니다. 생성형 AI 활용 역량은 이제 선택이 아닌 필수 경쟁력입니다.</div>
+        <div class="str-kpi">
+          <div class="str-kpi-num">15종+</div>
+          <div class="str-kpi-label">AI 도구 교육 적용</div>
+        </div>
+      </div>
+      <div class="str-right">
+        <div class="str-right-header">핵심 역량 · Key Features</div>
+        <div class="str-points">
+          <div class="str-point">
+            <div class="str-pt-idx">01</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">생성형 AI 도구 실무 적용 교육</div>
+              <div class="str-pt-body">ChatGPT, Midjourney, Claude, Runway, Sora, 뤼튼, AI-POT 등 최신 생성형 AI 도구를 실무에 적용하는 방법을 교육합니다. 도구 사용법을 넘어 AI와 협업하는 크리에이터 역량을 기릅니다.</div>
+              <div class="str-pt-tags">
+                <span class="str-pt-tag">ChatGPT</span><span class="str-pt-tag">Midjourney</span><span class="str-pt-tag">Claude</span>
+                <span class="str-pt-tag">Runway</span><span class="str-pt-tag">Sora</span><span class="str-pt-tag">뤼튼</span>
+              </div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">02</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">AI 자격증 취득 과정 운영</div>
+              <div class="str-pt-body">AI-POT, AI 프롬프트 엔지니어링 등 AI 관련 자격증 취득 과정을 전용으로 운영합니다. 실전OA(OA/AI/노션) 과정과 연계하여 디지털 업무 역량을 체계적으로 갖출 수 있도록 지원합니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">03</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">분야별 AI 크리에이터 전문 과정</div>
+              <div class="str-pt-body">AI 크리에이터 과정을 분야별로 세분화하여 운영합니다. 각 분야의 전공 실력과 AI 도구 활용 능력을 결합한 차별화된 결과물 제작이 가능합니다.</div>
+              <div class="str-pt-tags">
+                <span class="str-pt-tag">AI 크리에이터 시각편집</span><span class="str-pt-tag">AI 크리에이터 CG마야</span>
+                <span class="str-pt-tag">AI 크리에이터 인테리어</span><span class="str-pt-tag">AI 바이브코딩 웹</span>
+              </div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">04</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">전 학과 AI 융합 교육 내장</div>
+              <div class="str-pt-body">AI 융합 교육은 별도 과정이 아닌, 모든 학과 커리큘럼에 단계별로 내장되어 있습니다. 기본 도구 숙련 이후 자연스럽게 AI 활용 단계로 이어지는 구조로, 전 학과 수강생이 AI 역량을 갖추게 됩니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 8 — 강점 05: 유연한 교육 운영
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-8">
+    <div class="str-header-strip">
+      <div class="str-section-badge">02</div>
+      <div class="str-section-title">교육 강점 &amp; 차별점</div>
+      <div class="str-section-counter">강점 5 / 6</div>
+    </div>
+    <div class="str-layout">
+      <div class="str-left">
+        <div class="str-ghost-num">05</div>
+        <div class="str-tag">Strength 05 · 운영 방식</div>
+        <div class="str-title">유연한<br>교육 운영<br>체계</div>
+        <div class="str-rule"></div>
+        <div class="str-desc">학교의 일정과 상황에 맞게 교육 방식을 선택하고 조율할 수 있습니다. 정해진 틀이 아닌, 학교와 함께 설계하는 교육 운영을 지향합니다.</div>
+        <div class="str-kpi">
+          <div class="str-kpi-num">3가지</div>
+          <div class="str-kpi-label">교육 운영 방식</div>
+        </div>
+      </div>
+      <div class="str-right">
+        <div class="str-right-header">핵심 역량 · Key Features</div>
+        <div class="str-points">
+          <div class="str-point">
+            <div class="str-pt-idx">01</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">학원 수강 — 정규 과정</div>
+              <div class="str-pt-body">학원 내 최신 사양 장비와 전용 교육 공간에서 집중 수강합니다. 주중 오전~오후, 주말 오전 등 개인 스케줄에 맞춰 시간을 선택할 수 있으며, 분반 운영으로 소수 정예 교육이 가능합니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">02</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">학교 출강 — 현장 교육</div>
+              <div class="str-pt-body">강사가 학교로 직접 방문하여 교육을 진행합니다. 학교 시설 활용이 가능하며, 필요시 강사가 노트북·장비를 지참하여 진행합니다. 교내 진로체험, 특강, 방과후 수업 형태로 운영 가능합니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">03</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">방학 특강 — 집중 교육</div>
+              <div class="str-pt-body">1월 겨울방학 특강, 7월 여름방학 특강으로 단기 집중 교육을 운영합니다. 고3의 경우 8~11월 수시 대비 포트폴리오 특강도 별도 운영하며, 입시 전형에 맞는 집중 트레이닝이 가능합니다.</div>
+              <div class="str-pt-tags">
+                <span class="str-pt-tag">1월 겨울방학 특강</span><span class="str-pt-tag">7월 여름방학 특강</span><span class="str-pt-tag">8–11월 고3 수시 특강</span>
+              </div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">04</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">교육 일정 · 방식 맞춤 협의</div>
+              <div class="str-pt-body">학교 담당 교사와의 사전 협의를 통해 교육 시간, 횟수, 장소, 인원, 수준을 유연하게 조율합니다. 표준 커리큘럼을 기반으로 학교 환경에 최적화된 운영 방식을 제안하고 함께 설계합니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 9 — 강점 06: 학생 관리 · 상담 체계
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-9">
+    <div class="str-header-strip">
+      <div class="str-section-badge">02</div>
+      <div class="str-section-title">교육 강점 &amp; 차별점</div>
+      <div class="str-section-counter">강점 6 / 6</div>
+    </div>
+    <div class="str-layout">
+      <div class="str-left">
+        <div class="str-ghost-num">06</div>
+        <div class="str-tag">Strength 06 · 학생 관리</div>
+        <div class="str-title">체계적<br>학생 관리<br>&amp; 상담</div>
+        <div class="str-rule"></div>
+        <div class="str-desc">입학부터 취업·진학까지 학생 한 명 한 명을 책임집니다. 출결 관리, 학습 피드백, 진로 상담이 유기적으로 연결된 관리 체계를 운영합니다.</div>
+        <div class="str-kpi">
+          <div class="str-kpi-num">98%</div>
+          <div class="str-kpi-label">수강생 만족도</div>
+        </div>
+      </div>
+      <div class="str-right">
+        <div class="str-right-header">핵심 역량 · Key Features</div>
+        <div class="str-points">
+          <div class="str-point">
+            <div class="str-pt-idx">01</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">전산 출결 관리 시스템</div>
+              <div class="str-pt-body">학원 전산 출결 시스템으로 학생의 출결 현황을 실시간 기록·관리합니다. 학교 담당 교사에게 학습 현황을 정기적으로 공유하여 학교·학원 간 연계 관리가 가능합니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">02</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">3단계 1:1 진로 상담 체계</div>
+              <div class="str-pt-body">입학 시 초기 상담(방향 설정), 과정 중 중간 상담(점검 및 조율), 수료 전 최종 상담(진로 연계)으로 3단계 상담 체계를 운영합니다. 강사와 전담 상담사가 함께 학생을 지원합니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">03</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">단계별 학습 피드백 제공</div>
+              <div class="str-pt-body">과제별, 단계별 학습 결과에 대한 즉각적이고 구체적인 피드백을 제공합니다. 단순 칭찬이 아닌 부족한 부분에 대한 정확한 지적과 개선 방향을 제시하여 실질적인 실력 향상을 이끌어냅니다.</div>
+            </div>
+          </div>
+          <div class="str-point">
+            <div class="str-pt-idx">04</div>
+            <div class="str-pt-content">
+              <div class="str-pt-title">365일 상담 서비스 운영</div>
+              <div class="str-pt-body">대표 전화(1588-5530)를 통해 365일 상담이 가능합니다. 평일 오전 9시~오후 10시, 주말 오전 9시~오후 6시 운영하여 언제든 교육·진로 관련 문의를 받을 수 있습니다.</div>
+              <div class="str-pt-tags">
+                <span class="str-pt-tag">평일 09:00–22:00</span><span class="str-pt-tag">주말 09:00–18:00</span><span class="str-pt-tag">365일 상담 가능</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 10 — 학과별 연계 가능 과정
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-10">
     <div class="slide-header">
       <div class="slide-num">03</div>
       <div class="slide-title">학과별 연계 가능 과정</div>
@@ -565,7 +947,7 @@ html, body {
           </tr>
           <tr>
             <td>아트웍학과</td>
-            <td>기초디자인, 핸드드로잉, 심화드로잉, 디지털드로잉, 아트웍 포트폴리오</td>
+            <td>기초드로잉, 핸드드로잉, 심화드로잉, 디지털드로잉, 아트웍 포트폴리오</td>
             <td><span class="dept-badge p">디지털아트</span> <span class="dept-badge p">일러스트</span> <span class="dept-badge p">드로잉</span></td>
           </tr>
           <tr>
@@ -575,27 +957,27 @@ html, body {
           </tr>
           <tr>
             <td>웹학과</td>
-            <td>웹퍼블리싱, UX/UI디자인, 웹포트폴리오, 웹디자인기능사</td>
+            <td>웹퍼블리싱, UX/UI디자인(피그마), 웹포트폴리오, 웹디자인기능사, AI바이브코딩</td>
             <td><span class="dept-badge">컴퓨터공학</span> <span class="dept-badge">웹디자인</span> <span class="dept-badge">소프트웨어</span></td>
           </tr>
           <tr>
             <td>인테리어학과</td>
-            <td>캐드, 스케치업, 제도, BIM, 인테리어 실무, 실내건축 포트폴리오</td>
+            <td>캐드, 스케치업, 3DMAX, BIM(레빗), 인테리어 실무, 실내건축기능사, AI 인테리어</td>
             <td><span class="dept-badge g">건축학</span> <span class="dept-badge g">실내디자인</span> <span class="dept-badge g">공간디자인</span></td>
           </tr>
           <tr>
             <td>자격증학과</td>
-            <td>컴퓨터활용능력, MOS, ITQ, 전산회계, 전산세무, OA 실무</td>
+            <td>컴퓨터활용능력, MOS 365, ITQ, 전산회계(FAT), 전산세무(TAT), 실전 OA</td>
             <td><span class="dept-badge gold">사무행정</span> <span class="dept-badge gold">경영</span> <span class="dept-badge gold">회계</span></td>
           </tr>
           <tr>
             <td>프로그래밍학과</td>
-            <td>파이썬, 자바, C언어, C++, AI 프롬프트 엔지니어링</td>
+            <td>파이썬, 자바, C/C++ 언어, AI 프롬프트 엔지니어링</td>
             <td><span class="dept-badge o">컴퓨터공학</span> <span class="dept-badge o">소프트웨어</span> <span class="dept-badge o">IT</span></td>
           </tr>
           <tr>
             <td>CG학과</td>
-            <td>마야, 블렌더, 언리얼엔진, 모델링, Asset 제작, 포트폴리오</td>
+            <td>마야, 블렌더, 언리얼엔진, 모델링, Asset 제작, 서브스탠스 페인터, 포트폴리오</td>
             <td><span class="dept-badge t">만화·애니메이션</span> <span class="dept-badge t">3D디자인</span> <span class="dept-badge t">영상콘텐츠</span></td>
           </tr>
           <tr>
@@ -608,8 +990,10 @@ html, body {
     </div>
   </div>
 
-  <!-- SLIDE 6 — 전문 강사진 -->
-  <div class="slide" id="slide-6">
+  <!-- ═══════════════════════════════════════════
+       SLIDE 11 — 전문 강사진
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-11">
     <div class="slide-header">
       <div class="slide-num">04</div>
       <div class="slide-title">전문 강사진</div>
@@ -617,14 +1001,10 @@ html, body {
     </div>
     <div class="instructor-grid">
       <div class="instructor-card">
-        <div class="inst-header">
-          <div class="inst-avatar" style="background:var(--blue);">이</div>
-          <div>
-            <div class="inst-name">이은상</div>
-            <div class="inst-dept">아트웍학과 학과장</div>
-            <div class="inst-role">디자인 및 포트폴리오 지도</div>
-          </div>
-        </div>
+        <div class="inst-name">이은상</div>
+        <div class="inst-dept">아트웍학과 학과장</div>
+        <div class="inst-role">디자인 및 포트폴리오 지도</div>
+        <div class="inst-divider"></div>
         <ul class="inst-career">
           <li>부평구문화재단 홍보물 디자인</li>
           <li>신한은행 연말 시상식 대상 트로피 디자인</li>
@@ -632,79 +1012,67 @@ html, body {
         </ul>
       </div>
       <div class="instructor-card">
-        <div class="inst-header">
-          <div class="inst-avatar" style="background:var(--dark);">정</div>
-          <div>
-            <div class="inst-name">정세일</div>
-            <div class="inst-dept">모션영상학과 학과장</div>
-            <div class="inst-role">영상 및 모션그래픽 실무 교육</div>
-          </div>
-        </div>
+        <div class="inst-name">정세일</div>
+        <div class="inst-dept">모션영상학과 학과장</div>
+        <div class="inst-role">영상 및 모션그래픽 실무 교육</div>
+        <div class="inst-divider"></div>
         <ul class="inst-career">
-          <li>에이전시 영상디자인팀 근무</li>
-          <li>건설사 홍보영상 제작</li>
+          <li>에이전시 영상디자인팀 현장 실무 경력</li>
+          <li>건설사 기업 홍보영상 제작 다수</li>
+          <li>방송 · 광고 영상 편집 및 모션 제작</li>
         </ul>
       </div>
       <div class="instructor-card">
-        <div class="inst-header">
-          <div class="inst-avatar" style="background:#2d5f4f;">윤</div>
-          <div>
-            <div class="inst-name">윤찬주</div>
-            <div class="inst-dept">인테리어학과 학과장</div>
-            <div class="inst-role">건축 및 인테리어 설계 교육</div>
-          </div>
-        </div>
+        <div class="inst-name">윤찬주</div>
+        <div class="inst-dept">인테리어학과 학과장</div>
+        <div class="inst-role">건축 및 인테리어 설계 교육</div>
+        <div class="inst-divider"></div>
         <ul class="inst-career">
-          <li>건국대학교 건축전문대학원 석사</li>
+          <li>건국대학교 건축전문대학원 석사 졸업</li>
           <li>경기미래캠퍼스 창의과학키움센터 설계 및 시공</li>
           <li>정부·지자체 지역공공시설물 연구용역 연구원</li>
         </ul>
       </div>
       <div class="instructor-card">
-        <div class="inst-header">
-          <div class="inst-avatar" style="background:#4a3878;">이</div>
-          <div>
-            <div class="inst-name">이동훈</div>
-            <div class="inst-dept">모션영상학과 강사</div>
-            <div class="inst-role">영상 편집 및 콘텐츠 제작</div>
-          </div>
-        </div>
+        <div class="inst-name">이동훈</div>
+        <div class="inst-dept">모션영상학과 강사</div>
+        <div class="inst-role">영상 편집 및 콘텐츠 제작</div>
+        <div class="inst-divider"></div>
         <ul class="inst-career">
           <li>2021 KF Virtual Dialogue Series 사전영상 제작</li>
+          <li>기업·기관 홍보영상 편집 실무</li>
+          <li>유튜브 채널 콘텐츠 제작 및 운영</li>
         </ul>
       </div>
       <div class="instructor-card">
-        <div class="inst-header">
-          <div class="inst-avatar" style="background:#6b5320;">김</div>
-          <div>
-            <div class="inst-name">김채영</div>
-            <div class="inst-dept">시각디자인학과 강사</div>
-            <div class="inst-role">디자인 및 포트폴리오 제작 지도</div>
-          </div>
-        </div>
+        <div class="inst-name">김채영</div>
+        <div class="inst-dept">시각디자인학과 강사</div>
+        <div class="inst-role">디자인 및 포트폴리오 제작 지도</div>
+        <div class="inst-divider"></div>
         <ul class="inst-career">
-          <li>경문실용전문학교 포토샵 강사</li>
+          <li>경문실용전문학교 포토샵 강사 역임</li>
+          <li>광고 편집 디자인 실무 경력</li>
+          <li>브랜드 아이덴티티 디자인 작업</li>
         </ul>
       </div>
       <div class="instructor-card">
-        <div class="inst-header">
-          <div class="inst-avatar" style="background:#2a5462;">심</div>
-          <div>
-            <div class="inst-name">심수현</div>
-            <div class="inst-dept">인테리어학과 강사</div>
-            <div class="inst-role">실내건축 및 설계 교육</div>
-          </div>
-        </div>
+        <div class="inst-name">심수현</div>
+        <div class="inst-dept">인테리어학과 강사</div>
+        <div class="inst-role">실내건축 및 설계 교육</div>
+        <div class="inst-divider"></div>
         <ul class="inst-career">
           <li>색채심리상담사 1급</li>
           <li>미술심리상담사 1급</li>
+          <li>공간 색채 계획 및 인테리어 설계 실무</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 7 — 교육 커리큘럼 -->
-  <div class="slide" id="slide-7">
+  <!-- ═══════════════════════════════════════════
+       SLIDE 12 — 교육 커리큘럼
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-12">
     <div class="slide-header">
       <div class="slide-num">05</div>
       <div class="slide-title">교육 커리큘럼</div>
@@ -712,68 +1080,70 @@ html, body {
     </div>
     <div class="curr-grid">
       <div class="curr-card">
-        <div class="curr-icon">🎨</div>
+        <div class="curr-card-num">01</div>
         <div>
           <div class="curr-name">시각/편집디자인학과</div>
           <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 블렌더1-2 → 그래픽디자인1-2 → UXUI(피그마) → 인디자인 → ACP/GTQ1급/컴그기능사 → AI자격증 → AI프롬프트 엔지니어링 → AI크리에이터 시각편집 → 시각/편집 포폴</div>
         </div>
       </div>
       <div class="curr-card">
-        <div class="curr-icon">🌐</div>
+        <div class="curr-card-num">02</div>
         <div>
           <div class="curr-name">웹디자인학과</div>
-          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 블렌더1-2 → 그래픽디자인1-2 → 웹1→웹2→웹3→웹4 → UXUI(피그마) → ACP/GTQ1급 → 실전OA → AI자격증 → AI바이브코딩 웹 → 웹포폴</div>
+          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 블렌더1-2 → 그래픽디자인1-2 → 웹1→2→3→4 → UXUI(피그마) → ACP/GTQ1급 → 실전OA → AI자격증 → AI바이브코딩 웹 → 웹포폴</div>
         </div>
       </div>
       <div class="curr-card">
-        <div class="curr-icon">✏️</div>
+        <div class="curr-card-num">03</div>
         <div>
           <div class="curr-name">아트웍학과</div>
-          <div class="curr-tools">핸드드로잉1-2 → 핸드드로잉PO → 심화드로잉(예) → 심화드로잉 → 기초디자인 → 디-드로잉1-2 → 디-드로잉PO → 영상 크리에이터 Goal / 핸드드로잉 → 포토샵 → 일러스트 → 프리미어 → 에펙1-3 → 유튜브 기초/심화 → AI크리에이터 → 2D모션포폴</div>
+          <div class="curr-tools">핸드드로잉1-2 → 핸드드로잉PO → 심화드로잉(예) → 심화드로잉 → 기초디자인 → 디-드로잉1-2 → 디-드로잉PO → 영상 크리에이터 Goal / 포토샵 → 일러스트 → 프리미어 → 에펙1-3 → 유튜브 기초/심화 → AI크리에이터 → 2D모션포폴</div>
         </div>
       </div>
       <div class="curr-card">
-        <div class="curr-icon">🎬</div>
+        <div class="curr-card-num">04</div>
         <div>
           <div class="curr-name">영상/모션디자인학과</div>
-          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 디일러 → 블렌더1-2 → 그래픽디자인1-2 → 프리미어 → 에펙1-3 → C4D1-4 → 서브스탠스 페인터 → 언리얼엔진 → ACP/GTQ1급 → 실전OA → AI자격증 → AI프롬프트 → AI크리에이터 → 2D/3D모션포폴</div>
+          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 블렌더1-2 → 그래픽디자인1-2 → 프리미어 → 에펙1-3 → C4D1-4 → 서브스탠스 페인터 → 언리얼엔진 → ACP/GTQ1급 → AI자격증 → AI크리에이터 → 2D/3D모션포폴</div>
         </div>
       </div>
       <div class="curr-card">
-        <div class="curr-icon">🎥</div>
+        <div class="curr-card-num">05</div>
         <div>
           <div class="curr-name">마야/CG학과</div>
-          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 디일러 → 프리미어 → 에펙1-3 → 마야1-6 → Asset1-3 → 서브스탠스 페인터 → 언리얼엔진 → ACP/GTQ1급 → AI자격증 → AI프롬프트 엔지니어링 → AI크리에이터 CG마야 → 마야포폴</div>
+          <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 프리미어 → 에펙1-3 → 마야1-6 → Asset1-3 → 서브스탠스 페인터 → 언리얼엔진 → ACP/GTQ1급 → AI자격증 → AI프롬프트 엔지니어링 → AI크리에이터 CG마야 → 마야포폴</div>
         </div>
       </div>
       <div class="curr-card">
-        <div class="curr-icon">🏠</div>
+        <div class="curr-card-num">06</div>
         <div>
           <div class="curr-name">인테리어/BIM학과</div>
-          <div class="curr-tools">제도 → 포토샵 → 일러스트 → 포토웍스 → 디일러 → 캐드1-2(CAT2급) → 스케치업1-2(엔스케이프) → 3DMAX1-3 → 레빗1-2 → 인테리어 실무 → 실내건축자격증(기능사/산업기사/기사) → ACP/GTQ1급 → 실전OA → AI자격증 → AI크리에이터 인테리어 → 인포폴</div>
+          <div class="curr-tools">제도 → 포토샵 → 일러스트 → 캐드1-2(CAT2급) → 스케치업1-2(엔스케이프) → 3DMAX1-3 → 레빗1-2 → 인테리어 실무 → 실내건축자격증(기능사/산업기사/기사) → ACP/GTQ1급 → AI자격증 → AI크리에이터 인테리어 → 인포폴</div>
         </div>
       </div>
       <div class="curr-card">
-        <div class="curr-icon">📋</div>
+        <div class="curr-card-num">07</div>
         <div>
           <div class="curr-name">OA/자격증학과</div>
-          <div class="curr-tools">컴퓨터 베이직/AI → 실전OA(OA/AI/노션) → AI자격증대비(뤼튼, AI-POT) → 모스365 → 컴활2급 → 컴활1급 / 케이랩&더존1급(전산회계+FAT) → 케이랩1급(전산회계) → 케이랩&더존2급(전산세무+TAT) → 케이랩2급(전산세무)</div>
+          <div class="curr-tools">컴퓨터 베이직/AI → 실전OA(OA/AI/노션) → AI자격증대비(뤼튼, AI-POT) → 모스365 → 컴활2급 → 컴활1급 / 케이랩&amp;더존1급(전산회계+FAT) → 케이랩1급(전산회계) → 케이랩&amp;더존2급(전산세무+TAT)</div>
         </div>
       </div>
       <div class="curr-card">
-        <div class="curr-icon">💻</div>
+        <div class="curr-card-num">08</div>
         <div>
           <div class="curr-name">IT / 기계설계학과</div>
-          <div class="curr-tools">【IT】 C언어 → JAVA → Python / 【기계설계】 캐드1 → 캐드2(CAT2급) → 인벤터(전산응용기계제도기능사 주간반) → 전산응용기계제도기능사(전응기)</div>
+          <div class="curr-tools">【IT】 C언어 → JAVA → Python · AI프롬프트 엔지니어링 / 【기계설계】 캐드1 → 캐드2(CAT2급) → 인벤터(전산응용기계제도기능사 주간반) → 전산응용기계제도기능사(전응기)</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 8 — 입시 로드맵 -->
-  <div class="slide" id="slide-8-new">
+  <!-- ═══════════════════════════════════════════
+       SLIDE 13 — 입시 로드맵
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-13">
     <div class="slide-header">
-      <div class="slide-num">06</div>
+      <div class="slide-num">05</div>
       <div class="slide-title">입시 로드맵</div>
       <div class="slide-subtitle">College Entrance · 대학 입시 전문 과정</div>
     </div>
@@ -783,11 +1153,8 @@ html, body {
         <div style="display:flex; flex-direction:column; gap:.8rem;">
           <div class="adm-card">
             <div class="adm-card-head">
-              <span class="adm-icon">🎭</span>
-              <div>
-                <div class="adm-title">만화/애니메이션과</div>
-                <div class="adm-sub">핸드드로잉 · 디-드로잉 중심</div>
-              </div>
+              <div class="adm-title">만화/애니메이션과</div>
+              <div class="adm-sub">핸드드로잉 · 디-드로잉 중심</div>
             </div>
             <div class="adm-body">
               <span>중1~중3:</span> 핸드드로잉1→2→PO / 예비심화드로잉<br>
@@ -797,11 +1164,8 @@ html, body {
           </div>
           <div class="adm-card">
             <div class="adm-card-head">
-              <span class="adm-icon">✏️</span>
-              <div>
-                <div class="adm-title">만화컨텐츠학과</div>
-                <div class="adm-sub">핸드드로잉 + 디-드로잉</div>
-              </div>
+              <div class="adm-title">만화컨텐츠학과</div>
+              <div class="adm-sub">핸드드로잉 + 디-드로잉</div>
             </div>
             <div class="adm-body">
               <span>시작~고2:</span> 핸드드로잉1→2→PO / 포토샵 → 일러스트 → 포토웍스<br>
@@ -813,11 +1177,8 @@ html, body {
         <div style="display:flex; flex-direction:column; gap:.8rem;">
           <div class="adm-card">
             <div class="adm-card-head">
-              <span class="adm-icon">🎬</span>
-              <div>
-                <div class="adm-title">영상컨텐츠학과</div>
-                <div class="adm-sub">에펙 / C4D 중심</div>
-              </div>
+              <div class="adm-title">영상컨텐츠학과</div>
+              <div class="adm-sub">에펙 / C4D 중심</div>
             </div>
             <div class="adm-body">
               <span>고1,2 비전공자:</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→일러스트→포토웍스→디일러→GTQ1급→프리미어→에펙1→2→3→C4D1→2→3→4→언리얼엔진<br>
@@ -826,15 +1187,12 @@ html, body {
           </div>
           <div class="adm-card">
             <div class="adm-card-head">
-              <span class="adm-icon">🎥</span>
-              <div>
-                <div class="adm-title">애니/컨텐츠학과</div>
-                <div class="adm-sub">CG / 마야 / VFX</div>
-              </div>
+              <div class="adm-title">애니/컨텐츠학과</div>
+              <div class="adm-sub">CG / 마야 / VFX</div>
             </div>
             <div class="adm-body">
               <span>시작~고2 비전공자:</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→일러스트→포토웍스→디일러→GTQ1급→프리미어→에펙1→2→3→마야1→2→3→4→5→6→언리얼엔진<br>
-              <span>전공자:</span> 포토샵→포토웍스→일러스트→디일러→프리미어→에펙1→2→3→마야1→2→3→4→5→6→언리얼엔진 → 마야포폴/언리얼 → Goal
+              <span>전공자:</span> 포토샵→포토웍스→일러스트→디일러→프리미어→에펙1→2→3→마야1→2→3→4→5→6→언리얼엔진 → 마야포폴 → Goal
             </div>
           </div>
         </div>
@@ -856,12 +1214,14 @@ html, body {
     </div>
   </div>
 
-  <!-- SLIDE 9 — 교육 성과 -->
-  <div class="slide" id="slide-8">
+  <!-- ═══════════════════════════════════════════
+       SLIDE 14 — 교육 성과
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-14">
     <div class="slide-header">
-      <div class="slide-num">07</div>
+      <div class="slide-num">06</div>
       <div class="slide-title">교육 성과</div>
-      <div class="slide-subtitle">Results &amp; Reviews</div>
+      <div class="slide-subtitle">Results &amp; Recognition</div>
     </div>
     <div class="results-two-col">
       <div class="results-section">
@@ -892,20 +1252,27 @@ html, body {
             <div class="outcome-label">수강생 만족도</div>
           </div>
         </div>
+        <div class="award-block">
+          <div class="award-num">9년</div>
+          <div class="award-detail">
+            <div class="award-title">올해의 브랜드대상 연속 수상</div>
+            <div class="award-sub">2017–2025 취업교육서비스 부문<br>퍼스트브랜드 대상 2017–2020 수상</div>
+          </div>
+        </div>
       </div>
       <div class="results-section">
         <div class="results-title">수강생 후기</div>
         <div class="review-cards">
           <div class="review-card">
-            <div class="review-quote-mark">"</div>
+            <div class="review-mark">"</div>
             <div class="review-text">처음 그림을 접하는 상황에서도 강사님의 1대1 피드백과 지속적인 지도 덕분에 실력이 점차 향상되는 것을 느낄 수 있었고, 학습 과정 자체에 대한 흥미를 높일 수 있었습니다.</div>
           </div>
           <div class="review-card">
-            <div class="review-quote-mark">"</div>
+            <div class="review-mark">"</div>
             <div class="review-text">어려운 부분이 있을 때마다 직접 찾아와 1대1로 지도해주었고, 단순한 칭찬이 아닌 부족한 부분에 대한 정확한 피드백을 통해 실질적인 실력 향상을 경험할 수 있었습니다.</div>
           </div>
           <div class="review-card">
-            <div class="review-quote-mark">"</div>
+            <div class="review-mark">"</div>
             <div class="review-text">처음 배우는 과정에서도 강사님의 지속적인 체크와 친절한 설명이 큰 도움이 되었으며, 수업 종료 후에도 스스로 학습을 이어갈 수 있는 동기를 부여받을 수 있었습니다.</div>
           </div>
         </div>
@@ -913,31 +1280,30 @@ html, body {
     </div>
   </div>
 
-  <!-- SLIDE 10 — 수강 안내 · 비전 · 문의처 -->
-  <div class="slide" id="slide-10">
+  <!-- ═══════════════════════════════════════════
+       SLIDE 15 — 수강 안내 · 비전 · 문의처
+  ═══════════════════════════════════════════ -->
+  <div class="slide" id="slide-15">
     <div class="slide-header">
-      <div class="slide-num">09</div>
+      <div class="slide-num">06</div>
       <div class="slide-title">수강 안내 &amp; 비전</div>
       <div class="slide-subtitle">Enrollment · Vision · Contact</div>
     </div>
     <div class="vision-grid">
 
-      <!-- 비전 선언 -->
       <div class="vision-header">
         <div class="vision-headline">학생의 진로를 함께 설계하는 <span>교육 파트너십</span>을 제안합니다</div>
         <div class="vision-desc">학교와 본 원은 교육 협력 체계를 구축하여, 학생들의 진로 탐색부터 실무역량 강화, 취업 연계까지 이어지는 실무 중심 교육 프로그램을 공동 운영할 수 있습니다.</div>
       </div>
 
-      <!-- 협력 프로그램 -->
       <div class="vision-programs">
         <div class="prog-item">진로탐색 특강 및 전공 체험 프로그램 운영</div>
-        <div class="prog-item">방학 특강 및 단기 집중 교육 과정 운영</div>
-        <div class="prog-item">포트폴리오 제작 및 입시 · 취업 특강</div>
-        <div class="prog-item">자격증 취득 대비 과정 운영</div>
-        <div class="prog-item">학과 맞춤형 교육 및 출강</div>
+        <div class="prog-item">방학 특강 및 단기 집중 교육 과정 운영 (겨울·여름·수시 특강)</div>
+        <div class="prog-item">포트폴리오 제작 및 대학 입시 · 취업 준비 특강</div>
+        <div class="prog-item">자격증 취득 대비 과정 운영 (GTQ, 컴활, 실내건축기능사 등)</div>
+        <div class="prog-item">학과 맞춤형 교육 설계 및 학교 출강</div>
       </div>
 
-      <!-- 좌측: 운영시간 + 절차 -->
       <div class="vision-left">
         <div class="op-hours">
           <div class="op-title">운영 시간</div>
@@ -959,7 +1325,6 @@ html, body {
         </div>
       </div>
 
-      <!-- 우측: 핵심 목표 -->
       <div class="vision-right">
         <div class="goal-label">핵심 목표</div>
         <div class="goals">
@@ -978,7 +1343,6 @@ html, body {
         </div>
       </div>
 
-      <!-- 연락처 -->
       <div class="contact-bar">
         <div class="contact-item">
           <div class="contact-lbl">대표번호</div>
