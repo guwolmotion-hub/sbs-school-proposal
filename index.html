@@ -10,14 +10,19 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --black: #0a0a0a;
-  --dark:  #222;
-  --mid:   #555;
-  --soft:  #888;
-  --ghost: #bbb;
-  --line:  #e0e0e0;
-  --bg:    #f5f5f3;
-  --white: #fff;
+  --ink:    #0f172a;
+  --dark:   #1e293b;
+  --mid:    #475569;
+  --soft:   #94a3b8;
+  --ghost:  #cbd5e1;
+  --line:   #e2e8f0;
+  --bg:     #f8fafc;
+  --white:  #ffffff;
+  --blue:   #1d4ed8;
+  --blue-b: #3b82f6;
+  --blue-l: #eff6ff;
+  --blue-m: #bfdbfe;
+  --navy:   #0f1f3d;
 }
 
 html, body {
@@ -27,9 +32,19 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* 한글 단위 폰트 믹스 fix */
+.u {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: .62em;
+  font-weight: 700;
+  letter-spacing: 0;
+  vertical-align: .12em;
+  margin-left: .05em;
+}
+
 #progress-bar {
-  position: fixed; top: 0; left: 0; height: 2px;
-  background: var(--black); z-index: 2000; transition: width .4s ease;
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--blue-b); z-index: 2000; transition: width .4s ease;
 }
 
 #slider { width: 100%; height: 100vh; position: relative; overflow: hidden; }
@@ -46,51 +61,52 @@ html, body {
 /* ── Navigation ── */
 #nav-pill {
   position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
-  background: var(--black); border-radius: 100px;
+  background: var(--navy); border-radius: 100px;
   padding: 8px 22px; display: flex; align-items: center; gap: 16px; z-index: 1000;
 }
 #nav-pill button {
-  background: rgba(255,255,255,.1); border: none; color: #fff;
+  background: rgba(255,255,255,.12); border: none; color: #fff;
   width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
   font-size: .95rem; display: flex; align-items: center; justify-content: center;
   transition: background .2s;
 }
-#nav-pill button:hover { background: rgba(255,255,255,.25); }
-#slide-counter { color: rgba(255,255,255,.4); font-size: .75rem; min-width: 44px; text-align: center; letter-spacing: .06em; }
+#nav-pill button:hover { background: rgba(255,255,255,.28); }
+#slide-counter { color: rgba(255,255,255,.45); font-size: .75rem; min-width: 44px; text-align: center; letter-spacing: .06em; }
 
 #dots-nav {
   position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
   display: flex; flex-direction: column; gap: 7px; z-index: 1000;
 }
 .dot { width: 4px; height: 4px; border-radius: 50%; background: #c0c0c0; cursor: pointer; transition: all .25s; }
-.dot.active { background: var(--black); height: 18px; border-radius: 2px; }
+.dot.active { background: var(--blue-b); height: 18px; border-radius: 2px; }
 
 /* ══════════════════════════════════════════════
    SLIDE ANATOMY
 ══════════════════════════════════════════════ */
 .s-head {
-  padding: 1.6rem 5rem;
+  padding: 1.55rem 5rem;
   border-bottom: 1px solid var(--line);
-  display: flex; align-items: baseline; gap: 1.6rem;
+  display: flex; align-items: center; gap: 1.4rem;
   flex-shrink: 0;
 }
 .s-num {
-  font-family: 'Inter', monospace;
-  font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--ghost);
+  font-family: 'Inter', sans-serif;
+  font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--blue); background: var(--blue-l);
+  padding: .22rem .75rem; border-radius: 4px; flex-shrink: 0;
 }
-.s-title { font-size: 1.55rem; font-weight: 700; color: var(--black); letter-spacing: -.025em; }
-.s-en { font-size: .72rem; color: var(--ghost); margin-left: auto; letter-spacing: .12em; text-transform: uppercase; }
+.s-title { font-size: 1.5rem; font-weight: 700; color: var(--ink); letter-spacing: -.025em; }
+.s-en { font-size: .7rem; color: var(--ghost); margin-left: auto; letter-spacing: .12em; text-transform: uppercase; }
 
 .s-sub {
-  padding: .65rem 5rem;
+  padding: .6rem 5rem;
   border-bottom: 1px solid var(--line);
-  font-size: .88rem; color: var(--soft); flex-shrink: 0;
+  font-size: .87rem; color: var(--soft); flex-shrink: 0;
 }
 
 .s-body {
-  flex: 1; padding: 2.8rem 5rem;
-  display: flex; flex-direction: column; gap: 1.6rem;
+  flex: 1; padding: 2.6rem 5rem;
+  display: flex; flex-direction: column; gap: 1.4rem;
   overflow: hidden; min-height: 0;
 }
 
@@ -105,109 +121,118 @@ html, body {
   border-right: 1px solid var(--line);
   position: relative;
 }
-.cv-bar { position: absolute; left: 0; top: 20%; bottom: 20%; width: 3px; background: var(--black); }
+.cv-bar { position: absolute; left: 0; top: 20%; bottom: 20%; width: 3px; background: var(--blue); }
 .cv-eye {
-  font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--ghost); margin-bottom: 2.5rem;
+  font-size: .67rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--soft); margin-bottom: 2.4rem;
 }
 .cv-h1 {
-  font-size: clamp(3rem, 4.2vw, 4.8rem); font-weight: 800;
-  line-height: 1.05; letter-spacing: -.04em; color: var(--black); margin-bottom: 2.5rem;
+  font-size: clamp(2.8rem, 4.2vw, 4.6rem); font-weight: 800;
+  line-height: 1.05; letter-spacing: -.04em; color: var(--ink); margin-bottom: 2.4rem;
 }
-.cv-rule { width: 40px; height: 1px; background: var(--line); margin-bottom: 2rem; }
-.cv-desc { font-size: .95rem; color: var(--mid); line-height: 1.85; margin-bottom: 2.5rem; }
+.cv-rule { width: 36px; height: 2px; background: var(--blue); border-radius: 2px; margin-bottom: 1.8rem; }
+.cv-desc { font-size: .94rem; color: var(--mid); line-height: 1.85; margin-bottom: 2.4rem; }
 .cv-collab {
   display: inline-flex; align-items: center; gap: .8rem;
   border: 1px solid var(--line); border-radius: 6px;
-  padding: .75rem 1.3rem; font-size: .88rem; font-weight: 600;
-  color: var(--dark); margin-bottom: 2.5rem; width: fit-content;
+  padding: .7rem 1.3rem; font-size: .87rem; font-weight: 600;
+  color: var(--dark); margin-bottom: 2.4rem; width: fit-content;
+  background: var(--bg);
 }
-.cv-collab .x { color: var(--ghost); font-weight: 300; }
+.cv-collab .x { color: var(--blue); font-weight: 400; }
 .cv-chapters { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; }
-.cv-chapters span { font-size: .8rem; color: var(--ghost); }
-.cv-chapters span::before { content: '— '; }
+.cv-chapters span { font-size: .79rem; color: var(--ghost); }
+.cv-chapters span::before { content: '— '; color: var(--blue-m); }
 
 .cv-right {
-  background: var(--black);
+  background: linear-gradient(145deg, var(--navy) 0%, #0d2a52 100%);
   display: flex; flex-direction: column; justify-content: center;
   padding: 5rem 5rem 5rem 5.5rem;
 }
-.cv-stat { padding: 2.2rem 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+.cv-stat { padding: 2.2rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
 .cv-stat:first-child { padding-top: 0; }
 .cv-stat:last-child { border-bottom: none; padding-bottom: 0; }
-.cv-lbl { font-size: .63rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: .6rem; }
-.cv-num { font-size: clamp(3rem, 4.5vw, 4.5rem); font-weight: 800; color: #fff; line-height: 1; letter-spacing: -.04em; margin-bottom: .35rem; }
-.cv-sub-s { font-size: .82rem; color: rgba(255,255,255,.3); }
+.cv-lbl { font-size: .62rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: .65rem; }
+.cv-num { font-size: clamp(2.8rem, 4.2vw, 4.3rem); font-weight: 800; color: #fff; line-height: 1; letter-spacing: -.04em; margin-bottom: .35rem; }
+.cv-sub-s { font-size: .81rem; color: rgba(255,255,255,.3); }
 
 /* ══════════════════════════════════════════════
-   COMMON COMPONENTS
+   COMPONENTS
 ══════════════════════════════════════════════ */
 .card {
   border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 2rem 2.4rem;
+  border-radius: 8px;
+  padding: 1.8rem 2.2rem;
+  background: var(--white);
 }
-.card.ruled { border-top: 2px solid var(--black); }
+.card.ruled { border-top: 2px solid var(--blue); }
+.card.accent-bg { background: var(--blue-l); border-color: var(--blue-m); }
+
 .card-lbl {
-  font-size: .68rem; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--ghost); margin-bottom: .9rem;
+  font-size: .67rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--soft); margin-bottom: .85rem;
 }
-.card-ttl { font-size: 1.05rem; font-weight: 700; color: var(--black); margin-bottom: .7rem; line-height: 1.4; }
-.card-body { font-size: .93rem; color: var(--mid); line-height: 1.9; }
+.card-ttl { font-size: 1.02rem; font-weight: 700; color: var(--ink); margin-bottom: .65rem; line-height: 1.4; }
+.card-body { font-size: .91rem; color: var(--mid); line-height: 1.9; }
 
 /* Grids */
-.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
 .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
 
 /* Meta bar */
 .meta-bar {
   display: grid; grid-template-columns: repeat(5, 1fr);
-  border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
-  flex-shrink: 0;
+  border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+  background: var(--bg); flex-shrink: 0;
 }
-.meta-cell { padding: 1.2rem 1.6rem; border-right: 1px solid var(--line); }
+.meta-cell { padding: 1.1rem 1.5rem; border-right: 1px solid var(--line); }
 .meta-cell:last-child { border-right: none; }
-.ml { font-size: .63rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--ghost); margin-bottom: .4rem; }
-.mv { font-size: .92rem; font-weight: 600; color: var(--black); }
+.ml { font-size: .62rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--soft); margin-bottom: .4rem; }
+.mv { font-size: .9rem; font-weight: 600; color: var(--ink); }
 
-/* Feature bar — replaces 3 bland cards in slide 3 */
+/* Feature bar */
 .feat-bar {
   display: flex; align-items: stretch;
-  border: 1px solid var(--line); border-radius: 6px;
+  border: 1px solid var(--line); border-radius: 8px;
   overflow: hidden; flex-shrink: 0;
 }
-.feat-item { flex: 1; display: flex; align-items: center; gap: 1.2rem; padding: 1.4rem 2rem; }
-.feat-div { width: 1px; background: var(--line); align-self: stretch; }
+.feat-item { flex: 1; display: flex; align-items: center; gap: 1.2rem; padding: 1.3rem 2rem; }
+.feat-div { width: 1px; background: var(--line); }
 .feat-no {
-  font-family: 'Inter', monospace;
-  font-size: 1.8rem; font-weight: 800; color: var(--line);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.7rem; font-weight: 800; color: var(--blue-m);
   line-height: 1; letter-spacing: -.04em; flex-shrink: 0;
 }
-.feat-tx { font-size: .9rem; font-weight: 600; color: var(--dark); line-height: 1.4; }
+.feat-tx { font-size: .88rem; font-weight: 600; color: var(--dark); line-height: 1.4; }
 
 /* Tag box */
-.tag-box { border: 1px solid var(--line); border-radius: 6px; padding: 1.4rem 1.8rem; }
-.tag-box.ruled { border-top: 2px solid var(--black); }
+.tag-box { border: 1px solid var(--line); border-radius: 8px; padding: 1.3rem 1.7rem; }
+.tag-box.ruled { border-top: 2px solid var(--blue); }
 .tag-lbl {
-  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
-  color: var(--soft); margin-bottom: .75rem;
+  font-size: .67rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--mid); margin-bottom: .7rem;
   display: flex; align-items: center; gap: .6rem;
 }
-.tag-cnt { font-size: .62rem; font-weight: 700; color: var(--black); border: 1px solid var(--black); padding: .05rem .45rem; border-radius: 3px; }
-.tag-cnt.muted { color: var(--ghost); border-color: var(--ghost); }
+.tag-cnt {
+  font-size: .6rem; font-weight: 700; color: var(--white);
+  background: var(--blue); padding: .08rem .5rem; border-radius: 3px;
+}
+.tag-cnt.muted { background: var(--ghost); color: var(--white); }
 .chip-row { display: flex; flex-wrap: wrap; gap: .4rem; }
-.chip { border: 1px solid var(--black); color: var(--black); padding: .25rem .75rem; border-radius: 3px; font-size: .8rem; font-weight: 500; }
-.chip.muted { border-color: var(--ghost); color: var(--soft); }
+.chip {
+  border: 1px solid var(--blue-m); color: var(--blue);
+  background: var(--blue-l);
+  padding: .25rem .75rem; border-radius: 4px; font-size: .79rem; font-weight: 500;
+}
+.chip.muted { border-color: var(--line); color: var(--soft); background: var(--white); }
 
 /* List */
 .ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
-.ul li { font-size: .9rem; color: var(--mid); padding-left: 1rem; position: relative; line-height: 1.6; }
-.ul li::before { content: '—'; position: absolute; left: 0; color: var(--line); }
+.ul li { font-size: .88rem; color: var(--mid); padding-left: 1rem; position: relative; line-height: 1.6; }
+.ul li::before { content: '—'; position: absolute; left: 0; color: var(--blue-m); }
 
-/* Collab (slide 4) — flex with CSS arrow separators */
-.collab-g {
-  display: flex; align-items: stretch; gap: 0; flex: 1;
-}
+/* Collab */
+.collab-g { display: flex; align-items: stretch; gap: 0; flex: 1; }
 .collab-g > .card { flex: 1; }
 .c-arr {
   display: flex; align-items: center; justify-content: center;
@@ -215,8 +240,8 @@ html, body {
 }
 .c-arr::before {
   content: '';
-  position: absolute; left: 4px; right: 4px; top: 50%;
-  height: 1px; background: var(--ghost);
+  position: absolute; left: 4px; right: 8px; top: 50%;
+  height: 1px; background: var(--blue-m);
 }
 .c-arr::after {
   content: '';
@@ -224,125 +249,139 @@ html, body {
   width: 0; height: 0;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
-  border-left: 6px solid var(--ghost);
+  border-left: 6px solid var(--blue-m);
 }
-.p-type { font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ghost); margin-bottom: .5rem; }
-.p-name { font-size: 1.25rem; font-weight: 700; color: var(--black); margin-bottom: .15rem; }
-.p-org { font-size: .82rem; color: var(--soft); margin-bottom: .7rem; }
+.p-type {
+  font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: .5rem;
+}
+.p-name { font-size: 1.2rem; font-weight: 700; color: var(--ink); margin-bottom: .15rem; }
+.p-org { font-size: .81rem; color: var(--soft); margin-bottom: .7rem; }
 .p-rule { border: none; border-top: 1px solid var(--line); margin-bottom: .7rem; }
 
 /* Big number */
 .big-num {
-  font-family: 'Inter', monospace;
-  font-size: clamp(4rem, 6vw, 6rem); font-weight: 800;
-  letter-spacing: -.04em; line-height: 1; color: var(--black);
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(3.8rem, 5.8vw, 5.8rem); font-weight: 800;
+  letter-spacing: -.04em; line-height: 1; color: var(--blue);
 }
 
-/* Rule line */
-.rule { border: none; border-top: 1px solid var(--line); margin: 1rem 0; }
+/* Rule */
+.rule { border: none; border-top: 1px solid var(--line); margin: .9rem 0; }
 
-/* Bar chart — all fills same color */
-.bar-item { display: flex; flex-direction: column; gap: .4rem; }
-.bar-row { display: flex; justify-content: space-between; font-size: .88rem; font-weight: 500; color: var(--black); }
-.bar-track { height: 4px; background: #f0f0f0; border-radius: 10px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 10px; background: var(--black); }
+/* Bar chart */
+.bar-item { display: flex; flex-direction: column; gap: .45rem; }
+.bar-row { display: flex; justify-content: space-between; font-size: .87rem; font-weight: 500; color: var(--ink); }
+.bar-track { height: 5px; background: var(--bg); border-radius: 10px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 10px; background: var(--blue); }
+.bar-fill.minor { background: var(--blue-m); }
 
-/* Flow bar — no fills */
+/* Flow */
 .flow {
   display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
-  padding: 1.1rem 1.6rem;
-  border: 1px solid var(--line); border-radius: 6px; flex-shrink: 0;
+  padding: 1rem 1.6rem;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); flex-shrink: 0;
 }
-.fn { border: 1px solid var(--black); color: var(--black); padding: .35rem 1rem; border-radius: 4px; font-size: .82rem; font-weight: 600; white-space: nowrap; }
-.fa { color: var(--ghost); font-size: .9rem; }
-.fn-note { font-size: .78rem; color: var(--soft); margin-left: auto; }
+.fn {
+  border: 1px solid var(--line); color: var(--dark); background: var(--white);
+  padding: .35rem 1rem; border-radius: 5px; font-size: .81rem; font-weight: 600; white-space: nowrap;
+}
+.fn.primary { border-color: var(--blue-m); color: var(--blue); background: var(--blue-l); }
+.fa { color: var(--blue-m); font-size: .9rem; }
+.fn-note { font-size: .76rem; color: var(--soft); margin-left: auto; }
 
 /* TOC */
 .toc-wrap { flex: 1; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
 .toc-item {
   display: flex; align-items: flex-start; gap: 2rem;
-  padding: 2.5rem 5rem;
+  padding: 2.4rem 5rem;
   border-bottom: 1px solid var(--line);
   cursor: pointer; transition: background .15s;
 }
 .toc-item:nth-child(odd) { border-right: 1px solid var(--line); }
 .toc-item:nth-last-child(-n+2) { border-bottom: none; }
-.toc-item:hover { background: #fafafa; }
+.toc-item:hover { background: var(--blue-l); }
 .ti-num {
-  font-family: 'Inter', monospace;
-  font-size: 2.6rem; font-weight: 800; color: var(--line);
-  line-height: 1; flex-shrink: 0; width: 3.2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 2.4rem; font-weight: 800; color: var(--line);
+  line-height: 1; flex-shrink: 0; width: 3rem;
   letter-spacing: -.04em; transition: color .15s;
 }
-.toc-item:hover .ti-num { color: var(--black); }
-.ti-body { padding-top: .4rem; }
-.ti-ttl { font-size: 1.05rem; font-weight: 700; color: var(--black); margin-bottom: .5rem; }
-.ti-dsc { font-size: .85rem; color: var(--soft); line-height: 1.7; }
+.toc-item:hover .ti-num { color: var(--blue); }
+.ti-body { padding-top: .35rem; }
+.ti-ttl { font-size: 1.02rem; font-weight: 700; color: var(--ink); margin-bottom: .45rem; }
+.ti-dsc { font-size: .84rem; color: var(--soft); line-height: 1.7; }
 
 /* Effect grid */
 .effect-g {
   display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
-  gap: 1.6rem; flex: 1;
+  gap: 1.4rem; flex: 1;
 }
-.ec { border: 1px solid var(--line); border-radius: 6px; padding: 2rem 2.4rem; display: flex; flex-direction: column; gap: .6rem; }
-.ec.ruled { border-top: 2px solid var(--black); }
+.ec { border: 1px solid var(--line); border-radius: 8px; padding: 1.8rem 2.2rem; display: flex; flex-direction: column; gap: .5rem; }
+.ec.ruled { border-top: 2px solid var(--blue); }
 .ec-idx {
-  font-family: 'Inter', monospace;
-  font-size: .65rem; font-weight: 700; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--ghost);
+  font-size: .62rem; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--blue);
 }
-.ec-ttl { font-size: 1rem; font-weight: 700; color: var(--black); }
-.ec-num { font-size: 2rem; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; }
+.ec-ttl { font-size: .98rem; font-weight: 700; color: var(--ink); }
+.ec-num {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.9rem; font-weight: 800; letter-spacing: -.04em; color: var(--blue); line-height: 1;
+}
 
-/* Timeline — clean horizontal flow, no piano keys */
+/* Timeline */
 .tl-wrap {
   flex: 1; display: flex; flex-direction: column;
-  border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
 }
-.tl-steps {
-  flex: 1; display: grid; grid-template-columns: repeat(7, 1fr);
-}
+.tl-steps { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); }
 .tl-step {
   padding: 2rem 1.4rem;
   border-right: 1px solid var(--line);
-  display: flex; flex-direction: column; gap: .7rem;
-  background: var(--white);
+  display: flex; flex-direction: column; gap: .65rem;
+  background: var(--white); transition: background .15s;
 }
 .tl-step:last-child { border-right: none; }
+.tl-step:first-child { background: var(--blue-l); }
 .tl-num {
-  font-family: 'Inter', monospace;
   font-size: .58rem; font-weight: 800; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--ghost);
+  text-transform: uppercase;
   display: flex; align-items: center; gap: .5rem;
 }
+.tl-step:first-child .tl-num { color: var(--blue); }
+.tl-step:not(:first-child) .tl-num { color: var(--ghost); }
 .tl-num::before {
   content: '';
   display: block; width: 1.4rem; height: 1.4rem;
-  border-radius: 50%; border: 1.5px solid var(--line);
+  border-radius: 50%; border: 1.5px solid currentColor;
   flex-shrink: 0;
 }
-.tl-step:first-child .tl-num::before { border-color: var(--black); }
-.tl-ttl { font-size: .88rem; font-weight: 700; color: var(--black); line-height: 1.4; }
-.tl-org { font-size: .72rem; color: var(--soft); line-height: 1.55; margin-top: auto; }
+.tl-ttl { font-size: .86rem; font-weight: 700; color: var(--ink); line-height: 1.4; }
+.tl-org { font-size: .71rem; color: var(--soft); line-height: 1.55; margin-top: auto; }
 
 /* Note bar */
 .note-bar {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem; border-top: 1px solid var(--line); padding: 1.2rem 1.8rem;
-  flex-shrink: 0;
+  gap: 1rem; border-top: 1px solid var(--line);
+  padding: 1.1rem 1.8rem; background: var(--bg); flex-shrink: 0;
 }
-.nb-lbl { font-size: .63rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--ghost); margin-bottom: .35rem; }
-.nb-val { font-size: .88rem; color: var(--black); line-height: 1.55; }
+.nb-lbl { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--soft); margin-bottom: .3rem; }
+.nb-val { font-size: .87rem; color: var(--ink); line-height: 1.55; }
 
-/* Revenue numbers */
+/* Revenue */
 .rev-num {
   display: flex; align-items: baseline; gap: .8rem;
-  padding: 1.4rem 0; border-bottom: 1px solid var(--line);
+  padding: 1.3rem 0; border-bottom: 1px solid var(--line);
 }
 .rev-num:last-child { border-bottom: none; }
-.rev-num-label { font-size: .72rem; font-weight: 600; color: var(--ghost); text-transform: uppercase; letter-spacing: .1em; min-width: 90px; }
-.rev-num-val { font-size: 2.6rem; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; }
-.rev-num-detail { font-size: .78rem; color: var(--soft); margin-left: auto; }
+.rev-num-label { font-size: .7rem; font-weight: 600; color: var(--soft); text-transform: uppercase; letter-spacing: .1em; min-width: 85px; }
+.rev-num-val {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.4rem; font-weight: 800; letter-spacing: -.04em; color: var(--blue); line-height: 1;
+}
+.rev-num-val.minor { color: var(--ghost); }
+.rev-num-detail { font-size: .76rem; color: var(--soft); margin-left: auto; }
 
 @media print {
   #nav-pill, #dots-nav, #progress-bar { display: none !important; }
@@ -396,17 +435,17 @@ html, body {
   <div class="cv-right">
     <div class="cv-stat">
       <div class="cv-lbl">교육 시간</div>
-      <div class="cv-num">960h+</div>
+      <div class="cv-num">960<span class="u">h+</span></div>
       <div class="cv-sub-s">6개월 과정</div>
     </div>
     <div class="cv-stat">
       <div class="cv-lbl">융합분야 연간 수익</div>
-      <div class="cv-num">7.3억+</div>
+      <div class="cv-num">7.3<span class="u">억+</span></div>
       <div class="cv-sub-s">연 2회 기준</div>
     </div>
     <div class="cv-stat">
       <div class="cv-lbl">최대 지속 운영</div>
-      <div class="cv-num">3년</div>
+      <div class="cv-num">3<span class="u">년</span></div>
       <div class="cv-sub-s">훈련 개시 후</div>
     </div>
   </div>
@@ -501,7 +540,7 @@ html, body {
   <div class="s-sub">산업 수요 기반 교육과정 공동 설계 · 프로젝트 중심 실무 교육 · 산학협력 기반 디지털 인재 양성</div>
   <div class="s-body">
     <div class="collab-g">
-      <div class="card" style="padding:2rem 2.2rem;">
+      <div class="card" style="padding:1.8rem 2rem;">
         <div class="p-type">Partner A</div>
         <div class="p-name">대학교</div>
         <div class="p-org">대학 / 산학협력단</div>
@@ -514,7 +553,7 @@ html, body {
         </ul>
       </div>
       <div class="c-arr"></div>
-      <div class="card" style="padding:2rem 2.2rem;">
+      <div class="card" style="padding:1.8rem 2rem;">
         <div class="p-type">Partner B</div>
         <div class="p-name">참여기업</div>
         <div class="p-org">산업체 / 협약기업</div>
@@ -527,7 +566,7 @@ html, body {
         </ul>
       </div>
       <div class="c-arr"></div>
-      <div class="card" style="padding:2rem 2.2rem;">
+      <div class="card" style="padding:1.8rem 2rem;">
         <div class="p-type">Partner C</div>
         <div class="p-name">훈련기관</div>
         <div class="p-org">SBS아카데미컴퓨터아트학원</div>
@@ -540,7 +579,7 @@ html, body {
         </ul>
       </div>
     </div>
-    <div class="card" style="padding:1.4rem 2rem;">
+    <div class="card" style="padding:1.3rem 2rem;">
       <div class="card-lbl">SBS아카데미컴퓨터아트학원 구월점 강점</div>
       <div class="card-body">디지털 콘텐츠 및 컴퓨터 교육 분야 다년간 운영 경험 · 전국 단위 네트워크와 홍보 역량으로 안정적 훈련생 모집 가능 · 출석 관리, 취업 지원, 만족도 체크 등 체계적 교육 운영 시스템 · 다양한 실무 강사진 — 대학은 별도 모집 부담 없이 효율적 산학협력 교육모델 구축 가능</div>
     </div>
@@ -558,33 +597,44 @@ html, body {
     <div class="g2">
       <div class="tag-box ruled">
         <div class="tag-lbl">신기술 분야 <span class="tag-cnt">9개</span></div>
-        <div class="chip-row"><span class="chip">AI</span><span class="chip">클라우드</span><span class="chip">IoT</span><span class="chip">메타버스</span><span class="chip">5G/6G</span><span class="chip">S/W</span><span class="chip">블록체인</span><span class="chip">빅데이터</span><span class="chip">사이버보안</span></div>
+        <div class="chip-row">
+          <span class="chip">AI</span><span class="chip">클라우드</span><span class="chip">IoT</span>
+          <span class="chip">메타버스</span><span class="chip">5G/6G</span><span class="chip">S/W</span>
+          <span class="chip">블록체인</span><span class="chip">빅데이터</span><span class="chip">사이버보안</span>
+        </div>
       </div>
       <div class="tag-box">
         <div class="tag-lbl">첨단 분야 <span class="tag-cnt muted">12개</span></div>
-        <div class="chip-row"><span class="chip muted">이차전지</span><span class="chip muted">디스플레이</span><span class="chip muted">3D프린팅</span><span class="chip muted">첨단소재</span><span class="chip muted">반도체</span><span class="chip muted">나노</span><span class="chip muted">로봇</span><span class="chip muted">드론</span><span class="chip muted">바이오헬스</span><span class="chip muted">에코업</span><span class="chip muted">신재생에너지</span><span class="chip muted">수소</span></div>
+        <div class="chip-row">
+          <span class="chip muted">이차전지</span><span class="chip muted">디스플레이</span>
+          <span class="chip muted">3D프린팅</span><span class="chip muted">첨단소재</span>
+          <span class="chip muted">반도체</span><span class="chip muted">나노</span>
+          <span class="chip muted">로봇</span><span class="chip muted">드론</span>
+          <span class="chip muted">바이오헬스</span><span class="chip muted">에코업</span>
+          <span class="chip muted">신재생에너지</span><span class="chip muted">수소</span>
+        </div>
       </div>
     </div>
     <div class="g2" style="flex:1;">
-      <div class="card ruled" style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="card ruled" style="display:flex;flex-direction:column;gap:.9rem;">
         <div class="card-lbl">과정예시 1</div>
         <div class="card-ttl">생성형 AI 기반 디지털 미디어 콘텐츠 제작 과정</div>
         <hr class="rule">
-        <div style="display:flex;flex-direction:column;gap:.65rem;">
-          <div style="display:flex;gap:1rem;font-size:.88rem;"><span style="font-weight:600;color:var(--black);min-width:58px;flex-shrink:0;">NCS</span><span style="color:var(--mid);">영상제작[080304], 디자인[080201], 문화콘텐츠제작[080302]</span></div>
-          <div style="display:flex;gap:1rem;font-size:.88rem;"><span style="font-weight:600;color:var(--black);min-width:58px;flex-shrink:0;">프로젝트</span><span style="color:var(--mid);">AI 기반 영상 콘텐츠 기획 및 제작</span></div>
+        <div style="display:flex;flex-direction:column;gap:.6rem;">
+          <div style="display:flex;gap:1rem;font-size:.87rem;"><span style="font-weight:600;color:var(--ink);min-width:56px;flex-shrink:0;">NCS</span><span style="color:var(--mid);">영상제작[080304], 디자인[080201], 문화콘텐츠제작[080302]</span></div>
+          <div style="display:flex;gap:1rem;font-size:.87rem;"><span style="font-weight:600;color:var(--ink);min-width:56px;flex-shrink:0;">프로젝트</span><span style="color:var(--mid);">AI 기반 영상 콘텐츠 기획 및 제작</span></div>
         </div>
-        <div style="margin-top:auto;font-size:.75rem;font-weight:600;color:var(--soft);border:1px solid var(--line);border-radius:4px;padding:.3rem .8rem;width:fit-content;">융합: 인공지능 + 일반 S/W</div>
+        <div style="margin-top:auto;font-size:.73rem;font-weight:600;color:var(--blue);background:var(--blue-l);border:1px solid var(--blue-m);border-radius:4px;padding:.3rem .8rem;width:fit-content;">융합: 인공지능 + 일반 S/W</div>
       </div>
-      <div class="card ruled" style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="card ruled" style="display:flex;flex-direction:column;gap:.9rem;">
         <div class="card-lbl">과정예시 2</div>
         <div class="card-ttl">생성형 AI 기반 UX/UI 디지털 서비스 개발 과정</div>
         <hr class="rule">
-        <div style="display:flex;flex-direction:column;gap:.65rem;">
-          <div style="display:flex;gap:1rem;font-size:.88rem;"><span style="font-weight:600;color:var(--black);min-width:58px;flex-shrink:0;">NCS</span><span style="color:var(--mid);">정보기술개발[200102], 디자인[080210]</span></div>
-          <div style="display:flex;gap:1rem;font-size:.88rem;"><span style="font-weight:600;color:var(--black);min-width:58px;flex-shrink:0;">프로젝트</span><span style="color:var(--mid);">AI 기반 UX/UI 웹서비스 설계 및 제작</span></div>
+        <div style="display:flex;flex-direction:column;gap:.6rem;">
+          <div style="display:flex;gap:1rem;font-size:.87rem;"><span style="font-weight:600;color:var(--ink);min-width:56px;flex-shrink:0;">NCS</span><span style="color:var(--mid);">정보기술개발[200102], 디자인[080210]</span></div>
+          <div style="display:flex;gap:1rem;font-size:.87rem;"><span style="font-weight:600;color:var(--ink);min-width:56px;flex-shrink:0;">프로젝트</span><span style="color:var(--mid);">AI 기반 UX/UI 웹서비스 설계 및 제작</span></div>
         </div>
-        <div style="margin-top:auto;font-size:.75rem;font-weight:600;color:var(--soft);border:1px solid var(--line);border-radius:4px;padding:.3rem .8rem;width:fit-content;">융합: 인공지능 + 일반 S/W</div>
+        <div style="margin-top:auto;font-size:.73rem;font-weight:600;color:var(--blue);background:var(--blue-l);border:1px solid var(--blue-m);border-radius:4px;padding:.3rem .8rem;width:fit-content;">융합: 인공지능 + 일반 S/W</div>
       </div>
     </div>
   </div>
@@ -600,23 +650,23 @@ html, body {
   <div class="s-sub">훈련비 산출: 훈련인원 × 훈련시간 × 수료율 × 훈련비 단가</div>
   <div class="s-body">
     <div class="g2" style="flex:1;">
-      <div class="card" style="display:flex;flex-direction:column;gap:1.2rem;">
+      <div class="card" style="display:flex;flex-direction:column;gap:1.1rem;">
         <div class="card-lbl">일반 디지털 분야</div>
-        <div class="big-num">1.9억</div>
+        <div class="big-num">1.9<span class="u">억</span></div>
         <hr class="rule" style="margin:0;">
-        <div style="font-size:.88rem;color:var(--soft);line-height:1.8;">30명 × 960시간 × 70% × 9,400원<br>1회차 기준 189,504,000원</div>
-        <div style="margin-top:auto;font-size:.85rem;font-weight:600;color:var(--dark);border:1px solid var(--line);border-radius:4px;padding:.55rem 1rem;">연 2회 약 3.8억 (379,008,000원)</div>
+        <div style="font-size:.87rem;color:var(--soft);line-height:1.8;">30명 × 960시간 × 70% × 9,400원<br>1회차 기준 189,504,000원</div>
+        <div style="margin-top:auto;font-size:.84rem;font-weight:600;color:var(--mid);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:.5rem 1rem;">연 2회 약 3.8억 (379,008,000원)</div>
       </div>
-      <div class="card ruled" style="display:flex;flex-direction:column;gap:1.2rem;">
+      <div class="card ruled" style="display:flex;flex-direction:column;gap:1.1rem;">
         <div class="card-lbl">디지털 신기술 / 융합 분야</div>
-        <div class="big-num">3.6억</div>
+        <div class="big-num">3.6<span class="u">억</span></div>
         <hr class="rule" style="margin:0;">
-        <div style="font-size:.88rem;color:var(--soft);line-height:1.8;">30명 × 960시간 × 70% × 18,150원<br>1회차 기준 365,904,000원</div>
-        <div style="margin-top:auto;font-size:.85rem;font-weight:600;color:var(--dark);border:1px solid var(--line);border-radius:4px;padding:.55rem 1rem;">연 2회 약 7.3억 (731,808,000원)</div>
+        <div style="font-size:.87rem;color:var(--soft);line-height:1.8;">30명 × 960시간 × 70% × 18,150원<br>1회차 기준 365,904,000원</div>
+        <div style="margin-top:auto;font-size:.84rem;font-weight:600;color:var(--blue);background:var(--blue-l);border:1px solid var(--blue-m);border-radius:5px;padding:.5rem 1rem;">연 2회 약 7.3억 (731,808,000원)</div>
       </div>
     </div>
     <div class="flow">
-      <div class="fn">고용노동부 (주관)</div>
+      <div class="fn primary">고용노동부 (주관)</div>
       <div class="fa">→</div>
       <div class="fn">대학교 (수령, 대외 표방 85%)</div>
       <div class="fa">→</div>
@@ -636,37 +686,37 @@ html, body {
   <div class="s-sub">융합 분야 기준 연 7.3억 (731,808,000원) — 세부 비율은 협의에 따라 조정 가능</div>
   <div class="s-body">
     <div class="g2" style="flex:1;">
-      <div class="card" style="display:flex;flex-direction:column;gap:1.4rem;">
+      <div class="card" style="display:flex;flex-direction:column;gap:1.3rem;">
         <div class="card-lbl">배분 비율</div>
-        <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div style="display:flex;flex-direction:column;gap:.9rem;">
           <div class="bar-item">
             <div class="bar-row"><span>훈련기관</span><span style="color:var(--soft);">85% · 약 6.2억</span></div>
             <div class="bar-track"><div class="bar-fill" style="width:85%;"></div></div>
           </div>
           <div class="bar-item">
             <div class="bar-row"><span>대학교</span><span style="color:var(--soft);">15% · 약 1.1억</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div>
+            <div class="bar-track"><div class="bar-fill minor" style="width:15%;"></div></div>
           </div>
         </div>
-        <div style="font-size:.83rem;color:var(--soft);line-height:1.85;padding-top:.4rem;border-top:1px solid var(--line);">
+        <div style="font-size:.82rem;color:var(--soft);line-height:1.85;padding-top:.4rem;border-top:1px solid var(--line);">
           * 대외 표방: 대학 85% / 훈련기관 15%<br>* 실제 집행: 훈련기관 85% / 대학 15%
         </div>
         <div style="border-top:1px solid var(--line);margin-top:auto;">
           <div class="rev-num">
             <span class="rev-num-label">대학교 수익</span>
-            <span class="rev-num-val" style="color:var(--soft);">1.1억</span>
+            <span class="rev-num-val minor">1.1<span class="u">억</span></span>
             <span class="rev-num-detail">× 15% = 109,771,200원</span>
           </div>
           <div class="rev-num">
             <span class="rev-num-label">훈련기관 수익</span>
-            <span class="rev-num-val">6.2억</span>
+            <span class="rev-num-val">6.2<span class="u">억</span></span>
             <span class="rev-num-detail">× 85% = 622,036,800원</span>
           </div>
         </div>
       </div>
-      <div class="card" style="display:flex;flex-direction:column;gap:1.2rem;">
+      <div class="card" style="display:flex;flex-direction:column;gap:1.1rem;">
         <div class="card-lbl">훈련기관 운영비 세부 내역</div>
-        <div style="display:flex;flex-direction:column;gap:.95rem;">
+        <div style="display:flex;flex-direction:column;gap:.85rem;">
           <div class="bar-item">
             <div class="bar-row"><span>행정 운영</span><span style="color:var(--soft);">20%</span></div>
             <div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div>
@@ -708,7 +758,7 @@ html, body {
     <div class="effect-g">
       <div class="ec ruled">
         <div class="ec-idx">대학 · 훈련기관 공통</div>
-        <div class="ec-num">1.1억+</div>
+        <div class="ec-num">1.1<span class="u">억+</span></div>
         <div class="ec-ttl">안정적 고수익 창출</div>
         <ul class="ul"><li>등록금 외 추가 수익 확보</li><li>모객 보장 안정적 고수익</li><li>최대 3년 지속 운영</li></ul>
       </div>
