@@ -10,14 +10,14 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --black:  #0a0a0a;
-  --dark:   #1a1a1a;
-  --mid:    #555;
-  --muted:  #888;
-  --subtle: #bbb;
-  --line:   #e2e2e2;
-  --bg:     #f6f6f4;
-  --white:  #ffffff;
+  --black: #0a0a0a;
+  --dark:  #222;
+  --mid:   #555;
+  --soft:  #888;
+  --ghost: #bbb;
+  --line:  #dedede;
+  --bg:    #f5f5f3;
+  --white: #fff;
 }
 
 html, body {
@@ -27,144 +27,214 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Progress ──────────────────────────────── */
 #progress-bar {
   position: fixed; top: 0; left: 0; height: 2px;
   background: var(--black); z-index: 2000; transition: width .4s ease;
 }
 
-/* ── Slider ────────────────────────────────── */
 #slider { width: 100%; height: 100vh; position: relative; overflow: hidden; }
 
 .slide {
   position: absolute; inset: 0;
   background: var(--white);
   display: flex; flex-direction: column;
-  transition: transform .55s cubic-bezier(.77,0,.175,1), opacity .55s ease;
+  transition: transform .5s cubic-bezier(.77,0,.175,1), opacity .5s ease;
   transform: translateX(100%); opacity: 0;
 }
 .slide.active { transform: translateX(0); opacity: 1; }
 
-/* ── Nav ───────────────────────────────────── */
+/* ── Navigation ── */
 #nav-pill {
-  position: fixed; bottom: 20px; left: 50%;
-  transform: translateX(-50%);
+  position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
   background: var(--black); border-radius: 100px;
-  padding: 8px 20px; display: flex; align-items: center; gap: 14px; z-index: 1000;
+  padding: 8px 22px; display: flex; align-items: center; gap: 16px; z-index: 1000;
 }
 #nav-pill button {
-  background: rgba(255,255,255,.12); border: none; color: #fff;
-  width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
-  font-size: .9rem; display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.1); border: none; color: #fff;
+  width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+  font-size: .95rem; display: flex; align-items: center; justify-content: center;
   transition: background .2s;
 }
-#nav-pill button:hover { background: rgba(255,255,255,.3); }
-#slide-counter {
-  color: rgba(255,255,255,.5); font-size: .72rem; font-weight: 500;
-  min-width: 40px; text-align: center; letter-spacing: .06em;
-}
-#dots-nav {
-  position: fixed; right: 18px; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 6px; z-index: 1000;
-}
-.dot { width: 4px; height: 4px; border-radius: 50%; background: #ccc; cursor: pointer; transition: all .25s; }
-.dot.active { background: var(--black); height: 16px; border-radius: 2px; }
+#nav-pill button:hover { background: rgba(255,255,255,.25); }
+#slide-counter { color: rgba(255,255,255,.4); font-size: .75rem; min-width: 44px; text-align: center; letter-spacing: .06em; }
 
-/* ═══════════════════════════════════════════
-   SLIDE HEADER
-═══════════════════════════════════════════ */
+#dots-nav {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 7px; z-index: 1000;
+}
+.dot { width: 4px; height: 4px; border-radius: 50%; background: #c0c0c0; cursor: pointer; transition: all .25s; }
+.dot.active { background: var(--black); height: 18px; border-radius: 2px; }
+
+/* ══════════════════════════════════════════════
+   SLIDE ANATOMY
+══════════════════════════════════════════════ */
 .s-head {
-  padding: 1.4rem 4rem;
+  padding: 1.6rem 5rem;
   border-bottom: 1px solid var(--line);
-  display: flex; align-items: baseline; gap: 1.4rem;
+  display: flex; align-items: baseline; gap: 1.6rem;
   flex-shrink: 0;
 }
 .s-num {
   font-family: 'Inter', monospace;
-  font-size: .65rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--muted); flex-shrink: 0;
+  font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ghost);
 }
-.s-title { font-size: 1.35rem; font-weight: 700; color: var(--black); letter-spacing: -.025em; }
-.s-en {
-  font-size: .7rem; font-weight: 400; color: var(--subtle);
-  margin-left: auto; letter-spacing: .1em; text-transform: uppercase;
-}
+.s-title { font-size: 1.55rem; font-weight: 700; color: var(--black); letter-spacing: -.025em; }
+.s-en { font-size: .72rem; color: var(--ghost); margin-left: auto; letter-spacing: .12em; text-transform: uppercase; }
+
 .s-sub {
-  padding: .55rem 4rem;
+  padding: .65rem 5rem;
   border-bottom: 1px solid var(--line);
-  font-size: .8rem; color: var(--muted); flex-shrink: 0;
+  font-size: .88rem; color: var(--soft); flex-shrink: 0;
 }
 
-/* body wrapper */
+/* content area — fills remaining height */
 .s-body {
-  flex: 1; padding: 2rem 4rem 2rem;
-  display: flex; flex-direction: column; gap: 1.2rem;
-  overflow: hidden;
+  flex: 1; padding: 2.8rem 5rem;
+  display: flex; flex-direction: column; gap: 1.6rem;
+  overflow: hidden; min-height: 0;
 }
 
-/* ═══════════════════════════════════════════
-   COVER — SLIDE 1
-═══════════════════════════════════════════ */
-#slide-1 {
-  display: grid; grid-template-columns: 52% 48%;
-}
+/* ══════════════════════════════════════════════
+   COVER
+══════════════════════════════════════════════ */
+#slide-1 { display: grid; grid-template-columns: 52% 48%; }
+
 .cv-left {
   display: flex; flex-direction: column; justify-content: center;
-  padding: 5rem 4rem 4rem 5.5rem;
+  padding: 5rem 4.5rem 4.5rem 6rem;
   border-right: 1px solid var(--line);
   position: relative;
 }
-.cv-bar { position: absolute; left: 0; top: 18%; bottom: 18%; width: 3px; background: var(--black); }
+.cv-bar { position: absolute; left: 0; top: 20%; bottom: 20%; width: 3px; background: var(--black); }
 .cv-eye {
-  font-size: .65rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 2rem;
+  font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ghost); margin-bottom: 2.5rem;
 }
 .cv-h1 {
-  font-size: clamp(2.6rem, 4vw, 4rem); font-weight: 800;
-  line-height: 1.07; letter-spacing: -.04em;
-  color: var(--black); margin-bottom: 2rem;
+  font-size: clamp(3rem, 4.2vw, 4.8rem); font-weight: 800;
+  line-height: 1.05; letter-spacing: -.04em; color: var(--black); margin-bottom: 2.5rem;
 }
-.cv-h1 em { font-style: normal; }
-.cv-rule { width: 36px; height: 1px; background: var(--subtle); margin-bottom: 1.8rem; }
-.cv-desc { font-size: .88rem; color: var(--mid); line-height: 1.8; margin-bottom: 2rem; }
+.cv-rule { width: 40px; height: 1px; background: var(--line); margin-bottom: 2rem; }
+.cv-desc { font-size: .95rem; color: var(--mid); line-height: 1.85; margin-bottom: 2.5rem; }
 .cv-collab {
-  display: inline-flex; align-items: center; gap: .7rem;
-  border: 1px solid var(--line); border-radius: 5px;
-  padding: .65rem 1.1rem; font-size: .82rem; font-weight: 600;
-  color: var(--dark); margin-bottom: 2rem; width: fit-content;
+  display: inline-flex; align-items: center; gap: .8rem;
+  border: 1px solid var(--line); border-radius: 6px;
+  padding: .75rem 1.3rem; font-size: .88rem; font-weight: 600;
+  color: var(--dark); margin-bottom: 2.5rem; width: fit-content;
 }
-.cv-collab .x { color: var(--muted); font-weight: 400; }
-.cv-chapters { display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; }
-.cv-chapters span { font-size: .75rem; color: var(--subtle); }
+.cv-collab .x { color: var(--ghost); font-weight: 300; }
+.cv-chapters { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; }
+.cv-chapters span { font-size: .8rem; color: var(--ghost); }
 .cv-chapters span::before { content: '— '; }
 
 .cv-right {
   background: var(--black);
   display: flex; flex-direction: column; justify-content: center;
-  padding: 4rem 4.5rem;
+  padding: 5rem 5rem 5rem 5.5rem;
 }
-.cv-stat { padding: 2rem 0; border-bottom: 1px solid rgba(255,255,255,.08); }
-.cv-stat:last-child { border-bottom: none; }
-.cv-stat-lbl {
-  font-size: .6rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(255,255,255,.3); margin-bottom: .5rem;
-}
-.cv-stat-num {
-  font-size: clamp(2.8rem, 4vw, 3.8rem); font-weight: 800; color: #fff;
-  line-height: 1; letter-spacing: -.04em; margin-bottom: .3rem;
-}
-.cv-stat-sub { font-size: .78rem; color: rgba(255,255,255,.35); }
+.cv-stat { padding: 2.2rem 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+.cv-stat:first-child { padding-top: 0; }
+.cv-stat:last-child { border-bottom: none; padding-bottom: 0; }
+.cv-lbl { font-size: .63rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: .6rem; }
+.cv-num { font-size: clamp(3rem, 4.5vw, 4.5rem); font-weight: 800; color: #fff; line-height: 1; letter-spacing: -.04em; margin-bottom: .35rem; }
+.cv-sub-s { font-size: .82rem; color: rgba(255,255,255,.3); }
 
-/* ═══════════════════════════════════════════
-   TOC — SLIDE 2
-═══════════════════════════════════════════ */
-.toc-wrap {
-  flex: 1; display: grid; grid-template-columns: 1fr 1fr;
-  border-top: 1px solid var(--line);
+/* ══════════════════════════════════════════════
+   COMMON COMPONENTS — NO COLOR FILLS IN CONTENT
+══════════════════════════════════════════════ */
+
+/* Card: white bg + border only */
+.card {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 2rem 2.4rem;
 }
+/* Top-ruled card: 2px black top line only */
+.card.ruled { border-top: 2px solid var(--black); }
+
+.card-lbl {
+  font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ghost); margin-bottom: .9rem;
+}
+.card-ttl { font-size: 1.05rem; font-weight: 700; color: var(--black); margin-bottom: .7rem; line-height: 1.4; }
+.card-body { font-size: .93rem; color: var(--mid); line-height: 1.9; }
+
+/* Grids */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
+
+/* Meta row */
+.meta-bar {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+}
+.meta-cell { padding: 1.2rem 1.6rem; border-right: 1px solid var(--line); }
+.meta-cell:last-child { border-right: none; }
+.ml { font-size: .63rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--ghost); margin-bottom: .4rem; }
+.mv { font-size: .92rem; font-weight: 600; color: var(--black); }
+
+/* Tag box */
+.tag-box { border: 1px solid var(--line); border-radius: 6px; padding: 1.4rem 1.8rem; }
+.tag-box.ruled { border-top: 2px solid var(--black); }
+.tag-lbl {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--soft); margin-bottom: .75rem;
+  display: flex; align-items: center; gap: .6rem;
+}
+.tag-cnt { font-size: .62rem; font-weight: 700; color: var(--black); border: 1px solid var(--black); padding: .05rem .45rem; border-radius: 3px; }
+.tag-cnt.muted { color: var(--ghost); border-color: var(--ghost); }
+.chip-row { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chip { border: 1px solid var(--black); color: var(--black); padding: .25rem .75rem; border-radius: 3px; font-size: .8rem; font-weight: 500; }
+.chip.muted { border-color: var(--ghost); color: var(--soft); }
+
+/* List */
+.ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+.ul li { font-size: .9rem; color: var(--mid); padding-left: 1rem; position: relative; line-height: 1.6; }
+.ul li::before { content: '—'; position: absolute; left: 0; color: var(--line); }
+
+/* Collab grid */
+.collab-g { display: grid; grid-template-columns: 1fr 30px 1fr 30px 1fr; align-items: stretch; }
+.c-arr { display: flex; align-items: center; justify-content: center; color: var(--ghost); }
+.p-type { font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ghost); margin-bottom: .5rem; }
+.p-name { font-size: 1.25rem; font-weight: 700; color: var(--black); margin-bottom: .15rem; }
+.p-org { font-size: .82rem; color: var(--soft); margin-bottom: .7rem; }
+.p-rule { border: none; border-top: 1px solid var(--line); margin-bottom: .7rem; }
+
+/* Big number — no fill */
+.big-num {
+  font-family: 'Inter', monospace;
+  font-size: clamp(4rem, 6vw, 6rem); font-weight: 800;
+  letter-spacing: -.04em; line-height: 1; color: var(--black);
+}
+.big-num.secondary { color: var(--soft); }   /* 작은 쪽 숫자: 같은 크기지만 회색 */
+
+/* Rule line */
+.rule { border: none; border-top: 1px solid var(--line); margin: 1rem 0; }
+
+/* Bar chart */
+.bar-item { display: flex; flex-direction: column; gap: .4rem; }
+.bar-row { display: flex; justify-content: space-between; font-size: .88rem; font-weight: 500; color: var(--black); }
+.bar-track { height: 4px; background: #f0f0f0; border-radius: 10px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 10px; background: var(--black); }
+.bar-fill.light { background: var(--ghost); }
+
+/* Flow bar */
+.flow {
+  display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+  padding: 1.1rem 1.6rem;
+  border: 1px solid var(--line); border-radius: 6px; flex-shrink: 0;
+}
+.fn { border: 1px solid var(--black); color: var(--black); padding: .35rem 1rem; border-radius: 4px; font-size: .82rem; font-weight: 600; white-space: nowrap; }
+.fn.filled { background: var(--black); color: #fff; border-color: var(--black); }
+.fa { color: var(--ghost); }
+.fn-note { font-size: .78rem; color: var(--soft); margin-left: auto; }
+
+/* TOC */
+.toc-wrap { flex: 1; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
 .toc-item {
-  display: flex; align-items: flex-start; gap: 1.6rem;
-  padding: 2rem 3.5rem;
+  display: flex; align-items: flex-start; gap: 2rem;
+  padding: 2.5rem 5rem;
   border-bottom: 1px solid var(--line);
   cursor: pointer; transition: background .15s;
 }
@@ -173,145 +243,63 @@ html, body {
 .toc-item:hover { background: #fafafa; }
 .ti-num {
   font-family: 'Inter', monospace;
-  font-size: 2.2rem; font-weight: 800; color: var(--line);
-  line-height: 1; flex-shrink: 0; width: 2.8rem;
+  font-size: 2.6rem; font-weight: 800; color: var(--line);
+  line-height: 1; flex-shrink: 0; width: 3.2rem;
   letter-spacing: -.04em; transition: color .15s;
 }
 .toc-item:hover .ti-num { color: var(--black); }
-.ti-body { padding-top: .3rem; }
-.ti-ttl { font-size: .98rem; font-weight: 700; color: var(--black); margin-bottom: .4rem; }
-.ti-dsc { font-size: .8rem; color: var(--muted); line-height: 1.65; }
+.ti-body { padding-top: .4rem; }
+.ti-ttl { font-size: 1.05rem; font-weight: 700; color: var(--black); margin-bottom: .5rem; }
+.ti-dsc { font-size: .85rem; color: var(--soft); line-height: 1.7; }
 
-/* ═══════════════════════════════════════════
-   COMMON COMPONENTS
-═══════════════════════════════════════════ */
-
-/* 2-col / 3-col grids */
-.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
-.g5 { display: grid; grid-template-columns: repeat(5, 1fr); }
-
-/* 기본 카드: 테두리만, 배경색 없음 */
-.card {
-  border: 1px solid var(--line); border-radius: 5px;
-  padding: 1.4rem 1.6rem;
+/* Effect grid */
+.effect-g {
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+  gap: 1.6rem; flex: 1;
 }
-.card.ruled { border-top: 2px solid var(--black); }   /* 상단 강조선 */
-.card.dark { background: var(--black); border-color: transparent; }  /* 유일하게 허용되는 색 채움 */
+.ec { border: 1px solid var(--line); border-radius: 6px; padding: 2rem 2.4rem; }
+.ec.ruled { border-top: 2px solid var(--black); }
+.ec-num { font-size: 2.4rem; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; margin-bottom: .5rem; }
+.ec-ttl { font-size: 1rem; font-weight: 700; color: var(--black); margin-bottom: .75rem; }
 
-/* 카드 제목 */
-.card-lbl {
-  font-size: .62rem; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--muted); margin-bottom: .7rem;
-}
-.card.dark .card-lbl { color: rgba(255,255,255,.3); }
-.card-ttl { font-size: .95rem; font-weight: 700; color: var(--black); margin-bottom: .6rem; line-height: 1.4; }
-.card.dark .card-ttl { color: #fff; }
-.card-body { font-size: .85rem; color: var(--mid); line-height: 1.85; }
-
-/* 메타 행 */
-.meta-bar {
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  border: 1px solid var(--line); border-radius: 5px; overflow: hidden;
-}
-.meta-cell { padding: .9rem 1.2rem; border-right: 1px solid var(--line); }
-.meta-cell:last-child { border-right: none; }
-.ml { font-size: .6rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: .3rem; }
-.mv { font-size: .85rem; font-weight: 600; color: var(--black); }
-
-/* 칩 */
-.chip-row { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
-.chip {
-  border: 1px solid var(--black); color: var(--black);
-  padding: .2rem .65rem; border-radius: 3px; font-size: .75rem; font-weight: 500;
-}
-.chip.muted { border-color: var(--subtle); color: var(--muted); }
-
-/* 목록 */
-.ul { list-style: none; display: flex; flex-direction: column; gap: .4rem; margin-top: .3rem; }
-.ul li { font-size: .83rem; color: var(--mid); padding-left: .9rem; position: relative; line-height: 1.55; }
-.ul li::before { content: '·'; position: absolute; left: 0; color: var(--subtle); font-weight: 700; }
-.card.dark .ul li { color: rgba(255,255,255,.55); }
-.card.dark .ul li::before { color: rgba(255,255,255,.2); }
-
-/* 구분선 */
-.rule { border: none; border-top: 1px solid var(--line); margin: .6rem 0; }
-.rule.dark { border-color: rgba(255,255,255,.1); }
-
-/* 큰 숫자 */
-.big-num {
-  font-family: 'Inter', monospace;
-  font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 800;
-  letter-spacing: -.04em; line-height: 1; color: var(--black);
-}
-.card.dark .big-num { color: #fff; }
-
-/* 바 차트 */
-.bar-item { display: flex; flex-direction: column; gap: .3rem; }
-.bar-row { display: flex; justify-content: space-between; font-size: .8rem; font-weight: 500; color: var(--black); }
-.bar-track { height: 4px; background: var(--line); border-radius: 10px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 10px; background: var(--black); }
-.bar-fill.half { background: var(--muted); }
-
-/* 플로우 바 */
-.flow {
-  display: flex; align-items: center; gap: .6rem;
-  padding: .9rem 1.4rem; border: 1px solid var(--line); border-radius: 5px;
-  flex-wrap: wrap; flex-shrink: 0;
-}
-.fn { background: var(--black); color: #fff; padding: .3rem .85rem; border-radius: 3px; font-size: .78rem; font-weight: 600; }
-.fn.out { background: transparent; color: var(--black); border: 1px solid var(--line); }
-.fa { color: var(--subtle); font-size: .85rem; }
-.fn-note { font-size: .73rem; color: var(--muted); margin-left: auto; }
-
-/* 태그 박스 */
-.tag-box { border: 1px solid var(--line); border-radius: 5px; padding: 1rem 1.2rem; }
-.tag-box.ruled { border-top: 2px solid var(--black); }
-.tag-lbl { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: .55rem; display: flex; align-items: center; gap: .5rem; }
-.tag-cnt { font-size: .6rem; font-weight: 700; color: var(--black); border: 1px solid var(--black); padding: .05rem .4rem; border-radius: 3px; }
-.tag-cnt.muted { color: var(--muted); border-color: var(--subtle); }
-
-/* 협력 구조 그리드 */
-.collab-g { display: grid; grid-template-columns: 1fr 28px 1fr 28px 1fr; gap: 0; align-items: stretch; }
-.c-arr { display: flex; align-items: center; justify-content: center; color: var(--subtle); font-size: .85rem; }
-.p-type { font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
-.p-name { font-size: 1.15rem; font-weight: 700; color: var(--black); margin-bottom: .1rem; }
-.p-org { font-size: .75rem; color: var(--muted); margin-bottom: .5rem; }
-
-/* 타임라인 스텝 */
-.steps { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
-.step { padding: 1.3rem 1rem; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: .5rem; }
+/* Timeline */
+.steps { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; flex: 1; }
+.step { padding: 1.8rem 1.4rem; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: .6rem; }
 .step:last-child { border-right: none; }
 .step:nth-child(odd) { background: var(--black); }
 .step:nth-child(even) { background: #fafafa; }
-.s-num2 { font-size: .58rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-.step:nth-child(odd) .s-num2 { color: rgba(255,255,255,.25); }
-.step:nth-child(even) .s-num2 { color: var(--muted); }
-.s-ttl { font-size: .84rem; font-weight: 700; line-height: 1.35; }
-.step:nth-child(odd) .s-ttl { color: #fff; }
-.step:nth-child(even) .s-ttl { color: var(--black); }
-.s-org { font-size: .7rem; line-height: 1.4; margin-top: auto; }
-.step:nth-child(odd) .s-org { color: rgba(255,255,255,.35); }
-.step:nth-child(even) .s-org { color: var(--muted); }
+.sn2 { font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.step:nth-child(odd) .sn2 { color: rgba(255,255,255,.2); }
+.step:nth-child(even) .sn2 { color: var(--ghost); }
+.sttl { font-size: .92rem; font-weight: 700; line-height: 1.4; }
+.step:nth-child(odd) .sttl { color: #fff; }
+.step:nth-child(even) .sttl { color: var(--black); }
+.sorg { font-size: .75rem; line-height: 1.5; margin-top: auto; }
+.step:nth-child(odd) .sorg { color: rgba(255,255,255,.3); }
+.step:nth-child(even) .sorg { color: var(--soft); }
 
-.note-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; border: 1px solid var(--line); border-radius: 5px; padding: .9rem 1.4rem; }
-.nb-lbl { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: .25rem; }
-.nb-val { font-size: .82rem; color: var(--black); line-height: 1.5; }
+.note-bar {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem; border: 1px solid var(--line); border-radius: 6px; padding: 1.2rem 1.8rem;
+  flex-shrink: 0;
+}
+.nb-lbl { font-size: .63rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--ghost); margin-bottom: .35rem; }
+.nb-val { font-size: .9rem; color: var(--black); line-height: 1.55; }
 
-/* 기대효과 */
-.effect-g { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1.2rem; flex: 1; }
-.ec { border: 1px solid var(--line); border-radius: 5px; padding: 1.4rem 1.6rem; }
-.ec.dark { background: var(--black); border-color: transparent; }
-.ec-num { font-size: 2rem; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; margin-bottom: .4rem; }
-.ec.dark .ec-num { color: rgba(255,255,255,.9); }
-.ec-ttl { font-size: .92rem; font-weight: 700; color: var(--black); margin-bottom: .6rem; }
-.ec.dark .ec-ttl { color: #fff; }
+/* Revenue num display — text only, no fill */
+.rev-num {
+  display: flex; align-items: baseline; gap: .8rem;
+  padding: 1.4rem 0; border-bottom: 1px solid var(--line);
+}
+.rev-num:last-child { border-bottom: none; }
+.rev-num-label { font-size: .72rem; font-weight: 600; color: var(--ghost); text-transform: uppercase; letter-spacing: .1em; min-width: 90px; }
+.rev-num-val { font-size: 2.8rem; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; }
+.rev-num-detail { font-size: .78rem; color: var(--soft); margin-left: auto; }
 
-/* ── Print ──── */
 @media print {
   #nav-pill, #dots-nav, #progress-bar { display: none !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .slide, .card, .ec, .step { page-break-inside: avoid; break-inside: avoid; }
+  .slide, .card, .ec, .step, .toc-item { page-break-inside: avoid; break-inside: avoid; }
   h1, .s-title { page-break-after: avoid; }
   a[href]::after { content: none !important; }
 }
@@ -359,19 +347,19 @@ html, body {
   </div>
   <div class="cv-right">
     <div class="cv-stat">
-      <div class="cv-stat-lbl">교육 시간</div>
-      <div class="cv-stat-num">960h+</div>
-      <div class="cv-stat-sub">6개월 과정</div>
+      <div class="cv-lbl">교육 시간</div>
+      <div class="cv-num">960h+</div>
+      <div class="cv-sub-s">6개월 과정</div>
     </div>
     <div class="cv-stat">
-      <div class="cv-stat-lbl">융합분야 연간 수익</div>
-      <div class="cv-stat-num">7.3억+</div>
-      <div class="cv-stat-sub">연 2회 기준</div>
+      <div class="cv-lbl">융합분야 연간 수익</div>
+      <div class="cv-num">7.3억+</div>
+      <div class="cv-sub-s">연 2회 기준</div>
     </div>
     <div class="cv-stat">
-      <div class="cv-stat-lbl">최대 지속 운영</div>
-      <div class="cv-stat-num">3년</div>
-      <div class="cv-stat-sub">훈련 개시 후</div>
+      <div class="cv-lbl">최대 지속 운영</div>
+      <div class="cv-num">3년</div>
+      <div class="cv-sub-s">훈련 개시 후</div>
     </div>
   </div>
 </div>
@@ -420,11 +408,11 @@ html, body {
   </div>
   <div class="s-body">
     <div class="g2" style="flex:1;">
-      <div class="card">
+      <div class="card ruled">
         <div class="card-lbl">K-디지털 트레이닝(KDT) 사업</div>
         <div class="card-body">고용노동부가 추진하는 디지털·첨단 산업 분야 인재 양성 사업으로, 산업 현장에서 요구되는 실무형 디지털 인재 양성을 목표로 하는 국가 훈련사업입니다.<br><br>기업 수요 기반의 프로젝트 중심 교육을 통해 현장에서 즉시 활용 가능한 실무 인재 양성을 목적으로 운영됩니다.</div>
       </div>
-      <div class="card">
+      <div class="card ruled">
         <div class="card-lbl">대학주도형 아카데미</div>
         <div class="card-body">대학 또는 산학협력단이 참여기업과 협약을 체결하여 산업 수요를 반영한 교육과정을 설계하고 운영하는 산학협력 기반 교육 모델입니다.<br><br>대학·참여기업·훈련기관이 협력하여 디지털 신기술 분야의 실무형 인재를 양성하고 취업 연계를 강화합니다.</div>
       </div>
@@ -437,9 +425,15 @@ html, body {
       <div class="meta-cell"><div class="ml">교육 방식</div><div class="mv">프로젝트 기반</div></div>
     </div>
     <div class="g3">
-      <div class="card dark" style="padding:.9rem 1.3rem; text-align:center;"><div class="card-body" style="color:rgba(255,255,255,.7); font-size:.85rem;">기업 수요 반영 교육과정</div></div>
-      <div class="card dark" style="padding:.9rem 1.3rem; text-align:center;"><div class="card-body" style="color:rgba(255,255,255,.7); font-size:.85rem;">프로젝트 기반 실무 교육</div></div>
-      <div class="card dark" style="padding:.9rem 1.3rem; text-align:center;"><div class="card-body" style="color:rgba(255,255,255,.7); font-size:.85rem;">취업 연계 중심 훈련과정</div></div>
+      <div class="card" style="text-align:center; padding:1.2rem 1rem;">
+        <div style="font-size:.92rem; font-weight:600; color:var(--dark);">기업 수요 반영 교육과정</div>
+      </div>
+      <div class="card" style="text-align:center; padding:1.2rem 1rem;">
+        <div style="font-size:.92rem; font-weight:600; color:var(--dark);">프로젝트 기반 실무 교육</div>
+      </div>
+      <div class="card" style="text-align:center; padding:1.2rem 1rem;">
+        <div style="font-size:.92rem; font-weight:600; color:var(--dark);">취업 연계 중심 훈련과정</div>
+      </div>
     </div>
   </div>
 </div>
@@ -454,11 +448,11 @@ html, body {
   <div class="s-sub">산업 수요 기반 교육과정 공동 설계 · 프로젝트 중심 실무 교육 · 산학협력 기반 디지털 인재 양성</div>
   <div class="s-body">
     <div class="collab-g" style="flex:1;">
-      <div class="card">
+      <div class="card" style="padding:2rem 2.2rem;">
         <div class="p-type">Partner A</div>
         <div class="p-name">대학교</div>
         <div class="p-org">대학 / 산학협력단</div>
-        <hr class="rule">
+        <hr class="p-rule">
         <ul class="ul">
           <li>교육과정 공동 설계 참여</li>
           <li>대학 교수진 프로젝트 지도</li>
@@ -467,11 +461,11 @@ html, body {
         </ul>
       </div>
       <div class="c-arr">→</div>
-      <div class="card">
+      <div class="card" style="padding:2rem 2.2rem;">
         <div class="p-type">Partner B</div>
         <div class="p-name">참여기업</div>
         <div class="p-org">산업체 / 협약기업</div>
-        <hr class="rule">
+        <hr class="p-rule">
         <ul class="ul">
           <li>산업 수요 기반 직무 요구사항 제공</li>
           <li>프로젝트 주제 제공</li>
@@ -480,11 +474,11 @@ html, body {
         </ul>
       </div>
       <div class="c-arr">→</div>
-      <div class="card">
+      <div class="card" style="padding:2rem 2.2rem;">
         <div class="p-type">Partner C</div>
         <div class="p-name">훈련기관</div>
         <div class="p-org">SBS아카데미컴퓨터아트학원</div>
-        <hr class="rule">
+        <hr class="p-rule">
         <ul class="ul">
           <li>교육과정 운영 및 강사진 구성</li>
           <li>훈련생 모집 및 마케팅</li>
@@ -493,7 +487,7 @@ html, body {
         </ul>
       </div>
     </div>
-    <div class="card" style="padding:1rem 1.4rem;">
+    <div class="card" style="padding:1.4rem 2rem;">
       <div class="card-lbl">SBS아카데미컴퓨터아트학원 구월점 강점</div>
       <div class="card-body">디지털 콘텐츠 및 컴퓨터 교육 분야 다년간 운영 경험 · 전국 단위 네트워크와 홍보 역량으로 안정적 훈련생 모집 가능 · 출석 관리, 취업 지원, 만족도 체크 등 체계적 교육 운영 시스템 · 다양한 실무 강사진 — 대학은 별도 모집 부담 없이 효율적 산학협력 교육모델 구축 가능</div>
     </div>
@@ -511,37 +505,33 @@ html, body {
     <div class="g2">
       <div class="tag-box ruled">
         <div class="tag-lbl">신기술 분야 <span class="tag-cnt">9개</span></div>
-        <div class="chip-row">
-          <span class="chip">AI</span><span class="chip">클라우드</span><span class="chip">IoT</span><span class="chip">메타버스</span><span class="chip">5G/6G</span><span class="chip">S/W</span><span class="chip">블록체인</span><span class="chip">빅데이터</span><span class="chip">사이버보안</span>
-        </div>
+        <div class="chip-row"><span class="chip">AI</span><span class="chip">클라우드</span><span class="chip">IoT</span><span class="chip">메타버스</span><span class="chip">5G/6G</span><span class="chip">S/W</span><span class="chip">블록체인</span><span class="chip">빅데이터</span><span class="chip">사이버보안</span></div>
       </div>
       <div class="tag-box">
         <div class="tag-lbl">첨단 분야 <span class="tag-cnt muted">12개</span></div>
-        <div class="chip-row">
-          <span class="chip muted">이차전지</span><span class="chip muted">디스플레이</span><span class="chip muted">3D프린팅</span><span class="chip muted">첨단소재</span><span class="chip muted">반도체</span><span class="chip muted">나노</span><span class="chip muted">로봇</span><span class="chip muted">드론</span><span class="chip muted">바이오헬스</span><span class="chip muted">에코업</span><span class="chip muted">신재생에너지</span><span class="chip muted">수소</span>
-        </div>
+        <div class="chip-row"><span class="chip muted">이차전지</span><span class="chip muted">디스플레이</span><span class="chip muted">3D프린팅</span><span class="chip muted">첨단소재</span><span class="chip muted">반도체</span><span class="chip muted">나노</span><span class="chip muted">로봇</span><span class="chip muted">드론</span><span class="chip muted">바이오헬스</span><span class="chip muted">에코업</span><span class="chip muted">신재생에너지</span><span class="chip muted">수소</span></div>
       </div>
     </div>
     <div class="g2" style="flex:1;">
-      <div class="card ruled">
+      <div class="card ruled" style="display:flex;flex-direction:column;gap:1rem;">
         <div class="card-lbl">과정예시 1</div>
         <div class="card-ttl">생성형 AI 기반 디지털 미디어 콘텐츠 제작 과정</div>
         <hr class="rule">
-        <div style="display:flex;flex-direction:column;gap:.5rem;">
-          <div style="display:flex;gap:.8rem;font-size:.82rem;"><span style="font-weight:600;color:var(--black);min-width:52px;flex-shrink:0;">NCS</span><span style="color:var(--mid);">영상제작[080304], 디자인[080201], 문화콘텐츠제작[080302]</span></div>
-          <div style="display:flex;gap:.8rem;font-size:.82rem;"><span style="font-weight:600;color:var(--black);min-width:52px;flex-shrink:0;">프로젝트</span><span style="color:var(--mid);">AI 기반 영상 콘텐츠 기획 및 제작</span></div>
+        <div style="display:flex;flex-direction:column;gap:.65rem;">
+          <div style="display:flex;gap:1rem;font-size:.88rem;"><span style="font-weight:600;color:var(--black);min-width:58px;flex-shrink:0;">NCS</span><span style="color:var(--mid);">영상제작[080304], 디자인[080201], 문화콘텐츠제작[080302]</span></div>
+          <div style="display:flex;gap:1rem;font-size:.88rem;"><span style="font-weight:600;color:var(--black);min-width:58px;flex-shrink:0;">프로젝트</span><span style="color:var(--mid);">AI 기반 영상 콘텐츠 기획 및 제작</span></div>
         </div>
-        <div style="margin-top:.8rem;font-size:.72rem;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:.25rem .65rem;width:fit-content;">융합: 인공지능 + 일반 S/W</div>
+        <div style="margin-top:auto;font-size:.75rem;font-weight:600;color:var(--soft);border:1px solid var(--line);border-radius:4px;padding:.3rem .8rem;width:fit-content;">융합: 인공지능 + 일반 S/W</div>
       </div>
-      <div class="card ruled">
+      <div class="card ruled" style="display:flex;flex-direction:column;gap:1rem;">
         <div class="card-lbl">과정예시 2</div>
         <div class="card-ttl">생성형 AI 기반 UX/UI 디지털 서비스 개발 과정</div>
         <hr class="rule">
-        <div style="display:flex;flex-direction:column;gap:.5rem;">
-          <div style="display:flex;gap:.8rem;font-size:.82rem;"><span style="font-weight:600;color:var(--black);min-width:52px;flex-shrink:0;">NCS</span><span style="color:var(--mid);">정보기술개발[200102], 디자인[080210]</span></div>
-          <div style="display:flex;gap:.8rem;font-size:.82rem;"><span style="font-weight:600;color:var(--black);min-width:52px;flex-shrink:0;">프로젝트</span><span style="color:var(--mid);">AI 기반 UX/UI 웹서비스 설계 및 제작</span></div>
+        <div style="display:flex;flex-direction:column;gap:.65rem;">
+          <div style="display:flex;gap:1rem;font-size:.88rem;"><span style="font-weight:600;color:var(--black);min-width:58px;flex-shrink:0;">NCS</span><span style="color:var(--mid);">정보기술개발[200102], 디자인[080210]</span></div>
+          <div style="display:flex;gap:1rem;font-size:.88rem;"><span style="font-weight:600;color:var(--black);min-width:58px;flex-shrink:0;">프로젝트</span><span style="color:var(--mid);">AI 기반 UX/UI 웹서비스 설계 및 제작</span></div>
         </div>
-        <div style="margin-top:.8rem;font-size:.72rem;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:.25rem .65rem;width:fit-content;">융합: 인공지능 + 일반 S/W</div>
+        <div style="margin-top:auto;font-size:.75rem;font-weight:600;color:var(--soft);border:1px solid var(--line);border-radius:4px;padding:.3rem .8rem;width:fit-content;">융합: 인공지능 + 일반 S/W</div>
       </div>
     </div>
   </div>
@@ -557,27 +547,27 @@ html, body {
   <div class="s-sub">훈련비 산출: 훈련인원 × 훈련시간 × 수료율 × 훈련비 단가</div>
   <div class="s-body">
     <div class="g2" style="flex:1;">
-      <div class="card">
+      <div class="card" style="display:flex;flex-direction:column;gap:1.2rem;">
         <div class="card-lbl">일반 디지털 분야</div>
         <div class="big-num">1.9억</div>
-        <hr class="rule" style="margin:.8rem 0;">
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.7;">30명 × 960시간 × 70% × 9,400원<br>1회차 기준 189,504,000원</div>
-        <div style="margin-top:.8rem;font-size:.8rem;font-weight:600;color:var(--black);border:1px solid var(--line);border-radius:3px;padding:.4rem .8rem;">▲ 연 2회 약 3.8억 (379,008,000원)</div>
+        <hr class="rule" style="margin:0;">
+        <div style="font-size:.88rem;color:var(--soft);line-height:1.8;">30명 × 960시간 × 70% × 9,400원<br>1회차 기준 189,504,000원</div>
+        <div style="margin-top:auto;font-size:.85rem;font-weight:600;color:var(--dark);border:1px solid var(--line);border-radius:4px;padding:.55rem 1rem;">▲ 연 2회 약 3.8억 (379,008,000원)</div>
       </div>
-      <div class="card dark">
+      <div class="card ruled" style="display:flex;flex-direction:column;gap:1.2rem;">
         <div class="card-lbl">디지털 신기술 / 융합 분야</div>
         <div class="big-num">3.6억</div>
-        <hr class="rule dark" style="margin:.8rem 0;">
-        <div style="font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.7;">30명 × 960시간 × 70% × 18,150원<br>1회차 기준 365,904,000원</div>
-        <div style="margin-top:.8rem;font-size:.8rem;font-weight:600;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.15);border-radius:3px;padding:.4rem .8rem;">▲ 연 2회 약 7.3억 (731,808,000원)</div>
+        <hr class="rule" style="margin:0;">
+        <div style="font-size:.88rem;color:var(--soft);line-height:1.8;">30명 × 960시간 × 70% × 18,150원<br>1회차 기준 365,904,000원</div>
+        <div style="margin-top:auto;font-size:.85rem;font-weight:600;color:var(--dark);border:1px solid var(--line);border-radius:4px;padding:.55rem 1rem;">▲ 연 2회 약 7.3억 (731,808,000원)</div>
       </div>
     </div>
     <div class="flow">
-      <div class="fn">고용노동부 (주관)</div>
+      <div class="fn filled">고용노동부 (주관)</div>
       <div class="fa">→</div>
-      <div class="fn out">대학교 (수령, 대외 표방 85%)</div>
+      <div class="fn">대학교 (수령, 대외 표방 85%)</div>
       <div class="fa">→</div>
-      <div class="fn out">훈련기관 (실질 집행 85%)</div>
+      <div class="fn">훈련기관 (실질 집행 85%)</div>
       <div class="fn-note">훈련 개시 후 최대 3년 지속 운영 가능 · 보통 연 2회 운영</div>
     </div>
   </div>
@@ -593,37 +583,46 @@ html, body {
   <div class="s-sub">융합 분야 기준 연 7.3억 (731,808,000원) — 세부 비율은 협의에 따라 조정 가능</div>
   <div class="s-body">
     <div class="g2" style="flex:1;">
-      <div class="card">
+      <!-- 배분 비율 -->
+      <div class="card" style="display:flex;flex-direction:column;gap:1.4rem;">
         <div class="card-lbl">배분 비율</div>
-        <div style="display:flex;flex-direction:column;gap:.8rem;margin-top:.3rem;">
-          <div class="bar-item"><div class="bar-row"><span>훈련기관</span><span>85% · 약 6.2억</span></div><div class="bar-track"><div class="bar-fill" style="width:85%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>대학교</span><span>15% · 약 1.1억</span></div><div class="bar-track"><div class="bar-fill half" style="width:15%;"></div></div></div>
-        </div>
-        <hr class="rule" style="margin:1rem 0;">
-        <div style="font-size:.78rem;color:var(--muted);line-height:1.8;">* 대외 표방: 대학 85% / 훈련기관 15%<br>* 실제 집행: 훈련기관 85% / 대학 15%</div>
-        <hr class="rule" style="margin:1rem 0;">
-        <div class="g2" style="gap:.8rem;">
-          <div style="border:1px solid var(--line);border-radius:4px;padding:.9rem 1rem;">
-            <div style="font-size:.6rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">대학교 수익</div>
-            <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;color:var(--black);">1.1억</div>
-            <div style="font-size:.72rem;color:var(--muted);margin-top:.2rem;">× 15% = 109,771,200원</div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="bar-item">
+            <div class="bar-row"><span>훈련기관</span><span style="color:var(--soft);">85% · 약 6.2억</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:85%;"></div></div>
           </div>
-          <div style="border:1px solid var(--line);border-radius:4px;padding:.9rem 1rem;background:var(--black);">
-            <div style="font-size:.6rem;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">훈련기관 수익</div>
-            <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;color:#fff;">6.2억</div>
-            <div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.2rem;">× 85% = 622,036,800원</div>
+          <div class="bar-item">
+            <div class="bar-row"><span>대학교</span><span style="color:var(--soft);">15% · 약 1.1억</span></div>
+            <div class="bar-track"><div class="bar-fill light" style="width:15%;"></div></div>
+          </div>
+        </div>
+        <div style="font-size:.83rem;color:var(--soft);line-height:1.85;padding-top:.4rem;border-top:1px solid var(--line);">
+          * 대외 표방: 대학 85% / 훈련기관 15%<br>* 실제 집행: 훈련기관 85% / 대학 15%
+        </div>
+        <!-- 수익 숫자 — 색 채움 없이 텍스트만 -->
+        <div style="border-top:1px solid var(--line);margin-top:auto;">
+          <div class="rev-num">
+            <span class="rev-num-label">대학교 수익</span>
+            <span class="rev-num-val" style="color:var(--soft);">1.1억</span>
+            <span class="rev-num-detail">× 15% = 109,771,200원</span>
+          </div>
+          <div class="rev-num">
+            <span class="rev-num-label">훈련기관 수익</span>
+            <span class="rev-num-val">6.2억</span>
+            <span class="rev-num-detail">× 85% = 622,036,800원</span>
           </div>
         </div>
       </div>
-      <div class="card">
+      <!-- 운영비 세부 -->
+      <div class="card" style="display:flex;flex-direction:column;gap:1.2rem;">
         <div class="card-lbl">훈련기관 운영비 세부 내역</div>
-        <div style="display:flex;flex-direction:column;gap:.75rem;margin-top:.3rem;">
-          <div class="bar-item"><div class="bar-row"><span>행정 운영</span><span>20%</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>마케팅 용역</span><span>20%</span></div><div class="bar-track"><div class="bar-fill half" style="width:20%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>관리 용역</span><span>20%</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>교육운영비(참여기업)</span><span>15%</span></div><div class="bar-track"><div class="bar-fill half" style="width:15%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>강사비</span><span>15%</span></div><div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div></div>
-          <div class="bar-item"><div class="bar-row"><span>장비 / 인프라</span><span>10%</span></div><div class="bar-track"><div class="bar-fill half" style="width:10%;"></div></div></div>
+        <div style="display:flex;flex-direction:column;gap:.95rem;">
+          <div class="bar-item"><div class="bar-row"><span>행정 운영</span><span style="color:var(--soft);">20%</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div></div>
+          <div class="bar-item"><div class="bar-row"><span>마케팅 용역</span><span style="color:var(--soft);">20%</span></div><div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div></div>
+          <div class="bar-item"><div class="bar-row"><span>관리 용역</span><span style="color:var(--soft);">20%</span></div><div class="bar-track"><div class="bar-fill light" style="width:20%;"></div></div></div>
+          <div class="bar-item"><div class="bar-row"><span>교육운영비(참여기업)</span><span style="color:var(--soft);">15%</span></div><div class="bar-track"><div class="bar-fill light" style="width:15%;"></div></div></div>
+          <div class="bar-item"><div class="bar-row"><span>강사비</span><span style="color:var(--soft);">15%</span></div><div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div></div>
+          <div class="bar-item"><div class="bar-row"><span>장비 / 인프라</span><span style="color:var(--soft);">10%</span></div><div class="bar-track"><div class="bar-fill light" style="width:10%;"></div></div></div>
         </div>
       </div>
     </div>
@@ -639,7 +638,7 @@ html, body {
   </div>
   <div class="s-body">
     <div class="effect-g">
-      <div class="ec dark">
+      <div class="ec ruled">
         <div class="ec-num">1.1억+</div>
         <div class="ec-ttl">안정적 고수익 창출</div>
         <ul class="ul"><li>등록금 외 추가 수익 확보</li><li>모객 보장 안정적 고수익</li><li>최대 3년 지속 운영</li></ul>
@@ -669,14 +668,14 @@ html, body {
   </div>
   <div class="s-sub">사업공고부터 성과평가까지 7단계 프로세스</div>
   <div class="s-body">
-    <div class="steps" style="flex:1;">
-      <div class="step"><div class="s-num2">Step 01</div><div class="s-ttl">사업공고</div><div class="s-org">직업능력심사평가원<br>(고용노동부)</div></div>
-      <div class="step"><div class="s-num2">Step 02</div><div class="s-ttl">사업신청</div><div class="s-org">훈련기관</div></div>
-      <div class="step"><div class="s-num2">Step 03</div><div class="s-ttl">훈련과정 심사</div><div class="s-org">직업능력심사평가원</div></div>
-      <div class="step"><div class="s-num2">Step 04</div><div class="s-ttl">훈련과정 인정</div><div class="s-org">지방고용노동관서<br>(고용노동부)</div></div>
-      <div class="step"><div class="s-num2">Step 05</div><div class="s-ttl">훈련생 선발 및 훈련실시</div><div class="s-org">훈련기관</div></div>
-      <div class="step"><div class="s-num2">Step 06</div><div class="s-ttl">훈련비 및 훈련장려금 지급</div><div class="s-org">지방고용노동관서<br>(고용노동부)</div></div>
-      <div class="step"><div class="s-num2">Step 07</div><div class="s-ttl">성과평가</div><div class="s-org">직업능력심사평가원</div></div>
+    <div class="steps">
+      <div class="step"><div class="sn2">Step 01</div><div class="sttl">사업공고</div><div class="sorg">직업능력심사평가원<br>(고용노동부)</div></div>
+      <div class="step"><div class="sn2">Step 02</div><div class="sttl">사업신청</div><div class="sorg">훈련기관</div></div>
+      <div class="step"><div class="sn2">Step 03</div><div class="sttl">훈련과정 심사</div><div class="sorg">직업능력심사평가원</div></div>
+      <div class="step"><div class="sn2">Step 04</div><div class="sttl">훈련과정 인정</div><div class="sorg">지방고용노동관서<br>(고용노동부)</div></div>
+      <div class="step"><div class="sn2">Step 05</div><div class="sttl">훈련생 선발 및 훈련실시</div><div class="sorg">훈련기관</div></div>
+      <div class="step"><div class="sn2">Step 06</div><div class="sttl">훈련비 및 훈련장려금 지급</div><div class="sorg">지방고용노동관서<br>(고용노동부)</div></div>
+      <div class="step"><div class="sn2">Step 07</div><div class="sttl">성과평가</div><div class="sorg">직업능력심사평가원</div></div>
     </div>
     <div class="note-bar">
       <div><div class="nb-lbl">훈련비 지급 경로</div><div class="nb-val">고용노동부 → 대학교 → 훈련기관</div></div>
@@ -689,7 +688,8 @@ html, body {
 </div>
 
 <script>
-const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.dot'),counter=document.getElementById('slide-counter'),bar=document.getElementById('progress-bar'),total=slides.length;
+const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.dot'),
+counter=document.getElementById('slide-counter'),bar=document.getElementById('progress-bar'),total=slides.length;
 let cur=0,busy=false;
 function ui(){counter.textContent=(cur+1)+' / '+total;bar.style.width=(((cur+1)/total)*100)+'%';dots.forEach((d,i)=>d.classList.toggle('active',i===cur));}
 function goTo(n){
@@ -699,7 +699,7 @@ function goTo(n){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     from.style.transform='translateX('+(-dir*100)+'%)';from.style.opacity='0';
     to.style.transform='translateX(0)';to.style.opacity='1';
-    setTimeout(()=>{from.classList.remove('active');from.style.transform='';from.style.opacity='';cur=n;ui();busy=false;},550);
+    setTimeout(()=>{from.classList.remove('active');from.style.transform='';from.style.opacity='';cur=n;ui();busy=false;},500);
   }));
 }
 function nextSlide(){goTo(cur+1);}function prevSlide(){goTo(cur-1);}
