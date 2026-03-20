@@ -389,6 +389,30 @@ html, body {
 .contact-lbl { font-size: .67rem; font-weight: 600; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .08em; }
 .contact-val { font-size: .94rem; font-weight: 700; color: #fff; }
 
+/* ══════════════════════════
+   AWARD LIST (SLIDE 3)
+══════════════════════════ */
+.award-featured {
+  background: rgba(255,255,255,.05); border-radius: 8px;
+  padding: 1.2rem 1.4rem; border-left: 3px solid var(--blue-m); flex-shrink: 0;
+}
+.award-featured-label { font-size: .6rem; font-weight: 700; color: var(--blue-m); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem; }
+.award-featured-num { font-family: 'Inter', sans-serif; font-size: 2.2rem; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -.05em; }
+.award-featured-title { font-size: .9rem; font-weight: 700; color: rgba(255,255,255,.85); margin-top: .35rem; }
+.award-featured-sub { font-size: .75rem; color: rgba(255,255,255,.4); margin-top: .15rem; }
+
+.award-list { display: flex; flex-direction: column; gap: 0; flex: 1; min-height: 0; overflow: hidden; }
+.award-list-label { font-size: .58rem; font-weight: 700; color: rgba(255,255,255,.25); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .5rem; flex-shrink: 0; }
+.award-list-item { display: flex; align-items: center; gap: .9rem; padding: .52rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+.award-list-item:last-child { border-bottom: none; }
+.award-list-years {
+  font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 800;
+  color: #fff; min-width: 2.6rem; line-height: 1; flex-shrink: 0; text-align: right;
+}
+.award-list-detail { display: flex; flex-direction: column; gap: .08rem; }
+.award-list-title { font-size: .79rem; font-weight: 600; color: rgba(255,255,255,.72); line-height: 1.3; }
+.award-list-period { font-size: .68rem; color: rgba(255,255,255,.3); }
+
 @media print {
   #nav-pill, #dots-nav, #progress-bar { display: none !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -528,44 +552,119 @@ html, body {
       <div class="slide-title">학원 소개</div>
       <div class="slide-subtitle">About Us</div>
     </div>
-    <div class="slide-body">
-      <div class="intro-desc">
-        SBS아카데미컴퓨터아트학원 구월지점은 <strong>코리아교육그룹</strong> 산하 100% 법인 직영 교육기관으로, 전국 18개 지점을 운영합니다. 디자인·영상·웹·IT·건축 등 디지털 분야 전문 교육을 통해 학생들의 <strong>진로탐색부터 실무역량 강화, 자격증 취득, 포트폴리오 제작, 취업 연계</strong>까지 이어지는 체계적인 교육 시스템을 운영하고 있습니다. <strong>2017년부터 2025년까지 9년 연속 올해의 브랜드대상</strong>(취업교육서비스 부문)을 수상한 검증된 교육 브랜드입니다.
-      </div>
-      <div class="timeline-section">
-        <div class="timeline-label">연혁 타임라인</div>
-        <div class="timeline-row">
-          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2010</div><div class="t-text">학원 설립</div></div>
-          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2013</div><div class="t-text">직업능력개발<br>훈련기관 인증</div></div>
-          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2017</div><div class="t-text">올해의<br>브랜드대상 첫 수상</div></div>
-          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2019</div><div class="t-text">우수 직업훈련<br>기관 선정</div></div>
-          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2022</div><div class="t-text">웹개발 · AI<br>과정 도입</div></div>
-          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2025</div><div class="t-text">브랜드대상<br>9년 연속 수상</div></div>
-          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2026</div><div class="t-text">학교 연계<br>교육 확대 운영</div></div>
+
+    <!-- 2-column: 좌측 소개+연혁+KPI / 우측 수상실적 -->
+    <div style="flex:1; display:grid; grid-template-columns:1fr 40%; min-height:0; overflow:hidden;">
+
+      <!-- 좌측 -->
+      <div style="display:flex; flex-direction:column; padding:1.3rem 2.8rem 1.3rem 4rem; gap:1rem; overflow:hidden; min-height:0; border-right:1px solid var(--line);">
+        <div class="intro-desc" style="flex-shrink:0;">
+          SBS아카데미컴퓨터아트학원 구월지점은 <strong>코리아교육그룹</strong> 산하 100% 법인 직영 교육기관으로, 전국 18개 지점을 운영합니다. 디자인·영상·웹·IT·건축 등 디지털 분야 전문 교육을 통해 학생들의 <strong>진로탐색부터 자격증 취득, 포트폴리오 제작, 취업 연계</strong>까지 이어지는 체계적인 교육 시스템을 운영합니다.
+        </div>
+        <div class="timeline-section" style="flex-shrink:0;">
+          <div class="timeline-label">연혁 타임라인</div>
+          <div class="timeline-row">
+            <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2010</div><div class="t-text">학원 설립</div></div>
+            <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2013</div><div class="t-text">훈련기관<br>인증</div></div>
+            <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2017</div><div class="t-text">브랜드대상<br>첫 수상</div></div>
+            <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2019</div><div class="t-text">우수훈련<br>기관 선정</div></div>
+            <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2022</div><div class="t-text">AI 과정<br>도입</div></div>
+            <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2025</div><div class="t-text">브랜드대상<br>9년 연속</div></div>
+            <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2026</div><div class="t-text">학교 연계<br>교육 확대</div></div>
+          </div>
+        </div>
+        <div class="kpi-row" style="flex-shrink:0;">
+          <div class="kpi-mini"><div class="kpi-mini-num">18개</div><div class="kpi-mini-label">전국 직영 지점</div><div class="kpi-mini-badge">100% 법인 직영</div></div>
+          <div class="kpi-mini"><div class="kpi-mini-num">8,500명+</div><div class="kpi-mini-label">누적 수강생</div><div class="kpi-mini-badge">설립 이후 누계</div></div>
+          <div class="kpi-mini"><div class="kpi-mini-num">72%</div><div class="kpi-mini-label">취업·진학 연계율</div><div class="kpi-mini-badge">포트폴리오 기반</div></div>
+          <div class="kpi-mini"><div class="kpi-mini-num">98%</div><div class="kpi-mini-label">수강생 만족도</div><div class="kpi-mini-badge">자체 설문 기준</div></div>
         </div>
       </div>
-      <div class="kpi-row">
-        <div class="kpi-mini"><div class="kpi-mini-num">18개</div><div class="kpi-mini-label">전국 직영 지점</div><div class="kpi-mini-badge">100% 법인 직영</div></div>
-        <div class="kpi-mini"><div class="kpi-mini-num">8,500명+</div><div class="kpi-mini-label">누적 수강생</div><div class="kpi-mini-badge">설립 이후 누계</div></div>
-        <div class="kpi-mini"><div class="kpi-mini-num">72%</div><div class="kpi-mini-label">취업 · 진학 연계율</div><div class="kpi-mini-badge">포트폴리오 기반</div></div>
-        <div class="kpi-mini"><div class="kpi-mini-num">9년</div><div class="kpi-mini-label">브랜드대상 연속 수상</div><div class="kpi-mini-badge">2017–2025</div></div>
-      </div>
-      <div class="award-row">
-        <div class="award-badge">
-          <div class="award-badge-icon">🏆</div>
-          <div class="award-badge-text"><strong>4년 연속</strong> 학원교육서비스 부문 브랜드가치 1위 선정</div>
+
+      <!-- 우측: 수상 실적 (네이비 패널) -->
+      <div style="background:var(--navy); display:flex; flex-direction:column; padding:1.6rem 2.2rem 1.6rem 2rem; gap:.9rem; overflow:hidden; min-height:0;">
+        <div style="font-size:.58rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--blue-m); flex-shrink:0;">Korea Edu Group · Award History</div>
+
+        <!-- 대표 수상 -->
+        <div class="award-featured">
+          <div class="award-featured-label">대표 수상 · Featured Award</div>
+          <div class="award-featured-num">9년 연속</div>
+          <div class="award-featured-title">대한민국 올해의 브랜드 대상</div>
+          <div class="award-featured-sub">2017–2025 · 취업교육서비스 부문 소비자 선정 1위</div>
         </div>
-        <div class="award-badge">
-          <div class="award-badge-icon">🎖️</div>
-          <div class="award-badge-text"><strong>2019 사랑나눔 사회공헌대상</strong> 교육부 장관상 수상</div>
+
+        <!-- 추가 수상 목록 -->
+        <div class="award-list">
+          <div class="award-list-label">추가 수상 내역 · Additional Awards</div>
+          <div class="award-list-item">
+            <div class="award-list-years">16년</div>
+            <div class="award-list-detail">
+              <div class="award-list-title">교육브랜드 대상 · 디자인그래픽교육 부문</div>
+              <div class="award-list-period">2010–2025 연속 수상</div>
+            </div>
+          </div>
+          <div class="award-list-item">
+            <div class="award-list-years">13년</div>
+            <div class="award-list-detail">
+              <div class="award-list-title">교육브랜드 대상 · 게임교육 부문</div>
+              <div class="award-list-period">2013–2025 연속 수상</div>
+            </div>
+          </div>
+          <div class="award-list-item">
+            <div class="award-list-years">12년</div>
+            <div class="award-list-detail">
+              <div class="award-list-title">교육브랜드 대상 · 뷰티교육 부문</div>
+              <div class="award-list-period">2014–2025 연속 수상</div>
+            </div>
+          </div>
+          <div class="award-list-item">
+            <div class="award-list-years">12년</div>
+            <div class="award-list-detail">
+              <div class="award-list-title">교육브랜드 대상 · 승무원·지상직교육 부문</div>
+              <div class="award-list-period">2014–2025 연속 수상</div>
+            </div>
+          </div>
+          <div class="award-list-item">
+            <div class="award-list-years">10년</div>
+            <div class="award-list-detail">
+              <div class="award-list-title">교육브랜드 대상 · 정보보안·IT교육 부문</div>
+              <div class="award-list-period">2016–2025 연속 수상</div>
+            </div>
+          </div>
+          <div class="award-list-item">
+            <div class="award-list-years">9년</div>
+            <div class="award-list-detail">
+              <div class="award-list-title">교육브랜드 대상 · 요리학원·직업훈련교육 부문</div>
+              <div class="award-list-period">2017–2025 연속 수상</div>
+            </div>
+          </div>
+          <div class="award-list-item">
+            <div class="award-list-years">8년</div>
+            <div class="award-list-detail">
+              <div class="award-list-title">교육브랜드 대상 · 이러닝취업교육 부문</div>
+              <div class="award-list-period">2018–2025 연속 수상</div>
+            </div>
+          </div>
+          <div class="award-list-item">
+            <div class="award-list-years">4년</div>
+            <div class="award-list-detail">
+              <div class="award-list-title">FIRST 브랜드 대상 · 취업교육서비스 만족도 1위</div>
+              <div class="award-list-period">2017–2020 연속 수상 · 브랜드스타 대상 동시 수상</div>
+            </div>
+          </div>
+          <div class="award-list-item">
+            <div class="award-list-years" style="font-size:.72rem; color:var(--blue-m);">특별</div>
+            <div class="award-list-detail">
+              <div class="award-list-title">사랑나눔 사회공헌대상 · 교육부 장관상</div>
+              <div class="award-list-period">2019 수상</div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       SLIDE 4 — 강점 01: 실무 중심 교육
-  ═══════════════════════════════════════════ -->
   <div class="slide" id="slide-4">
     <div class="str-header-strip">
       <div class="str-section-badge">02</div>
