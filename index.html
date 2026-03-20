@@ -5,1217 +5,551 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>대학주도형 아카데미 협업 제안 — SBS아카데미컴퓨터아트학원 구월</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --blue: #2563EB;
-  --blue-dark: #1D4ED8;
-  --blue-light: #DBEAFE;
-  --blue-mid: #3B82F6;
-  --navy: #0F172A;
-  --navy-mid: #1E293B;
-  --white: #FFFFFF;
-  --gray-100: #F1F5F9;
-  --gray-200: #E2E8F0;
-  --gray-400: #94A3B8;
-  --gray-600: #475569;
-  --gold: #F59E0B;
-  --gold-light: #FEF3C7;
-  --green-light: #DCFCE7;
-  --green: #16A34A;
+  --bg: #ffffff;
+  --fg: #0a0a0a;
+  --fg-2: #262626;
+  --fg-muted: #525252;
+  --fg-subtle: #a3a3a3;
+  --border: #e5e5e5;
+  --border-2: #d4d4d4;
+  --surface: #fafafa;
+  --surface-2: #f5f5f5;
+  --accent: #2563eb;
+  --accent-dim: #dbeafe;
+  --dark: #0a0a0a;
+  --dark-2: #171717;
 }
 
 html, body {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   overflow: hidden;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Inter', 'Noto Sans KR', -apple-system, sans-serif;
   background: #000;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Progress Bar */
+/* ── Progress Bar ───────────────────────────────── */
 #progress-bar {
-  position: fixed;
-  top: 0; left: 0;
-  height: 4px;
-  background: var(--blue);
-  z-index: 1000;
+  position: fixed; top: 0; left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 2000;
   transition: width 0.4s ease;
 }
 
-/* Slider */
-#slider {
-  width: 100%;
-  height: 100vh;
-  position: relative;
+/* ── Slider ─────────────────────────────────────── */
+#slider { width: 100%; height: 100vh; position: relative; overflow: hidden; }
+
+.slide {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  transition: transform 0.55s cubic-bezier(.77,0,.175,1), opacity 0.55s ease;
+  transform: translateX(100%);
+  opacity: 0;
   overflow: hidden;
 }
 
-.slide {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.5s cubic-bezier(.77,0,.175,1), opacity 0.5s ease;
-  transform: translateX(100%);
-  opacity: 0;
-  padding-bottom: 72px;
-}
+.slide.active { transform: translateX(0); opacity: 1; }
 
-.slide.active {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-/* Navigation */
+/* ── Navigation Pill ────────────────────────────── */
 #nav-pill {
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
+  position: fixed; bottom: 20px; left: 50%;
   transform: translateX(-50%);
-  background: rgba(15,23,42,0.92);
-  backdrop-filter: blur(12px);
-  border-radius: 50px;
-  padding: 10px 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  background: var(--dark);
+  border-radius: 100px;
+  padding: 8px 20px;
+  display: flex; align-items: center; gap: 14px;
   z-index: 1000;
 }
 
 #nav-pill button {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: #fff;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1rem;
+  background: rgba(255,255,255,0.1);
+  border: none; color: #fff;
+  width: 32px; height: 32px;
+  border-radius: 50%; cursor: pointer;
+  font-size: 0.9rem;
   display: flex; align-items: center; justify-content: center;
   transition: background 0.2s;
 }
-
-#nav-pill button:hover { background: var(--blue); }
+#nav-pill button:hover { background: var(--accent); }
 
 #slide-counter {
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  min-width: 60px;
-  text-align: center;
-}
-
-/* Dot Navigation */
-#dots-nav {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 1000;
-}
-
-.dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: rgba(37,99,235,0.3);
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-  border: 2px solid rgba(37,99,235,0.5);
-}
-
-.dot.active {
-  background: var(--blue);
-  transform: scale(1.3);
-  border-color: var(--blue);
-}
-
-/* ====== SLIDE 1 — COVER ====== */
-#slide-1 {
-  display: grid;
-  grid-template-columns: 60% 40%;
-  padding-bottom: 72px;
-}
-
-.cover-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 4rem 4rem 3rem 5rem;
-  position: relative;
-  background: #fff;
-}
-
-.cover-left-stripe {
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 6px;
-  background: var(--blue);
-}
-
-.cover-overline {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--blue);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-}
-
-.cover-h1 {
-  font-size: 3.6rem;
-  font-weight: 900;
-  line-height: 1.15;
-  color: var(--navy);
-  margin-bottom: 1.4rem;
-}
-
-.cover-h1 span { color: var(--blue); }
-
-.cover-subtitle {
-  font-size: 1.05rem;
-  font-weight: 400;
-  color: var(--gray-600);
-  margin-bottom: 1.8rem;
-  line-height: 1.6;
-}
-
-.cover-collab {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  background: var(--navy);
-  color: #fff;
-  padding: 0.9rem 1.4rem;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 1.8rem;
-  width: fit-content;
-}
-
-.cover-collab .x { color: var(--blue); font-size: 1.2rem; }
-
-.cover-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-}
-
-.cover-tag {
-  background: var(--blue-light);
-  color: var(--blue-dark);
-  padding: 0.4rem 0.9rem;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 600;
-}
-
-.cover-brand {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--navy);
-  padding-top: 1rem;
-  border-top: 1px solid var(--gray-200);
-}
-
-.cover-right {
-  background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 50%, #0F172A 100%);
-  clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.8rem;
-  padding: 3rem 3rem 3rem 5rem;
-}
-
-.stat-box {
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 16px;
-  padding: 1.8rem 2.5rem;
-  text-align: center;
-  width: 100%;
-  max-width: 260px;
-  backdrop-filter: blur(8px);
-}
-
-.stat-num {
-  font-size: 3rem;
-  font-weight: 900;
-  color: #fff;
-  line-height: 1;
-  margin-bottom: 0.4rem;
-}
-
-.stat-label {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: rgba(255,255,255,0.8);
-  margin-bottom: 0.25rem;
-}
-
-.stat-sub {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.55);
-  font-weight: 400;
-}
-
-/* ====== COMMON SLIDE HEADER ====== */
-.slide-header {
-  background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
-  padding: 1.4rem 3.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-shrink: 0;
-}
-
-.slide-num {
-  background: var(--blue);
-  color: #fff;
-  width: 38px; height: 38px;
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 800;
-  flex-shrink: 0;
-}
-
-.slide-title {
-  font-size: 1.65rem;
-  font-weight: 900;
-  color: var(--navy);
-  letter-spacing: -0.02em;
-}
-
-.slide-title span { color: var(--blue); }
-
-.slide-subtitle {
-  font-size: 0.9rem;
-  color: var(--gray-400);
-  margin-left: auto;
-  font-weight: 400;
-}
-
-.slide-subheader {
-  padding: 0.75rem 3.5rem;
-  background: var(--gray-100);
-  font-size: 0.9rem;
-  color: var(--gray-600);
-  font-weight: 400;
-  border-bottom: 1px solid var(--gray-200);
-  flex-shrink: 0;
-}
-
-/* ====== SLIDE 2 — TOC ====== */
-.toc-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  flex: 1;
-  padding: 2rem 3.5rem;
-  gap: 1.25rem;
-}
-
-.toc-card {
-  background: #fff;
-  border: 2px solid var(--gray-200);
-  border-radius: 14px;
-  padding: 2rem 2.25rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.toc-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 5px;
-  background: var(--blue);
-  border-radius: 5px 0 0 5px;
-}
-
-.toc-card:hover {
-  border-color: var(--blue);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(37,99,235,0.15);
-}
-
-.toc-num {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--blue-light);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-.toc-card-title {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--navy);
-}
-
-.toc-card-desc {
-  font-size: 0.92rem;
-  color: var(--gray-600);
-  line-height: 1.65;
-  font-weight: 400;
-}
-
-/* ====== SLIDE 3 — 사업개요 ====== */
-.slide-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 3.5rem 1.5rem;
-  gap: 1.4rem;
-  overflow: hidden;
-}
-
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.4rem;
-  flex: 1;
-}
-
-.three-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.1rem;
-}
-
-.five-col {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
-}
-
-.info-card {
-  background: var(--gray-100);
-  border-radius: 14px;
-  padding: 2rem 2.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  height: 100%;
-}
-
-.info-card.blue-card {
-  background: var(--blue-light);
-  border-left: 4px solid var(--blue);
-}
-
-.info-card-title {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: var(--navy);
-  border-bottom: 2px solid var(--blue);
-  padding-bottom: 0.6rem;
-  margin-bottom: 0.25rem;
-}
-
-.info-card-body {
-  font-size: 1rem;
-  color: var(--gray-600);
-  line-height: 1.8;
-  font-weight: 400;
-}
-
-.structure-item {
-  background: var(--navy);
-  border-radius: 12px;
-  padding: 1.4rem 1rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.structure-item .s-label {
-  font-size: 0.78rem;
-  color: var(--gray-400);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.structure-item .s-value {
-  font-size: 0.95rem;
-  color: #fff;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.feature-item {
-  background: var(--blue);
-  border-radius: 12px;
-  padding: 1.2rem 1.4rem;
-  color: #fff;
-  font-size: 0.97rem;
-  font-weight: 700;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ====== SLIDE 4 — 협력 구조 ====== */
-.collab-wrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.collab-grid {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
-  gap: 0.75rem;
-  flex: 1;
-  align-items: stretch;
-  padding: 1.5rem 3.5rem;
-  min-height: 0;
-}
-
-.collab-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--blue);
-  font-size: 2rem;
-  flex-shrink: 0;
-}
-
-.partner-card {
-  border-radius: 14px;
-  padding: 2rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  height: 100%;
-}
-
-.partner-card.blue-bg { background: var(--blue-light); }
-.partner-card.gold-bg { background: var(--gold-light); }
-.partner-card.green-bg { background: var(--green-light); }
-
-.partner-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--blue);
-  background: rgba(37,99,235,0.12);
-  padding: 0.3rem 0.7rem;
-  border-radius: 20px;
-  width: fit-content;
-}
-
-.partner-badge.gold { color: #92400E; background: rgba(245,158,11,0.15); }
-.partner-badge.green { color: #14532D; background: rgba(22,163,74,0.15); }
-
-.partner-name {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--navy);
-  letter-spacing: -0.02em;
-}
-
-.partner-sub {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--gray-600);
-  margin-bottom: 0.4rem;
-}
-
-.partner-items {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  flex: 1;
-}
-
-.partner-items li {
-  font-size: 0.92rem;
-  color: var(--navy-mid);
-  padding-left: 1.1rem;
-  position: relative;
-  line-height: 1.6;
-  font-weight: 400;
-}
-
-.partner-items li::before {
-  content: '\25B8';
-  position: absolute;
-  left: 0;
-  color: var(--blue);
-}
-
-.strength-bar {
-  background: var(--navy);
-  border-radius: 14px;
-  padding: 1.4rem 2.5rem;
-  flex-shrink: 0;
-  margin: 0 3.5rem 1.5rem;
-}
-
-.strength-bar-title {
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--blue-mid);
-  margin-bottom: 0.5rem;
-}
-
-.strength-bar-body {
-  font-size: 0.92rem;
-  color: rgba(255,255,255,0.8);
-  line-height: 1.7;
-  font-weight: 400;
-}
-
-/* ====== SLIDE 5 — 과정 운영 ====== */
-.field-section {
-  border-radius: 14px;
-  padding: 1.6rem 1.8rem;
-  height: 100%;
-}
-
-.field-section.blue-field { background: var(--blue-light); border: 2px solid rgba(37,99,235,0.3); }
-.field-section.gray-field { background: var(--gray-100); border: 2px solid var(--gray-200); }
-
-.field-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--navy);
-  margin-bottom: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.field-count {
-  background: var(--blue);
-  color: #fff;
-  padding: 0.2rem 0.6rem;
-  border-radius: 20px;
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-
-.field-count.gray { background: var(--gray-600); }
-
-.tags-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.field-tag {
-  background: var(--blue);
-  color: #fff;
-  padding: 0.32rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 600;
-}
-
-.field-tag.gray-tag {
-  background: var(--gray-600);
-  color: #fff;
-}
-
-.course-card {
-  background: #fff;
-  border: 2px solid var(--gray-200);
-  border-radius: 14px;
-  padding: 1.8rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  height: 100%;
-  border-top: 4px solid var(--blue);
-}
-
-.course-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--navy);
-  line-height: 1.4;
-}
-
-.course-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.7rem;
-  font-size: 0.87rem;
-}
-
-.course-row-label {
-  font-weight: 700;
-  color: var(--blue);
-  min-width: 60px;
-  flex-shrink: 0;
-}
-
-.course-row-value {
-  color: var(--gray-600);
-  font-weight: 400;
-  line-height: 1.5;
-}
-
-.fusion-badge {
-  background: var(--navy);
-  color: #fff;
-  padding: 0.35rem 0.9rem;
-  border-radius: 20px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  width: fit-content;
-  margin-top: auto;
-}
-
-/* ====== SLIDE 6 — 웹/콘텐츠 ====== */
-.big-two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  flex: 1;
-  padding: 1.5rem 2.5rem;
-}
-
-.big-card {
-  border-radius: 16px;
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  height: 100%;
-}
-
-.big-card.blue-card-full { background: var(--blue); color: #fff; }
-.big-card.light-card { background: var(--gray-100); border: 2px solid var(--gray-200); }
-
-.big-card-badge {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: rgba(255,255,255,0.2);
-  color: #fff;
-  padding: 0.3rem 0.9rem;
-  border-radius: 20px;
-  width: fit-content;
-}
-
-.big-card-badge.dark { background: var(--navy); color: var(--blue-mid); }
-
-.big-card-title {
-  font-size: 2rem;
-  font-weight: 900;
-  line-height: 1.2;
-}
-
-.big-card-desc {
-  font-size: 1rem;
-  line-height: 1.7;
-  opacity: 0.85;
-  font-weight: 400;
-  flex: 1;
-}
-
-.big-card-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.meta-row {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  font-size: 0.9rem;
-}
-
-.meta-label { font-weight: 700; min-width: 80px; }
-.meta-value { font-weight: 400; }
-
-.cert-badge {
-  background: var(--gold);
-  color: #fff;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  width: fit-content;
-  margin-top: 0.5rem;
-}
-
-/* ====== SLIDE 7 — AI 콘텐츠 표 ====== */
-.full-table-wrap {
-  flex: 1;
-  padding: 1.5rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.styled-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 14px;
-  overflow: hidden;
-  flex: 1;
-  font-size: 1rem;
-}
-
-.styled-table thead tr { background: var(--navy); }
-
-.styled-table thead th {
-  color: #fff;
-  font-weight: 700;
-  padding: 1.2rem 1.5rem;
-  text-align: left;
-  font-size: 1rem;
-}
-
-.styled-table tbody tr { background: #fff; transition: background 0.15s; }
-.styled-table tbody tr:nth-child(even) { background: var(--gray-100); }
-.styled-table tbody tr:hover { background: var(--blue-light); }
-
-.styled-table tbody td {
-  padding: 1.3rem 1.5rem;
-  color: var(--navy);
-  font-size: 0.97rem;
-  border-bottom: 1px solid var(--gray-200);
-  font-weight: 400;
-  vertical-align: middle;
-}
-
-.styled-table tbody td:first-child { font-weight: 700; }
-
-.type-badge {
-  background: var(--blue-light);
-  color: var(--blue-dark);
-  padding: 0.25rem 0.7rem;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
-.type-badge.special { background: var(--gold-light); color: #92400E; }
-
-/* ====== SLIDE 8 — 국비 과정 ====== */
-.three-col-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.5rem;
-  flex: 1;
-  padding: 1.5rem 2.5rem;
-}
-
-.course-big-card {
-  border-radius: 16px;
-  padding: 2.2rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  height: 100%;
-}
-
-.course-big-card.card-blue { background: var(--blue); color: #fff; }
-.course-big-card.card-navy { background: var(--navy); color: #fff; }
-.course-big-card.card-light { background: var(--gray-100); border: 2px solid var(--gray-200); }
-
-.course-level {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  opacity: 0.7;
-}
-
-.course-big-title {
-  font-size: 1.5rem;
-  font-weight: 900;
-  line-height: 1.25;
-}
-
-.course-tools {
-  font-size: 0.92rem;
-  opacity: 0.85;
-  font-weight: 400;
-  line-height: 1.5;
-}
-
-.course-info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.7rem;
-  margin-top: auto;
-}
-
-.course-info-item {
-  background: rgba(255,255,255,0.12);
-  border-radius: 8px;
-  padding: 0.7rem 0.9rem;
-}
-
-.course-info-item.dark-item { background: var(--gray-200); }
-
-.course-info-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  opacity: 0.65;
-  margin-bottom: 0.2rem;
-}
-
-.course-info-value {
-  font-size: 0.88rem;
-  font-weight: 700;
-}
-
-.result-box {
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-  padding: 0.9rem 1rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-}
-
-/* ====== SLIDE 9 — 수익 구조 ====== */
-.kpi-two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  flex: 1;
-  padding: 1.5rem 2.5rem 1rem;
-}
-
-.kpi-card {
-  border-radius: 16px;
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  height: 100%;
-}
-
-.kpi-card.kpi-blue { background: var(--blue); color: #fff; }
-.kpi-card.kpi-gold { background: #B45309; color: #fff; }
-
-.kpi-label {
-  font-size: 1rem;
-  font-weight: 700;
-  opacity: 0.9;
-}
-
-.kpi-formula {
-  font-size: 0.85rem;
-  opacity: 0.7;
-  font-weight: 400;
-  line-height: 1.5;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  padding-top: 0.8rem;
-}
-
-.kpi-num {
-  font-size: 5rem;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.kpi-detail {
-  font-size: 0.9rem;
-  opacity: 0.8;
-  font-weight: 400;
-}
-
-.kpi-up {
-  font-size: 1rem;
-  font-weight: 700;
-  opacity: 0.95;
-  background: rgba(255,255,255,0.15);
-  border-radius: 8px;
-  padding: 0.6rem 1rem;
-  margin-top: auto;
-}
-
-.flow-bar {
-  background: var(--gray-100);
-  border-radius: 12px;
-  padding: 1rem 2rem;
-  margin: 0 2.5rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-}
-
-.flow-node {
-  background: var(--navy);
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.flow-node.blue-node { background: var(--blue); }
-.flow-arrow { color: var(--blue); font-size: 1.2rem; font-weight: 700; }
-.flow-note { font-size: 0.78rem; color: var(--gray-600); font-weight: 400; margin-left: auto; }
-
-/* ====== SLIDE 10 — 수익 배분 ====== */
-.revenue-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.2rem;
-  flex: 1;
-  padding: 1.2rem 2.5rem 0.8rem;
-}
-
-.revenue-card {
-  background: var(--gray-100);
-  border-radius: 14px;
-  padding: 1.8rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  height: 100%;
-}
-
-.revenue-card-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--navy);
-  border-bottom: 2px solid var(--blue);
-  padding-bottom: 0.5rem;
-}
-
-.bar-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.bar-label-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.87rem;
-  font-weight: 600;
-  color: var(--navy);
-}
-
-.bar-track {
-  height: 14px;
-  background: var(--gray-200);
-  border-radius: 7px;
-  overflow: hidden;
-}
-
-.bar-fill { height: 100%; border-radius: 7px; background: var(--blue); }
-.bar-fill.gold-fill { background: var(--gold); }
-.bar-fill.green-fill { background: var(--green); }
-.bar-fill.navy-fill { background: var(--navy); }
-.bar-fill.red-fill { background: #EF4444; }
-.bar-fill.teal-fill { background: #0891B2; }
-
-.big-num-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.2rem;
-  padding: 0 2.5rem 1rem;
-  flex-shrink: 0;
-}
-
-.big-num-card {
-  border-radius: 14px;
-  padding: 1.4rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.big-num-card.gold-num { background: var(--gold); color: #fff; }
-.big-num-card.blue-num { background: var(--blue); color: #fff; }
-.big-num-label { font-size: 0.85rem; font-weight: 600; opacity: 0.85; }
-.big-num-value { font-size: 2.8rem; font-weight: 900; line-height: 1; }
-.big-num-detail { font-size: 0.8rem; opacity: 0.75; font-weight: 400; }
-
-/* ====== SLIDE 11 — 기대효과 ====== */
-.effect-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1.2rem;
-  flex: 1;
-  padding: 1.5rem 2.5rem;
-}
-
-.effect-card {
-  background: #fff;
-  border: 2px solid var(--gray-200);
-  border-radius: 16px;
-  padding: 2rem 2.2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.effect-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: var(--blue);
-}
-
-.effect-icon { font-size: 2.2rem; line-height: 1; }
-
-.effect-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--navy);
-}
-
-.effect-items {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-}
-
-.effect-items li {
-  font-size: 0.93rem;
-  color: var(--gray-600);
-  padding-left: 1.2rem;
-  position: relative;
-  line-height: 1.55;
-  font-weight: 400;
-}
-
-.effect-items li::before {
-  content: '\2713';
-  position: absolute;
-  left: 0;
-  color: var(--blue);
-  font-weight: 700;
-}
-
-/* ====== SLIDE 12 — 추진 일정 ====== */
-.timeline-wrap {
-  flex: 1;
-  padding: 1.5rem 2rem 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.steps-row {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.7rem;
-  flex: 1;
-}
-
-.step-card {
-  border-radius: 14px;
-  padding: 1.5rem 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  height: 100%;
-}
-
-.step-card:nth-child(odd) { background: var(--navy); }
-.step-card:nth-child(even) { background: var(--blue); }
-
-.step-num {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.5);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.step-title {
-  font-size: 0.97rem;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.35;
-}
-
-.step-org {
-  font-size: 0.75rem;
   color: rgba(255,255,255,0.7);
-  font-weight: 400;
-  line-height: 1.4;
-  margin-top: auto;
-}
-
-.note-box {
-  background: var(--gray-100);
-  border-radius: 12px;
-  padding: 1.2rem 2rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-  flex-shrink: 0;
-}
-
-.note-item { display: flex; flex-direction: column; gap: 0.2rem; }
-
-.note-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--blue);
-  text-transform: uppercase;
+  font-size: 0.78rem; font-weight: 500;
+  min-width: 48px; text-align: center;
+  font-family: 'Inter', monospace;
   letter-spacing: 0.05em;
 }
 
-.note-value {
-  font-size: 0.88rem;
-  color: var(--navy);
+/* ── Dot Navigation ─────────────────────────────── */
+#dots-nav {
+  position: fixed; right: 18px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 7px;
+  z-index: 1000;
+}
+.dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--border-2);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.dot.active { background: var(--accent); height: 18px; border-radius: 3px; }
+
+/* ── Common Slide Header ────────────────────────── */
+.slide-header {
+  padding: 1.4rem 3rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1.4rem;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+.slide-badge {
+  font-family: 'Inter', monospace;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 0.3rem 0.7rem; border-radius: 4px;
+  flex-shrink: 0;
+}
+.slide-title {
+  font-size: 1.45rem; font-weight: 700;
+  color: var(--fg); letter-spacing: -0.025em;
+}
+.slide-en {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem; font-weight: 400;
+  color: var(--fg-subtle); margin-left: auto;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.slide-subheader {
+  padding: 0.6rem 3rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem; color: var(--fg-muted);
+  font-weight: 400; flex-shrink: 0;
+  background: var(--surface);
+  letter-spacing: 0.01em;
+}
+
+/* ── SLIDE 1 — COVER ────────────────────────────── */
+#slide-1 {
+  display: grid;
+  grid-template-columns: 58% 42%;
+  overflow: hidden;
+}
+.cover-left {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 4rem 4rem 3.5rem 5rem;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.cover-accent-line {
+  position: absolute; left: 0; top: 20%; bottom: 20%;
+  width: 3px; background: var(--accent);
+}
+.cover-eyebrow {
+  font-family: 'Inter', monospace;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 2rem;
+}
+.cover-h1 {
+  font-size: 3.8rem; font-weight: 800;
+  line-height: 1.08; letter-spacing: -0.04em;
+  color: var(--fg); margin-bottom: 2rem;
+}
+.cover-h1 em { font-style: normal; color: var(--accent); }
+.cover-rule {
+  width: 48px; height: 2px;
+  background: var(--border-2); margin-bottom: 1.8rem;
+}
+.cover-desc {
+  font-size: 0.92rem; color: var(--fg-muted);
+  line-height: 1.75; margin-bottom: 2rem; font-weight: 400;
+}
+.cover-collab {
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 1rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.88rem; font-weight: 600;
+  color: var(--fg-2); margin-bottom: 2rem;
+  width: fit-content;
+}
+.cover-collab .x { color: var(--accent); font-weight: 800; }
+.cover-chapters {
+  display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem;
+  font-size: 0.78rem; color: var(--fg-subtle);
+  font-weight: 400; letter-spacing: 0.01em;
+}
+.cover-chapters span { white-space: nowrap; }
+.cover-chapters span::before { content: '— '; color: var(--border-2); }
+.cover-right {
+  background: var(--dark);
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  padding: 4rem 3.5rem 4rem 4.5rem;
+  gap: 0;
+}
+.stat-item {
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  width: 100%;
+}
+.stat-item:first-child { padding-top: 0; }
+.stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+.stat-label-sm {
+  font-family: 'Inter', monospace;
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); margin-bottom: 0.6rem;
+}
+.stat-num-lg {
+  font-size: 4rem; font-weight: 800;
+  color: #fff; line-height: 1;
+  letter-spacing: -0.04em; margin-bottom: 0.4rem;
+}
+.stat-num-lg span { color: var(--accent); }
+.stat-sub-sm {
+  font-size: 0.82rem; color: rgba(255,255,255,0.45);
   font-weight: 400;
-  line-height: 1.5;
 }
 
-/* ====== RESPONSIVE + PRINT ====== */
-@media (max-width: 768px) {
-  #slide-1 { grid-template-columns: 1fr; }
-  .cover-right { display: none; }
-  .cover-h1 { font-size: 2.4rem; }
-  .two-col, .big-two-col, .kpi-two-col, .revenue-grid, .effect-grid { grid-template-columns: 1fr; }
-  .three-col-cards, .steps-row { grid-template-columns: 1fr 1fr; }
+/* ── SLIDE 2 — TOC ──────────────────────────────── */
+.toc-body {
+  flex: 1; display: flex; flex-direction: column;
+  padding: 2.5rem 3rem; justify-content: center;
+  gap: 0;
+}
+.toc-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.toc-item {
+  display: flex; align-items: flex-start; gap: 1.6rem;
+  padding: 1.6rem 2rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.toc-item:nth-child(odd) { border-right: 1px solid var(--border); }
+.toc-item:nth-child(5),
+.toc-item:nth-child(6) { border-bottom: none; }
+.toc-item:hover { background: var(--surface); }
+.toc-idx {
+  font-family: 'Inter', monospace;
+  font-size: 2rem; font-weight: 800;
+  color: var(--border);
+  line-height: 1; flex-shrink: 0;
+  letter-spacing: -0.04em;
+  transition: color 0.15s;
+  width: 2.5rem;
+}
+.toc-item:hover .toc-idx { color: var(--accent); }
+.toc-text { display: flex; flex-direction: column; gap: 0.4rem; padding-top: 0.2rem; }
+.toc-ttl { font-size: 1rem; font-weight: 700; color: var(--fg); }
+.toc-dsc { font-size: 0.8rem; color: var(--fg-muted); line-height: 1.6; font-weight: 400; }
+
+/* ── SLIDE 3 — 사업개요 ─────────────────────────── */
+.s-body { flex: 1; display: flex; flex-direction: column; gap: 1.2rem; padding: 1.8rem 3rem 1.5rem; overflow: hidden; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; flex: 1; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
+.five-col { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+
+.info-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 1.8rem 2rem;
+  display: flex; flex-direction: column; gap: 0.9rem;
+  height: 100%; border-left: 3px solid var(--accent);
+}
+.info-ttl {
+  font-size: 0.82rem; font-weight: 700;
+  color: var(--accent); letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.info-body {
+  font-size: 0.9rem; color: var(--fg-muted);
+  line-height: 1.85; font-weight: 400;
 }
 
+.meta-block {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 0; overflow: hidden;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+}
+.meta-cell {
+  padding: 1.1rem 1.2rem;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+.meta-cell:last-child { border-right: none; }
+.meta-lbl {
+  font-size: 0.65rem; font-weight: 600; color: var(--fg-subtle);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.meta-val { font-size: 0.88rem; font-weight: 600; color: var(--fg); }
+
+.feat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.feat-item {
+  background: var(--fg); color: #fff;
+  border-radius: 6px; padding: 0.85rem 1.2rem;
+  font-size: 0.85rem; font-weight: 600;
+  text-align: center; letter-spacing: 0.01em;
+}
+
+/* ── SLIDE 4 — 협력 구조 ────────────────────────── */
+.collab-body { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.collab-grid {
+  display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
+  gap: 0; flex: 1; align-items: stretch;
+  padding: 1.5rem 3rem;
+}
+.collab-arrow {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--border-2); font-size: 1rem;
+}
+.partner-card {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 1.8rem 2rem; display: flex; flex-direction: column;
+  gap: 0.8rem; height: 100%;
+}
+.p-type {
+  font-family: 'Inter', monospace;
+  font-size: 0.63rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.p-name { font-size: 1.3rem; font-weight: 700; color: var(--fg); }
+.p-org { font-size: 0.78rem; color: var(--fg-muted); font-weight: 400; }
+.p-rule { border: none; border-top: 1px solid var(--border); margin: 0.2rem 0; }
+.p-items { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; flex: 1; }
+.p-items li {
+  font-size: 0.84rem; color: var(--fg-muted);
+  padding-left: 1rem; position: relative;
+  line-height: 1.55; font-weight: 400;
+}
+.p-items li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.strength-bar {
+  background: var(--surface); border-top: 1px solid var(--border);
+  padding: 1.2rem 3rem; flex-shrink: 0;
+}
+.strength-label {
+  font-size: 0.68rem; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem;
+}
+.strength-text { font-size: 0.85rem; color: var(--fg-muted); line-height: 1.75; font-weight: 400; }
+
+/* ── SLIDE 5 — 과정 운영 ────────────────────────── */
+.tags-section {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  padding: 1.2rem 1.6rem; border: 1px solid var(--border);
+  border-radius: 6px; height: 100%;
+}
+.tags-section.accent { border-left: 3px solid var(--accent); }
+.tags-label {
+  font-size: 0.72rem; font-weight: 700; color: var(--fg-muted);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.tag-count {
+  background: var(--accent); color: #fff;
+  padding: 0.1rem 0.5rem; border-radius: 4px;
+  font-size: 0.65rem; font-weight: 700;
+}
+.tag-count.gray { background: var(--border-2); color: var(--fg-muted); }
+.tags-wrap { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag {
+  border: 1px solid var(--accent);
+  color: var(--accent); padding: 0.25rem 0.7rem;
+  border-radius: 4px; font-size: 0.78rem; font-weight: 500;
+}
+.tag.gray { border-color: var(--border-2); color: var(--fg-muted); }
+
+.course-card {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 1.6rem 1.8rem; display: flex; flex-direction: column;
+  gap: 0.8rem; height: 100%; border-top: 2px solid var(--accent);
+}
+.course-ttl { font-size: 0.95rem; font-weight: 700; color: var(--fg); line-height: 1.4; }
+.course-row { display: flex; gap: 0.8rem; font-size: 0.82rem; align-items: flex-start; }
+.c-lbl { font-weight: 600; color: var(--accent); min-width: 56px; flex-shrink: 0; }
+.c-val { color: var(--fg-muted); font-weight: 400; line-height: 1.5; }
+.fusion-tag {
+  margin-top: auto; font-size: 0.72rem; font-weight: 700;
+  color: var(--fg); background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 0.3rem 0.7rem; width: fit-content;
+  letter-spacing: 0.02em;
+}
+
+/* ── SLIDE 9 — 수익 구조 ────────────────────────── */
+.kpi-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.2rem; flex: 1; padding: 1.5rem 3rem 1rem;
+}
+.kpi-card {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 2.2rem 2.5rem; display: flex; flex-direction: column;
+  gap: 0.7rem; height: 100%;
+}
+.kpi-card.dark { background: var(--dark); border-color: transparent; }
+.kpi-type {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--fg-subtle);
+}
+.kpi-card.dark .kpi-type { color: rgba(255,255,255,0.35); }
+.kpi-formula {
+  font-size: 0.78rem; color: var(--fg-muted); font-weight: 400;
+  line-height: 1.6; padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+.kpi-card.dark .kpi-formula { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.45); }
+.kpi-num {
+  font-size: 5.5rem; font-weight: 800; line-height: 1;
+  letter-spacing: -0.04em; color: var(--fg);
+}
+.kpi-card.dark .kpi-num { color: #fff; }
+.kpi-detail { font-size: 0.8rem; color: var(--fg-muted); font-weight: 400; }
+.kpi-card.dark .kpi-detail { color: rgba(255,255,255,0.4); }
+.kpi-annual {
+  margin-top: auto; font-size: 0.85rem; font-weight: 600;
+  color: var(--accent); background: var(--accent-dim);
+  border-radius: 4px; padding: 0.55rem 1rem;
+}
+.kpi-card.dark .kpi-annual { background: rgba(37,99,235,0.2); }
+
+.flow-bar {
+  background: var(--surface); border-top: 1px solid var(--border);
+  padding: 0.9rem 3rem; flex-shrink: 0;
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+}
+.flow-node {
+  background: var(--fg); color: #fff;
+  padding: 0.4rem 0.9rem; border-radius: 4px;
+  font-size: 0.78rem; font-weight: 600; white-space: nowrap;
+}
+.flow-node.accent { background: var(--accent); }
+.flow-arr { color: var(--border-2); font-size: 0.9rem; }
+.flow-note { font-size: 0.75rem; color: var(--fg-subtle); margin-left: auto; }
+
+/* ── SLIDE 10 — 수익 배분 ───────────────────────── */
+.rev-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.2rem; flex: 1; padding: 1.5rem 3rem 0.8rem;
+}
+.rev-card {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 1.8rem 2rem; display: flex; flex-direction: column;
+  gap: 1rem; height: 100%;
+}
+.rev-ttl {
+  font-size: 0.72rem; font-weight: 700; color: var(--fg);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding-bottom: 0.8rem; border-bottom: 1px solid var(--border);
+}
+.bar-item { display: flex; flex-direction: column; gap: 0.3rem; }
+.bar-row { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--fg); font-weight: 500; }
+.bar-track { height: 5px; background: var(--surface-2); border-radius: 10px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 10px; background: var(--accent); }
+.bar-fill.amber { background: #d97706; }
+.bar-fill.green { background: #16a34a; }
+.bar-fill.dark { background: var(--dark); }
+.bar-fill.teal { background: #0891b2; }
+.bar-fill.red { background: #dc2626; }
+.rev-note { font-size: 0.78rem; color: var(--fg-subtle); line-height: 1.7; font-weight: 400; }
+
+.rev-num-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.2rem; padding: 0 3rem 1.2rem; flex-shrink: 0;
+}
+.rev-num-card {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 1.2rem 1.8rem; display: flex; flex-direction: column; gap: 0.2rem;
+}
+.rev-num-lbl { font-size: 0.68rem; font-weight: 600; color: var(--fg-subtle); text-transform: uppercase; letter-spacing: 0.1em; }
+.rev-num-val { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.04em; color: var(--fg); }
+.rev-num-val.accent { color: var(--accent); }
+.rev-num-detail { font-size: 0.75rem; color: var(--fg-muted); font-weight: 400; }
+
+/* ── SLIDE 11 — 기대효과 ────────────────────────── */
+.effect-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr; gap: 1.2rem; flex: 1;
+  padding: 1.5rem 3rem;
+}
+.effect-card {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 1.8rem 2rem; display: flex;
+  flex-direction: column; gap: 0.8rem; height: 100%;
+}
+.effect-card:first-child { background: var(--dark); border-color: transparent; }
+.e-ttl { font-size: 1rem; font-weight: 700; color: var(--fg); }
+.effect-card:first-child .e-ttl { color: #fff; }
+.e-items { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.e-items li {
+  font-size: 0.85rem; color: var(--fg-muted);
+  padding-left: 1.1rem; position: relative;
+  line-height: 1.55; font-weight: 400;
+}
+.effect-card:first-child .e-items li { color: rgba(255,255,255,0.6); }
+.e-items li::before { content: '—'; position: absolute; left: 0; color: var(--border-2); font-weight: 400; }
+.effect-card:first-child .e-items li::before { color: rgba(255,255,255,0.2); }
+.e-num {
+  font-size: 3rem; font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1; color: var(--accent); margin-bottom: 0.2rem;
+}
+
+/* ── SLIDE 12 — 추진 일정 ───────────────────────── */
+.timeline-body { flex: 1; display: flex; flex-direction: column; gap: 1.2rem; padding: 1.8rem 3rem 1.2rem; overflow: hidden; }
+.steps-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; flex: 1; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.step-card {
+  padding: 1.4rem 1.2rem; display: flex; flex-direction: column;
+  gap: 0.7rem; height: 100%; border-right: 1px solid var(--border);
+}
+.step-card:last-child { border-right: none; }
+.step-card:nth-child(odd) { background: var(--dark); }
+.step-card:nth-child(even) { background: var(--surface); }
+.step-num {
+  font-family: 'Inter', monospace;
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.step-card:nth-child(odd) .step-num { color: rgba(255,255,255,0.3); }
+.step-card:nth-child(even) .step-num { color: var(--fg-subtle); }
+.step-ttl { font-size: 0.88rem; font-weight: 700; line-height: 1.35; }
+.step-card:nth-child(odd) .step-ttl { color: #fff; }
+.step-card:nth-child(even) .step-ttl { color: var(--fg); }
+.step-org { font-size: 0.72rem; line-height: 1.5; margin-top: auto; }
+.step-card:nth-child(odd) .step-org { color: rgba(255,255,255,0.45); }
+.step-card:nth-child(even) .step-org { color: var(--fg-muted); }
+
+.note-bar {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 1rem 1.5rem;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem; flex-shrink: 0;
+}
+.note-lbl {
+  font-size: 0.65rem; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem;
+}
+.note-val { font-size: 0.83rem; color: var(--fg); font-weight: 400; line-height: 1.5; }
+
+/* ── Print ──────────────────────────────────────── */
 @media print {
   nav, #nav-pill, #dots-nav, #progress-bar { display: none !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .slide, .toc-card, .info-card, .effect-card, .kpi-card, tr { page-break-inside: avoid; break-inside: avoid; }
+  .slide, .toc-item, .info-card, .effect-card, .kpi-card, .partner-card, tr { page-break-inside: avoid; break-inside: avoid; }
   h1, h2, h3, .slide-title { page-break-after: avoid; }
   a[href]::after { content: none !important; }
 }
@@ -1245,460 +579,468 @@ html, body {
 
 <div id="slider">
 
-  <!-- SLIDE 1 — COVER -->
-  <div class="slide active" id="slide-1">
-    <div class="cover-left">
-      <div class="cover-left-stripe"></div>
-      <div class="cover-overline">K-DIGITAL TRAINING &middot; 대학주도형 아카데미</div>
-      <h1 class="cover-h1">대학주도형<br>아카데미<br><span>협업 제안</span></h1>
-      <p class="cover-subtitle">K-디지털 트레이닝 사업 — 대학 × 훈련기관 전략적 파트너십</p>
-      <div class="cover-collab">
-        <span>0000대학교</span>
-        <span class="x">×</span>
-        <span>SBS아카데미컴퓨터아트학원 구월</span>
-      </div>
-      <div class="cover-tags">
-        <span class="cover-tag">사업개요</span>
-        <span class="cover-tag">협력 제안 구조</span>
-        <span class="cover-tag">과정 운영 방안</span>
-        <span class="cover-tag">수익 구조</span>
-        <span class="cover-tag">기대효과</span>
-        <span class="cover-tag">사업 추진 일정</span>
-      </div>
-      <div class="cover-brand">SBS아카데미컴퓨터아트학원 구월</div>
+<!-- ■ SLIDE 1 — COVER -->
+<div class="slide active" id="slide-1">
+  <div class="cover-left">
+    <div class="cover-accent-line"></div>
+    <div class="cover-eyebrow">K-Digital Training · 대학주도형 아카데미</div>
+    <h1 class="cover-h1">대학주도형<br>아카데미<br><em>협업 제안</em></h1>
+    <div class="cover-rule"></div>
+    <p class="cover-desc">K-디지털 트레이닝 사업 — 대학 × 훈련기관 전략적 파트너십<br>고용노동부 주관 디지털 신기술 인재 양성 공동 운영</p>
+    <div class="cover-collab">
+      <span>0000대학교</span>
+      <span class="x">×</span>
+      <span>SBS아카데미컴퓨터아트학원 구월</span>
     </div>
-    <div class="cover-right">
-      <div class="stat-box">
-        <div class="stat-num">960h+</div>
-        <div class="stat-label">교육 시간</div>
-        <div class="stat-sub">6개월</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">7.3억+</div>
-        <div class="stat-label">융합분야 연간 수익</div>
-        <div class="stat-sub">연 2회 기준</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">3년</div>
-        <div class="stat-label">최대 지속 운영</div>
-        <div class="stat-sub">훈련 개시 후</div>
-      </div>
+    <div class="cover-chapters">
+      <span>KDT 사업개요</span>
+      <span>협력 제안 구조</span>
+      <span>과정 운영 방안</span>
+      <span>수익 구조</span>
+      <span>기대효과</span>
+      <span>사업 추진 일정</span>
     </div>
   </div>
-
-  <!-- SLIDE 2 — 목차 -->
-  <div class="slide" id="slide-2">
-    <div class="slide-header">
-      <div class="slide-num" style="font-size:0.75rem;">목차</div>
-      <div class="slide-title">목차</div>
-      <div class="slide-subtitle">INDEX</div>
+  <div class="cover-right">
+    <div class="stat-item">
+      <div class="stat-label-sm">교육 시간</div>
+      <div class="stat-num-lg">960<span>h+</span></div>
+      <div class="stat-sub-sm">6개월 과정</div>
     </div>
+    <div class="stat-item">
+      <div class="stat-label-sm">융합분야 연간 수익</div>
+      <div class="stat-num-lg">7.3<span>억+</span></div>
+      <div class="stat-sub-sm">연 2회 기준</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label-sm">최대 지속 운영</div>
+      <div class="stat-num-lg">3<span>년</span></div>
+      <div class="stat-sub-sm">훈련 개시 후</div>
+    </div>
+  </div>
+</div>
+
+<!-- ■ SLIDE 2 — 목차 -->
+<div class="slide" id="slide-2">
+  <div class="slide-header">
+    <div class="slide-badge">Index</div>
+    <div class="slide-title">목차</div>
+    <div class="slide-en">Table of Contents</div>
+  </div>
+  <div class="toc-body">
     <div class="toc-grid">
-      <div class="toc-card" onclick="goTo(2)">
-        <div class="toc-num">01</div>
-        <div class="toc-card-title">KDT 사업개요</div>
-        <div class="toc-card-desc">K-디지털 트레이닝 개요, 대학주도형 정의, 사업 구조 및 특징</div>
-      </div>
-      <div class="toc-card" onclick="goTo(3)">
-        <div class="toc-num">02</div>
-        <div class="toc-card-title">협력 제안 구조</div>
-        <div class="toc-card-desc">협력 목적, 3자 협력 구조, SBS아카데미 강점</div>
-      </div>
-      <div class="toc-card" onclick="goTo(4)">
-        <div class="toc-num">03</div>
-        <div class="toc-card-title">과정 운영 방안</div>
-        <div class="toc-card-desc">신기술 9개·첨단 12개 분야, 과정 예시 2종</div>
-      </div>
-      <div class="toc-card" onclick="goTo(5)">
-        <div class="toc-num">04</div>
-        <div class="toc-card-title">수익 구조 및 배분</div>
-        <div class="toc-card-desc">일반/융합 수익 산정, 지급 구조, 세부 운영비 배분</div>
-      </div>
-      <div class="toc-card" onclick="goTo(7)">
-        <div class="toc-num">05</div>
-        <div class="toc-card-title">기대효과</div>
-        <div class="toc-card-desc">대학·훈련기관 기대효과, 사업 전략적 가치</div>
-      </div>
-      <div class="toc-card" onclick="goTo(8)">
-        <div class="toc-num">06</div>
-        <div class="toc-card-title">사업 추진 일정</div>
-        <div class="toc-card-desc">사업공고 → 성과평가 7단계, 단계별 주관기관</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 3 — KDT 사업개요 -->
-  <div class="slide" id="slide-3">
-    <div class="slide-header">
-      <div class="slide-num">01</div>
-      <div class="slide-title">KDT 사업개요</div>
-      <div class="slide-subtitle">K-Digital Training Overview</div>
-    </div>
-    <div class="slide-body">
-      <div class="two-col">
-        <div class="info-card blue-card">
-          <div class="info-card-title">K-디지털 트레이닝(KDT) 사업</div>
-          <div class="info-card-body">고용노동부가 추진하는 디지털·첨단 산업 분야 인재 양성 사업으로, 산업 현장에서 요구되는 실무형 디지털 인재 양성을 목표로 하는 국가 훈련사업입니다.<br><br>기업 수요 기반의 프로젝트 중심 교육을 통해 현장에서 즉시 활용 가능한 실무 인재 양성을 목적으로 운영됩니다.</div>
-        </div>
-        <div class="info-card blue-card">
-          <div class="info-card-title">대학주도형 아카데미</div>
-          <div class="info-card-body">대학 또는 산학협력단이 참여기업과 협약을 체결하여 산업 수요를 반영한 교육과정을 설계하고 운영하는 산학협력 기반 교육 모델입니다.<br><br>대학·참여기업·훈련기관이 협력하여 디지털 신기술 분야의 실무형 인재를 양성하고 취업 연계를 강화합니다.</div>
+      <div class="toc-item" onclick="goTo(2)">
+        <div class="toc-idx">01</div>
+        <div class="toc-text">
+          <div class="toc-ttl">KDT 사업개요</div>
+          <div class="toc-dsc">K-디지털 트레이닝 개요, 대학주도형 정의, 사업 구조 및 특징</div>
         </div>
       </div>
-      <div class="five-col">
-        <div class="structure-item">
-          <span class="s-label">사업 주관</span>
-          <span class="s-value">고용노동부</span>
-        </div>
-        <div class="structure-item">
-          <span class="s-label">운영 구조</span>
-          <span class="s-value">대학 주도 + 훈련기관</span>
-        </div>
-        <div class="structure-item">
-          <span class="s-label">교육 대상</span>
-          <span class="s-value">구직자</span>
-        </div>
-        <div class="structure-item">
-          <span class="s-label">교육 기간</span>
-          <span class="s-value">960h+ / 6개월</span>
-        </div>
-        <div class="structure-item">
-          <span class="s-label">교육 방식</span>
-          <span class="s-value">프로젝트 기반</span>
+      <div class="toc-item" onclick="goTo(3)">
+        <div class="toc-idx">02</div>
+        <div class="toc-text">
+          <div class="toc-ttl">협력 제안 구조</div>
+          <div class="toc-dsc">협력 목적, 3자 협력 구조, SBS아카데미 강점</div>
         </div>
       </div>
-      <div class="three-col">
-        <div class="feature-item">기업 수요 반영 교육과정</div>
-        <div class="feature-item">프로젝트 기반 실무 교육</div>
-        <div class="feature-item">취업 연계 중심 훈련과정</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 4 — 협력 제안 구조 -->
-  <div class="slide" id="slide-4">
-    <div class="slide-header">
-      <div class="slide-num">02</div>
-      <div class="slide-title">협력 제안 구조</div>
-      <div class="slide-subtitle">Collaboration Structure</div>
-    </div>
-    <div class="slide-subheader">산업 수요 기반 교육과정 공동 설계 &middot; 프로젝트 중심 실무 교육 &middot; 산학협력 기반 디지털 인재 양성</div>
-    <div class="collab-wrap">
-      <div class="collab-grid">
-        <div class="partner-card blue-bg">
-          <span class="partner-badge">PARTNER A</span>
-          <div class="partner-name">대학교</div>
-          <div class="partner-sub">대학 / 산학협력단</div>
-          <ul class="partner-items">
-            <li>교육과정 공동 설계 참여</li>
-            <li>대학 교수진 프로젝트 지도</li>
-            <li>산학협력 기반 교육 운영 지원</li>
-            <li>사업 신청 및 행정 협력</li>
-          </ul>
-        </div>
-        <div class="collab-arrow">&#8594;</div>
-        <div class="partner-card gold-bg">
-          <span class="partner-badge gold">PARTNER B</span>
-          <div class="partner-name">참여기업</div>
-          <div class="partner-sub">산업체 / 협약기업</div>
-          <ul class="partner-items">
-            <li>산업 수요 기반 직무 요구사항 제공</li>
-            <li>프로젝트 주제 제공</li>
-            <li>실무 멘토링 지원</li>
-            <li>취업 연계 협력</li>
-          </ul>
-        </div>
-        <div class="collab-arrow">&#8594;</div>
-        <div class="partner-card green-bg">
-          <span class="partner-badge green">PARTNER C</span>
-          <div class="partner-name">훈련기관</div>
-          <div class="partner-sub">SBS아카데미컴퓨터아트학원</div>
-          <ul class="partner-items">
-            <li>교육과정 운영 및 강사진 구성</li>
-            <li>훈련생 모집 및 마케팅</li>
-            <li>교육 운영 및 프로젝트 관리</li>
-            <li>취업 지원 및 사후관리</li>
-          </ul>
+      <div class="toc-item" onclick="goTo(4)">
+        <div class="toc-idx">03</div>
+        <div class="toc-text">
+          <div class="toc-ttl">과정 운영 방안</div>
+          <div class="toc-dsc">신기술 9개·첨단 12개 분야, 과정 예시 2종</div>
         </div>
       </div>
-      <div class="strength-bar">
-        <div class="strength-bar-title">SBS아카데미컴퓨터아트학원 구월점 강점</div>
-        <div class="strength-bar-body">디지털 콘텐츠 및 컴퓨터 교육 분야 다년간 운영 경험 &middot; 전국 단위 네트워크와 홍보 역량으로 안정적 훈련생 모집 가능 &middot; 출석 관리, 취업 지원, 만족도 체크 등 체계적 교육 운영 시스템 &middot; 다양한 실무 강사진 — 대학은 별도 모집 부담 없이 효율적 산학협력 교육모델 구축 가능</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 5 — 과정 운영 방안 -->
-  <div class="slide" id="slide-5">
-    <div class="slide-header">
-      <div class="slide-num">03</div>
-      <div class="slide-title">과정 운영 방안</div>
-      <div class="slide-subtitle">Course Operation Plan</div>
-    </div>
-    <div class="slide-body">
-      <div class="two-col" style="flex:0 0 auto; height:140px;">
-        <div class="field-section blue-field">
-          <div class="field-title">신기술 분야 <span class="field-count">9개</span></div>
-          <div class="tags-wrap">
-            <span class="field-tag">AI</span><span class="field-tag">클라우드</span><span class="field-tag">IoT</span><span class="field-tag">메타버스</span><span class="field-tag">5G/6G</span><span class="field-tag">S/W</span><span class="field-tag">블록체인</span><span class="field-tag">빅데이터</span><span class="field-tag">사이버보안</span>
-          </div>
-        </div>
-        <div class="field-section gray-field">
-          <div class="field-title">첨단 분야 <span class="field-count gray">12개</span></div>
-          <div class="tags-wrap">
-            <span class="field-tag gray-tag">이차전지</span><span class="field-tag gray-tag">디스플레이</span><span class="field-tag gray-tag">3D프린팅</span><span class="field-tag gray-tag">첨단소재</span><span class="field-tag gray-tag">반도체</span><span class="field-tag gray-tag">나노</span><span class="field-tag gray-tag">로봇</span><span class="field-tag gray-tag">드론</span><span class="field-tag gray-tag">바이오헬스</span><span class="field-tag gray-tag">에코업</span><span class="field-tag gray-tag">신재생에너지</span><span class="field-tag gray-tag">수소</span>
-          </div>
+      <div class="toc-item" onclick="goTo(5)">
+        <div class="toc-idx">04</div>
+        <div class="toc-text">
+          <div class="toc-ttl">수익 구조 및 배분</div>
+          <div class="toc-dsc">일반/융합 수익 산정, 지급 구조, 세부 운영비 배분</div>
         </div>
       </div>
-      <div class="two-col">
-        <div class="course-card">
-          <div class="course-title">과정예시 1 — 생성형 AI 기반 디지털 미디어 콘텐츠 제작 과정</div>
-          <div class="course-row">
-            <span class="course-row-label">NCS</span>
-            <span class="course-row-value">영상제작[080304], 디자인[080201], 문화콘텐츠제작[080302]</span>
-          </div>
-          <div class="course-row">
-            <span class="course-row-label">프로젝트</span>
-            <span class="course-row-value">AI 기반 영상 콘텐츠 기획 및 제작</span>
-          </div>
-          <div class="fusion-badge">융합: 인공지능 + 일반 S/W</div>
+      <div class="toc-item" onclick="goTo(7)">
+        <div class="toc-idx">05</div>
+        <div class="toc-text">
+          <div class="toc-ttl">기대효과</div>
+          <div class="toc-dsc">대학·훈련기관 기대효과, 사업 전략적 가치</div>
         </div>
-        <div class="course-card">
-          <div class="course-title">과정예시 2 — 생성형 AI 기반 UX/UI 디지털 서비스 개발 과정</div>
-          <div class="course-row">
-            <span class="course-row-label">NCS</span>
-            <span class="course-row-value">정보기술개발[200102], 디자인[080210]</span>
-          </div>
-          <div class="course-row">
-            <span class="course-row-label">프로젝트</span>
-            <span class="course-row-value">AI 기반 UX/UI 웹서비스 설계 및 제작</span>
-          </div>
-          <div class="fusion-badge">융합: 인공지능 + 일반 S/W</div>
+      </div>
+      <div class="toc-item" onclick="goTo(8)">
+        <div class="toc-idx">06</div>
+        <div class="toc-text">
+          <div class="toc-ttl">사업 추진 일정</div>
+          <div class="toc-dsc">사업공고 → 성과평가 7단계, 단계별 주관기관</div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- SLIDE 9 — 수익 구조 -->
-  <div class="slide" id="slide-9">
-    <div class="slide-header">
-      <div class="slide-num">05</div>
-      <div class="slide-title">수익 구조</div>
-      <div class="slide-subtitle">Revenue Structure</div>
-    </div>
-    <div class="slide-subheader">훈련비 산출: 훈련인원 × 훈련시간 × 수료율 × 훈련비 단가</div>
-    <div class="kpi-two-col">
-      <div class="kpi-card kpi-blue">
-        <div class="kpi-label">일반 디지털 분야</div>
-        <div class="kpi-formula">30명 × 960시간 × 70% × 9,400원</div>
-        <div class="kpi-num">1.9억</div>
-        <div class="kpi-detail">1회차 기준 189,504,000원</div>
-        <div class="kpi-up">&#9650; 연 2회 약 3.8억 (379,008,000원)</div>
+<!-- ■ SLIDE 3 — KDT 사업개요 -->
+<div class="slide" id="slide-3">
+  <div class="slide-header">
+    <div class="slide-badge">01</div>
+    <div class="slide-title">KDT 사업개요</div>
+    <div class="slide-en">K-Digital Training Overview</div>
+  </div>
+  <div class="s-body">
+    <div class="two-col">
+      <div class="info-card">
+        <div class="info-ttl">K-디지털 트레이닝(KDT) 사업</div>
+        <div class="info-body">고용노동부가 추진하는 디지털·첨단 산업 분야 인재 양성 사업으로, 산업 현장에서 요구되는 실무형 디지털 인재 양성을 목표로 하는 국가 훈련사업입니다.<br><br>기업 수요 기반의 프로젝트 중심 교육을 통해 현장에서 즉시 활용 가능한 실무 인재 양성을 목적으로 운영됩니다.</div>
       </div>
-      <div class="kpi-card kpi-gold">
-        <div class="kpi-label">디지털 신기술/융합 분야</div>
-        <div class="kpi-formula">30명 × 960시간 × 70% × 18,150원</div>
-        <div class="kpi-num">3.6억</div>
-        <div class="kpi-detail">1회차 기준 365,904,000원</div>
-        <div class="kpi-up">&#9650; 연 2회 약 7.3억 (731,808,000원)</div>
+      <div class="info-card">
+        <div class="info-ttl">대학주도형 아카데미</div>
+        <div class="info-body">대학 또는 산학협력단이 참여기업과 협약을 체결하여 산업 수요를 반영한 교육과정을 설계하고 운영하는 산학협력 기반 교육 모델입니다.<br><br>대학·참여기업·훈련기관이 협력하여 디지털 신기술 분야의 실무형 인재를 양성하고 취업 연계를 강화합니다.</div>
       </div>
     </div>
-    <div class="flow-bar">
-      <div class="flow-node blue-node">고용노동부 (주관)</div>
-      <div class="flow-arrow">&#8594;</div>
-      <div class="flow-node">대학교 (수령, 대외 표방 85%)</div>
-      <div class="flow-arrow">&#8594;</div>
-      <div class="flow-node">훈련기관 (실질 집행 85%)</div>
-      <div class="flow-note">훈련 개시 후 최대 3년 지속 운영 가능 · 보통 연 2회 운영</div>
+    <div class="meta-block">
+      <div class="meta-cell">
+        <div class="meta-lbl">사업 주관</div>
+        <div class="meta-val">고용노동부</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-lbl">운영 구조</div>
+        <div class="meta-val">대학 주도 + 훈련기관</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-lbl">교육 대상</div>
+        <div class="meta-val">구직자</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-lbl">교육 기간</div>
+        <div class="meta-val">960h+ / 6개월</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-lbl">교육 방식</div>
+        <div class="meta-val">프로젝트 기반</div>
+      </div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-item">기업 수요 반영 교육과정</div>
+      <div class="feat-item">프로젝트 기반 실무 교육</div>
+      <div class="feat-item">취업 연계 중심 훈련과정</div>
     </div>
   </div>
+</div>
 
-  <!-- SLIDE 10 — 수익 배분 구조 -->
-  <div class="slide" id="slide-10">
-    <div class="slide-header">
-      <div class="slide-num">05</div>
-      <div class="slide-title">수익 배분 구조</div>
-      <div class="slide-subtitle">Revenue Distribution</div>
-    </div>
-    <div class="slide-subheader">융합 분야 기준 연 7.3억 (731,808,000원) — 세부 비율은 협의에 따라 조정 가능</div>
-    <div class="revenue-grid">
-      <div class="revenue-card">
-        <div class="revenue-card-title">배분 비율</div>
-        <div class="bar-item">
-          <div class="bar-label-row"><span>훈련기관</span><span>85% · 약 6.2억</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:85%;"></div></div>
-        </div>
-        <div class="bar-item">
-          <div class="bar-label-row"><span>대학교</span><span>15% · 약 1.1억</span></div>
-          <div class="bar-track"><div class="bar-fill gold-fill" style="width:15%;"></div></div>
-        </div>
-        <div style="font-size:0.82rem; color:var(--gray-600); line-height:1.7; margin-top:0.5rem;">
-          * 대외 표방: 대학 85% / 훈련기관 15%<br>
-          * 실제 집행: 훈련기관 85% / 대학 15%
-        </div>
-      </div>
-      <div class="revenue-card">
-        <div class="revenue-card-title">훈련기관 운영비 세부 내역</div>
-        <div class="bar-item">
-          <div class="bar-label-row"><span>행정 운영</span><span>20%</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div>
-        </div>
-        <div class="bar-item">
-          <div class="bar-label-row"><span>마케팅 용역</span><span>20%</span></div>
-          <div class="bar-track"><div class="bar-fill green-fill" style="width:20%;"></div></div>
-        </div>
-        <div class="bar-item">
-          <div class="bar-label-row"><span>관리 용역</span><span>20%</span></div>
-          <div class="bar-track"><div class="bar-fill navy-fill" style="width:20%;"></div></div>
-        </div>
-        <div class="bar-item">
-          <div class="bar-label-row"><span>교육운영비(참여기업)</span><span>15%</span></div>
-          <div class="bar-track"><div class="bar-fill gold-fill" style="width:15%;"></div></div>
-        </div>
-        <div class="bar-item">
-          <div class="bar-label-row"><span>강사비</span><span>15%</span></div>
-          <div class="bar-track"><div class="bar-fill teal-fill" style="width:15%;"></div></div>
-        </div>
-        <div class="bar-item">
-          <div class="bar-label-row"><span>장비/인프라</span><span>10%</span></div>
-          <div class="bar-track"><div class="bar-fill red-fill" style="width:10%;"></div></div>
-        </div>
-      </div>
-    </div>
-    <div class="big-num-row">
-      <div class="big-num-card gold-num">
-        <div class="big-num-label">대학교 수익</div>
-        <div class="big-num-value">1.1억</div>
-        <div class="big-num-detail">731,808,000 × 15% = 109,771,200원</div>
-      </div>
-      <div class="big-num-card blue-num">
-        <div class="big-num-label">훈련기관 수익</div>
-        <div class="big-num-value">6.2억</div>
-        <div class="big-num-detail">731,808,000 × 85% = 622,036,800원</div>
-      </div>
-    </div>
+<!-- ■ SLIDE 4 — 협력 제안 구조 -->
+<div class="slide" id="slide-4">
+  <div class="slide-header">
+    <div class="slide-badge">02</div>
+    <div class="slide-title">협력 제안 구조</div>
+    <div class="slide-en">Collaboration Structure</div>
   </div>
-
-  <!-- SLIDE 11 — 기대효과 -->
-  <div class="slide" id="slide-11">
-    <div class="slide-header">
-      <div class="slide-num">06</div>
-      <div class="slide-title">기대효과</div>
-      <div class="slide-subtitle">Expected Outcomes</div>
-    </div>
-    <div class="effect-grid">
-      <div class="effect-card">
-        <div class="effect-icon">&#128176;</div>
-        <div class="effect-title">안정적 고수익 창출</div>
-        <ul class="effect-items">
-          <li>등록금 외 추가 수익 확보</li>
-          <li>모객 보장 안정적 고수익</li>
-          <li>최대 3년 지속 운영</li>
+  <div class="slide-subheader">산업 수요 기반 교육과정 공동 설계 · 프로젝트 중심 실무 교육 · 산학협력 기반 디지털 인재 양성</div>
+  <div class="collab-body">
+    <div class="collab-grid">
+      <div class="partner-card">
+        <div class="p-type">Partner A</div>
+        <div class="p-name">대학교</div>
+        <div class="p-org">대학 / 산학협력단</div>
+        <hr class="p-rule">
+        <ul class="p-items">
+          <li>교육과정 공동 설계 참여</li>
+          <li>대학 교수진 프로젝트 지도</li>
+          <li>산학협력 기반 교육 운영 지원</li>
+          <li>사업 신청 및 행정 협력</li>
         </ul>
       </div>
-      <div class="effect-card">
-        <div class="effect-icon">&#128200;</div>
-        <div class="effect-title">낮은 진입 경쟁률 확보</div>
-        <ul class="effect-items">
-          <li>특화 과정 전략적 준비</li>
-          <li>AI 기반 융합 교육으로 시장 선도</li>
-          <li>디지털 신기술 교육 역량 강화</li>
+      <div class="collab-arrow">→</div>
+      <div class="partner-card">
+        <div class="p-type">Partner B</div>
+        <div class="p-name">참여기업</div>
+        <div class="p-org">산업체 / 협약기업</div>
+        <hr class="p-rule">
+        <ul class="p-items">
+          <li>산업 수요 기반 직무 요구사항 제공</li>
+          <li>프로젝트 주제 제공</li>
+          <li>실무 멘토링 지원</li>
+          <li>취업 연계 협력</li>
         </ul>
       </div>
-      <div class="effect-card">
-        <div class="effect-icon">&#129309;</div>
-        <div class="effect-title">산학협력 네트워크 구축</div>
-        <ul class="effect-items">
-          <li>산학협력 기반 취업 연계 확대</li>
-          <li>대학 파트너십 협력사업 이력</li>
-          <li>기타 교육사업 추가 획득 기반</li>
-        </ul>
-      </div>
-      <div class="effect-card">
-        <div class="effect-icon">&#127963;</div>
-        <div class="effect-title">대학 브랜드 이미지 제고</div>
-        <ul class="effect-items">
-          <li>디지털 인재 양성 대학 이미지</li>
-          <li>정부 주도 사업 참여 신뢰도</li>
-          <li>지역 산업계 협력 강화</li>
+      <div class="collab-arrow">→</div>
+      <div class="partner-card">
+        <div class="p-type">Partner C</div>
+        <div class="p-name">훈련기관</div>
+        <div class="p-org">SBS아카데미컴퓨터아트학원</div>
+        <hr class="p-rule">
+        <ul class="p-items">
+          <li>교육과정 운영 및 강사진 구성</li>
+          <li>훈련생 모집 및 마케팅</li>
+          <li>교육 운영 및 프로젝트 관리</li>
+          <li>취업 지원 및 사후관리</li>
         </ul>
       </div>
     </div>
+    <div class="strength-bar">
+      <div class="strength-label">SBS아카데미컴퓨터아트학원 구월점 강점</div>
+      <div class="strength-text">디지털 콘텐츠 및 컴퓨터 교육 분야 다년간 운영 경험 · 전국 단위 네트워크와 홍보 역량으로 안정적 훈련생 모집 가능 · 출석 관리, 취업 지원, 만족도 체크 등 체계적 교육 운영 시스템 · 다양한 실무 강사진 — 대학은 별도 모집 부담 없이 효율적 산학협력 교육모델 구축 가능</div>
+    </div>
   </div>
+</div>
 
-  <!-- SLIDE 12 — 사업 추진 일정 -->
-  <div class="slide" id="slide-12">
-    <div class="slide-header">
-      <div class="slide-num">07</div>
-      <div class="slide-title">사업 추진 일정</div>
-      <div class="slide-subtitle">Project Timeline</div>
-    </div>
-    <div class="slide-subheader">사업공고부터 성과평가까지 7단계 프로세스</div>
-    <div class="timeline-wrap">
-      <div class="steps-row">
-        <div class="step-card">
-          <div class="step-num">STEP 01</div>
-          <div class="step-title">사업공고</div>
-          <div class="step-org">직업능력심사평가원<br>(고용노동부)</div>
-        </div>
-        <div class="step-card">
-          <div class="step-num">STEP 02</div>
-          <div class="step-title">사업신청</div>
-          <div class="step-org">훈련기관</div>
-        </div>
-        <div class="step-card">
-          <div class="step-num">STEP 03</div>
-          <div class="step-title">훈련과정 심사</div>
-          <div class="step-org">직업능력심사평가원</div>
-        </div>
-        <div class="step-card">
-          <div class="step-num">STEP 04</div>
-          <div class="step-title">훈련과정 인정</div>
-          <div class="step-org">지방고용노동관서<br>(고용노동부)</div>
-        </div>
-        <div class="step-card">
-          <div class="step-num">STEP 05</div>
-          <div class="step-title">훈련생 선발 및 훈련실시</div>
-          <div class="step-org">훈련기관</div>
-        </div>
-        <div class="step-card">
-          <div class="step-num">STEP 06</div>
-          <div class="step-title">훈련비 및 훈련장려금 지급</div>
-          <div class="step-org">지방고용노동관서<br>(고용노동부)</div>
-        </div>
-        <div class="step-card">
-          <div class="step-num">STEP 07</div>
-          <div class="step-title">성과평가</div>
-          <div class="step-org">직업능력심사평가원</div>
+<!-- ■ SLIDE 5 — 과정 운영 방안 -->
+<div class="slide" id="slide-5">
+  <div class="slide-header">
+    <div class="slide-badge">03</div>
+    <div class="slide-title">과정 운영 방안</div>
+    <div class="slide-en">Course Operation Plan</div>
+  </div>
+  <div class="s-body">
+    <div class="two-col" style="flex: 0 0 auto; height: 130px;">
+      <div class="tags-section accent">
+        <div class="tags-label">신기술 분야 <span class="tag-count">9개</span></div>
+        <div class="tags-wrap">
+          <span class="tag">AI</span><span class="tag">클라우드</span><span class="tag">IoT</span><span class="tag">메타버스</span><span class="tag">5G/6G</span><span class="tag">S/W</span><span class="tag">블록체인</span><span class="tag">빅데이터</span><span class="tag">사이버보안</span>
         </div>
       </div>
-      <div class="note-box">
-        <div class="note-item">
-          <div class="note-label">훈련비 지급 경로</div>
-          <div class="note-value">고용노동부 &#8594; 대학교 &#8594; 훈련기관</div>
+      <div class="tags-section">
+        <div class="tags-label">첨단 분야 <span class="tag-count gray">12개</span></div>
+        <div class="tags-wrap">
+          <span class="tag gray">이차전지</span><span class="tag gray">디스플레이</span><span class="tag gray">3D프린팅</span><span class="tag gray">첨단소재</span><span class="tag gray">반도체</span><span class="tag gray">나노</span><span class="tag gray">로봇</span><span class="tag gray">드론</span><span class="tag gray">바이오헬스</span><span class="tag gray">에코업</span><span class="tag gray">신재생에너지</span><span class="tag gray">수소</span>
         </div>
-        <div class="note-item">
-          <div class="note-label">지속 운영</div>
-          <div class="note-value">훈련 개시 후 최대 3년 · 보통 연 2회 운영</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="course-card">
+        <div class="course-ttl">과정예시 1 — 생성형 AI 기반 디지털 미디어 콘텐츠 제작 과정</div>
+        <div class="course-row">
+          <span class="c-lbl">NCS</span>
+          <span class="c-val">영상제작[080304], 디자인[080201], 문화콘텐츠제작[080302]</span>
         </div>
-        <div class="note-item">
-          <div class="note-label">협력 문의</div>
-          <div class="note-value">SBS아카데미컴퓨터아트학원 구월</div>
+        <div class="course-row">
+          <span class="c-lbl">프로젝트</span>
+          <span class="c-val">AI 기반 영상 콘텐츠 기획 및 제작</span>
         </div>
+        <div class="fusion-tag">융합: 인공지능 + 일반 S/W</div>
+      </div>
+      <div class="course-card">
+        <div class="course-ttl">과정예시 2 — 생성형 AI 기반 UX/UI 디지털 서비스 개발 과정</div>
+        <div class="course-row">
+          <span class="c-lbl">NCS</span>
+          <span class="c-val">정보기술개발[200102], 디자인[080210]</span>
+        </div>
+        <div class="course-row">
+          <span class="c-lbl">프로젝트</span>
+          <span class="c-val">AI 기반 UX/UI 웹서비스 설계 및 제작</span>
+        </div>
+        <div class="fusion-tag">융합: 인공지능 + 일반 S/W</div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- ■ SLIDE 9 — 수익 구조 -->
+<div class="slide" id="slide-9">
+  <div class="slide-header">
+    <div class="slide-badge">04</div>
+    <div class="slide-title">수익 구조</div>
+    <div class="slide-en">Revenue Structure</div>
+  </div>
+  <div class="slide-subheader">훈련비 산출: 훈련인원 × 훈련시간 × 수료율 × 훈련비 단가</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-type">일반 디지털 분야</div>
+      <div class="kpi-num">1.9억</div>
+      <div class="kpi-formula">30명 × 960시간 × 70% × 9,400원<br>1회차 기준 189,504,000원</div>
+      <div class="kpi-annual">▲ 연 2회 약 3.8억 (379,008,000원)</div>
+    </div>
+    <div class="kpi-card dark">
+      <div class="kpi-type">디지털 신기술 / 융합 분야</div>
+      <div class="kpi-num">3.6억</div>
+      <div class="kpi-formula">30명 × 960시간 × 70% × 18,150원<br>1회차 기준 365,904,000원</div>
+      <div class="kpi-annual">▲ 연 2회 약 7.3억 (731,808,000원)</div>
+    </div>
+  </div>
+  <div class="flow-bar">
+    <div class="flow-node accent">고용노동부 (주관)</div>
+    <div class="flow-arr">→</div>
+    <div class="flow-node">대학교 (수령, 대외 표방 85%)</div>
+    <div class="flow-arr">→</div>
+    <div class="flow-node">훈련기관 (실질 집행 85%)</div>
+    <div class="flow-note">훈련 개시 후 최대 3년 지속 운영 가능 · 보통 연 2회 운영</div>
+  </div>
+</div>
+
+<!-- ■ SLIDE 10 — 수익 배분 구조 -->
+<div class="slide" id="slide-10">
+  <div class="slide-header">
+    <div class="slide-badge">04</div>
+    <div class="slide-title">수익 배분 구조</div>
+    <div class="slide-en">Revenue Distribution</div>
+  </div>
+  <div class="slide-subheader">융합 분야 기준 연 7.3억 (731,808,000원) — 세부 비율은 협의에 따라 조정 가능</div>
+  <div class="rev-grid">
+    <div class="rev-card">
+      <div class="rev-ttl">배분 비율</div>
+      <div class="bar-item">
+        <div class="bar-row"><span>훈련기관</span><span>85% · 약 6.2억</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:85%;"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-row"><span>대학교</span><span>15% · 약 1.1억</span></div>
+        <div class="bar-track"><div class="bar-fill amber" style="width:15%;"></div></div>
+      </div>
+      <div class="rev-note">* 대외 표방: 대학 85% / 훈련기관 15%<br>* 실제 집행: 훈련기관 85% / 대학 15%</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-ttl">훈련기관 운영비 세부 내역</div>
+      <div class="bar-item">
+        <div class="bar-row"><span>행정 운영</span><span>20%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-row"><span>마케팅 용역</span><span>20%</span></div>
+        <div class="bar-track"><div class="bar-fill green" style="width:20%;"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-row"><span>관리 용역</span><span>20%</span></div>
+        <div class="bar-track"><div class="bar-fill dark" style="width:20%;"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-row"><span>교육운영비(참여기업)</span><span>15%</span></div>
+        <div class="bar-track"><div class="bar-fill amber" style="width:15%;"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-row"><span>강사비</span><span>15%</span></div>
+        <div class="bar-track"><div class="bar-fill teal" style="width:15%;"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-row"><span>장비/인프라</span><span>10%</span></div>
+        <div class="bar-track"><div class="bar-fill red" style="width:10%;"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="rev-num-row">
+    <div class="rev-num-card">
+      <div class="rev-num-lbl">대학교 수익</div>
+      <div class="rev-num-val accent">1.1억</div>
+      <div class="rev-num-detail">731,808,000 × 15% = 109,771,200원</div>
+    </div>
+    <div class="rev-num-card">
+      <div class="rev-num-lbl">훈련기관 수익</div>
+      <div class="rev-num-val">6.2억</div>
+      <div class="rev-num-detail">731,808,000 × 85% = 622,036,800원</div>
+    </div>
+  </div>
+</div>
+
+<!-- ■ SLIDE 11 — 기대효과 -->
+<div class="slide" id="slide-11">
+  <div class="slide-header">
+    <div class="slide-badge">05</div>
+    <div class="slide-title">기대효과</div>
+    <div class="slide-en">Expected Outcomes</div>
+  </div>
+  <div class="effect-grid">
+    <div class="effect-card">
+      <div class="e-num">1.1억</div>
+      <div class="e-ttl">안정적 고수익 창출</div>
+      <ul class="e-items">
+        <li>등록금 외 추가 수익 확보</li>
+        <li>모객 보장 안정적 고수익</li>
+        <li>최대 3년 지속 운영</li>
+      </ul>
+    </div>
+    <div class="effect-card">
+      <div class="e-ttl">낮은 진입 경쟁률 확보</div>
+      <ul class="e-items">
+        <li>특화 과정 전략적 준비</li>
+        <li>AI 기반 융합 교육으로 시장 선도</li>
+        <li>디지털 신기술 교육 역량 강화</li>
+      </ul>
+    </div>
+    <div class="effect-card">
+      <div class="e-ttl">산학협력 네트워크 구축</div>
+      <ul class="e-items">
+        <li>산학협력 기반 취업 연계 확대</li>
+        <li>대학 파트너십 협력사업 이력</li>
+        <li>기타 교육사업 추가 획득 기반</li>
+      </ul>
+    </div>
+    <div class="effect-card">
+      <div class="e-ttl">대학 브랜드 이미지 제고</div>
+      <ul class="e-items">
+        <li>디지털 인재 양성 대학 이미지</li>
+        <li>정부 주도 사업 참여 신뢰도</li>
+        <li>지역 산업계 협력 강화</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ■ SLIDE 12 — 사업 추진 일정 -->
+<div class="slide" id="slide-12">
+  <div class="slide-header">
+    <div class="slide-badge">06</div>
+    <div class="slide-title">사업 추진 일정</div>
+    <div class="slide-en">Project Timeline</div>
+  </div>
+  <div class="slide-subheader">사업공고부터 성과평가까지 7단계 프로세스</div>
+  <div class="timeline-body">
+    <div class="steps-row">
+      <div class="step-card">
+        <div class="step-num">Step 01</div>
+        <div class="step-ttl">사업공고</div>
+        <div class="step-org">직업능력심사평가원<br>(고용노동부)</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Step 02</div>
+        <div class="step-ttl">사업신청</div>
+        <div class="step-org">훈련기관</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Step 03</div>
+        <div class="step-ttl">훈련과정 심사</div>
+        <div class="step-org">직업능력심사평가원</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Step 04</div>
+        <div class="step-ttl">훈련과정 인정</div>
+        <div class="step-org">지방고용노동관서<br>(고용노동부)</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Step 05</div>
+        <div class="step-ttl">훈련생 선발 및 훈련실시</div>
+        <div class="step-org">훈련기관</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Step 06</div>
+        <div class="step-ttl">훈련비 및 훈련장려금 지급</div>
+        <div class="step-org">지방고용노동관서<br>(고용노동부)</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Step 07</div>
+        <div class="step-ttl">성과평가</div>
+        <div class="step-org">직업능력심사평가원</div>
+      </div>
+    </div>
+    <div class="note-bar">
+      <div>
+        <div class="note-lbl">훈련비 지급 경로</div>
+        <div class="note-val">고용노동부 → 대학교 → 훈련기관</div>
+      </div>
+      <div>
+        <div class="note-lbl">지속 운영</div>
+        <div class="note-val">훈련 개시 후 최대 3년 · 보통 연 2회 운영</div>
+      </div>
+      <div>
+        <div class="note-lbl">협력 문의</div>
+        <div class="note-val">SBS아카데미컴퓨터아트학원 구월</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div><!-- /slider -->
 
 <script>
 const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-const counter = document.getElementById('slide-counter');
+const dots   = document.querySelectorAll('.dot');
+const counter    = document.getElementById('slide-counter');
 const progressBar = document.getElementById('progress-bar');
 const total = slides.length;
-let current = 0;
-let isAnimating = false;
+let current = 0, isAnimating = false;
 
 function updateUI() {
   counter.textContent = (current + 1) + ' / ' + total;
@@ -1709,22 +1051,17 @@ function updateUI() {
 function goTo(idx) {
   if (isAnimating || idx === current || idx < 0 || idx >= total) return;
   isAnimating = true;
-
-  var from = slides[current];
-  var to = slides[idx];
+  var from = slides[current], to = slides[idx];
   var dir = idx > current ? 1 : -1;
-
   to.style.transform = 'translateX(' + (dir * 100) + '%)';
   to.style.opacity = '0';
   to.classList.add('active');
-
   requestAnimationFrame(function() {
     requestAnimationFrame(function() {
       from.style.transform = 'translateX(' + (-dir * 100) + '%)';
       from.style.opacity = '0';
       to.style.transform = 'translateX(0)';
       to.style.opacity = '1';
-
       setTimeout(function() {
         from.classList.remove('active');
         from.style.transform = '';
@@ -1732,7 +1069,7 @@ function goTo(idx) {
         current = idx;
         updateUI();
         isAnimating = false;
-      }, 500);
+      }, 550);
     });
   });
 }
@@ -1749,7 +1086,7 @@ var touchStartX = 0;
 document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
 document.addEventListener('touchend', function(e) {
   var dx = e.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(dx) > 50) { dx < 0 ? nextSlide() : prevSlide(); }
+  if (Math.abs(dx) > 30) { dx < 0 ? nextSlide() : prevSlide(); }
 });
 
 updateUI();
