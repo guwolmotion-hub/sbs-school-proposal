@@ -3,282 +3,363 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SBS아카데미컴퓨터아트학원 구월 — 학교 연계 소개서 (기본)</title>
+<title>SBS아카데미컴퓨터아트학원 구월 — 학교 연계 소개서</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --blue: #2563EB;
-  --blue-dark: #1D4ED8;
-  --blue-light: #DBEAFE;
-  --blue-mid: #3B82F6;
-  --navy: #0F172A;
-  --navy-mid: #1E293B;
-  --white: #FFFFFF;
-  --gray-50: #F8FAFC;
-  --gray-100: #F1F5F9;
-  --gray-200: #E2E8F0;
-  --gray-400: #94A3B8;
-  --gray-600: #475569;
-  --gold: #F59E0B;
-  --gold-light: #FEF3C7;
-  --green: #16A34A;
-  --green-light: #DCFCE7;
-  --purple: #7C3AED;
-  --purple-light: #EDE9FE;
-  --orange: #EA580C;
-  --orange-light: #FED7AA;
-  --teal: #0891B2;
-  --teal-light: #CFFAFE;
+  --ink:    #0c1b2e;
+  --dark:   #1a2f47;
+  --mid:    #3d566e;
+  --soft:   #6e8fa8;
+  --ghost:  #a8c0d2;
+  --line:   #d6e3ee;
+  --bg:     #f1f6fa;
+  --white:  #ffffff;
+  --blue:   #1d3d6e;
+  --blue-b: #2a5294;
+  --blue-l: #eaf0f8;
+  --blue-m: #b3ccdf;
+  --navy:   #0f1f3d;
 }
 
-html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto Sans KR', sans-serif; background: #000; }
+html, body {
+  width: 100%; height: 100%; overflow: hidden;
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* Progress */
-#progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: var(--blue); z-index: 1000; transition: width 0.4s ease; }
+/* ── Progress ── */
+#progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--blue-b); z-index: 1000; transition: width .4s ease; }
 
-/* Slider */
+/* ── Slider ── */
 #slider { width: 100%; height: 100vh; position: relative; overflow: hidden; }
-
 .slide {
-  position: absolute; inset: 0; width: 100%; height: 100%; background: #fff;
+  position: absolute; inset: 0; background: var(--white);
   display: flex; flex-direction: column;
-  transition: transform 0.5s cubic-bezier(.77,0,.175,1), opacity 0.5s ease;
-  transform: translateX(100%); opacity: 0; padding-bottom: 72px;
+  transition: transform .5s cubic-bezier(.77,0,.175,1), opacity .5s ease;
+  transform: translateX(100%); opacity: 0;
 }
 .slide.active { transform: translateX(0); opacity: 1; }
 
-/* Nav Pill */
+/* ── Nav pill ── */
 #nav-pill {
-  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-  background: rgba(15,23,42,0.92); backdrop-filter: blur(12px);
-  border-radius: 50px; padding: 10px 24px;
-  display: flex; align-items: center; gap: 16px; z-index: 1000;
+  position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+  background: var(--navy); border-radius: 100px;
+  padding: 8px 22px; display: flex; align-items: center; gap: 16px; z-index: 1000;
 }
 #nav-pill button {
-  background: rgba(255,255,255,0.15); border: none; color: #fff;
-  width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
-  font-size: 1rem; display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s;
+  background: rgba(255,255,255,.12); border: none; color: #fff;
+  width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+  font-size: .9rem; display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
 }
-#nav-pill button:hover { background: var(--blue); }
-#slide-counter { color: #fff; font-size: 0.85rem; font-weight: 600; min-width: 60px; text-align: center; }
+#nav-pill button:hover { background: rgba(255,255,255,.28); }
+#slide-counter { color: rgba(255,255,255,.45); font-size: .75rem; min-width: 52px; text-align: center; letter-spacing: .06em; }
 
-/* Dots */
-#dots-nav { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 1000; }
-.dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(37,99,235,0.3); cursor: pointer; transition: background 0.2s, transform 0.2s; border: 2px solid rgba(37,99,235,0.5); }
-.dot.active { background: var(--blue); transform: scale(1.3); border-color: var(--blue); }
+/* ── Dots ── */
+#dots-nav { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 7px; z-index: 1000; }
+.dot { width: 4px; height: 4px; border-radius: 50%; background: #b0b0b0; cursor: pointer; transition: all .25s; }
+.dot.active { background: var(--blue-b); height: 18px; border-radius: 2px; }
 
-/* ====== SLIDE 1 — 표지 ====== */
-#slide-1 { display: grid; grid-template-columns: 58% 42%; padding-bottom: 72px; }
+/* ══════════════════════════
+   COVER
+══════════════════════════ */
+#slide-1 { display: grid; grid-template-columns: 56% 44%; }
 
-.cover-left { display: flex; flex-direction: column; justify-content: center; padding: 4rem 4rem 3rem 5rem; position: relative; background: #fff; }
-.cover-stripe { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--blue); }
-.cover-overline { font-size: 0.82rem; font-weight: 700; color: var(--blue); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem; }
-.cover-h1 { font-size: 3rem; font-weight: 900; line-height: 1.15; color: var(--navy); margin-bottom: 0.8rem; }
-.cover-h1 span { color: var(--blue); }
-.cover-tagline { font-size: 0.97rem; color: var(--gray-600); line-height: 1.75; margin-bottom: 1.8rem; font-weight: 400; }
-.cover-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
-.cover-tag { background: var(--blue-light); color: var(--blue-dark); padding: 0.38rem 0.9rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-.cover-brand { font-size: 0.88rem; font-weight: 700; color: var(--navy); padding-top: 1rem; border-top: 1px solid var(--gray-200); }
-.cover-date { font-size: 0.78rem; color: var(--gray-400); margin-top: 0.25rem; }
+.cover-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 4.5rem 4rem 4rem 5.5rem;
+  border-right: 1px solid var(--line); position: relative;
+}
+.cover-stripe { position: absolute; left: 0; top: 20%; bottom: 20%; width: 3px; background: var(--blue); }
+.cover-overline { font-size: .67rem; font-weight: 600; color: var(--soft); letter-spacing: .2em; text-transform: uppercase; margin-bottom: 1.8rem; }
+.cover-h1 { font-size: clamp(2.4rem, 3.8vw, 4rem); font-weight: 800; line-height: 1.1; color: var(--ink); letter-spacing: -.04em; margin-bottom: 2rem; }
+.cover-rule { width: 36px; height: 2px; background: var(--blue); border-radius: 2px; margin-bottom: 1.6rem; }
+.cover-tagline { font-size: .95rem; color: var(--mid); line-height: 1.85; margin-bottom: 2rem; }
+.cover-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 2rem; }
+.cover-tag { background: var(--blue-l); color: var(--blue); padding: .28rem .85rem; border-radius: 4px; font-size: .77rem; font-weight: 600; border: 1px solid var(--blue-m); }
+.cover-brand { font-size: .88rem; font-weight: 700; color: var(--ink); padding-top: .9rem; border-top: 1px solid var(--line); }
+.cover-date { font-size: .77rem; color: var(--soft); margin-top: .2rem; }
 
 .cover-right {
-  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 40%, #0F172A 100%);
-  clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 1.4rem; padding: 3rem 3rem 3rem 5rem;
+  background: linear-gradient(145deg, var(--navy) 0%, #0d2a52 100%);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 4.5rem 4rem 4.5rem 5rem; gap: 2rem;
 }
-.stat-box { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 16px; padding: 1.5rem 2rem; text-align: center; width: 100%; max-width: 240px; backdrop-filter: blur(8px); }
-.stat-num { font-size: 2.4rem; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 0.3rem; }
-.stat-label { font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.85); }
-.stat-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.2rem; font-weight: 400; }
+.stat-box { border-bottom: 1px solid rgba(255,255,255,.07); padding-bottom: 2rem; }
+.stat-box:last-child { border-bottom: none; padding-bottom: 0; }
+.stat-lbl { font-size: .62rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: .55rem; }
+.stat-num { font-family: 'Inter', sans-serif; font-size: clamp(1.8rem, 3.2vw, 2.8rem); font-weight: 800; color: #fff; line-height: 1; letter-spacing: -.04em; margin-bottom: .3rem; }
+.stat-sub { font-size: .78rem; color: rgba(255,255,255,.3); }
 
-/* ====== 공통 헤더 ====== */
-.slide-header { background: #fff; border-bottom: 1px solid var(--gray-200); padding: 1.4rem 3.5rem; display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
-.slide-num { background: var(--blue); color: #fff; width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 800; flex-shrink: 0; }
-.slide-title { font-size: 1.65rem; font-weight: 900; color: var(--navy); letter-spacing: -0.02em; }
-.slide-title span { color: var(--blue); }
-.slide-subtitle { font-size: 0.88rem; color: var(--gray-400); margin-left: auto; font-weight: 400; }
-.slide-subheader { padding: 0.7rem 3.5rem; background: var(--gray-100); font-size: 0.88rem; color: var(--gray-600); border-bottom: 1px solid var(--gray-200); flex-shrink: 0; }
+/* ══════════════════════════
+   SLIDE HEADER
+══════════════════════════ */
+.slide-header {
+  padding: 1.5rem 4rem;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 1.4rem;
+  flex-shrink: 0;
+}
+.slide-num {
+  font-family: 'Inter', sans-serif;
+  font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--blue); background: var(--blue-l);
+  padding: .22rem .75rem; border-radius: 4px; border: 1px solid var(--blue-m);
+  flex-shrink: 0;
+}
+.slide-title { font-size: 1.65rem; font-weight: 700; color: var(--ink); letter-spacing: -.025em; }
+.slide-subtitle { font-size: .72rem; color: var(--ghost); margin-left: auto; letter-spacing: .12em; text-transform: uppercase; }
+.slide-subheader {
+  padding: .6rem 4rem;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+  font-size: .88rem; color: var(--soft); flex-shrink: 0;
+}
 
-/* ====== SLIDE 2 — 목차 ====== */
-.toc-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; flex: 1; padding: 2rem 3.5rem; gap: 1.25rem; }
-.toc-card { background: #fff; border: 2px solid var(--gray-200); border-radius: 14px; padding: 1.8rem 2rem; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.6rem; position: relative; overflow: hidden; }
-.toc-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--blue); border-radius: 5px 0 0 5px; }
-.toc-card:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.15); }
-.toc-num { font-size: 1.8rem; font-weight: 900; color: var(--blue-light); line-height: 1; }
-.toc-card-title { font-size: 1.15rem; font-weight: 800; color: var(--navy); }
-.toc-card-desc { font-size: 0.87rem; color: var(--gray-600); line-height: 1.6; font-weight: 400; }
+/* ══════════════════════════
+   COMMON BODY
+══════════════════════════ */
+.slide-body { flex: 1; display: flex; flex-direction: column; padding: 1.6rem 4rem 1.2rem; gap: 1.2rem; overflow: hidden; min-height: 0; }
 
-/* ====== SLIDE 3 — 학원 소개 ====== */
-.slide-body { flex: 1; display: flex; flex-direction: column; padding: 1.8rem 3.5rem 1.4rem; gap: 1.3rem; overflow: hidden; }
+/* ══════════════════════════
+   TOC (SLIDE 2)
+══════════════════════════ */
+.toc-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; flex: 1; padding: 1.8rem 4rem; gap: 1.1rem; }
+.toc-card {
+  border: 1px solid var(--line); border-radius: 8px; padding: 1.6rem 2rem;
+  cursor: pointer; transition: background .15s;
+  display: flex; flex-direction: column; gap: .5rem;
+  border-top: 2px solid var(--blue);
+}
+.toc-card:hover { background: var(--blue-l); }
+.toc-num { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 800; color: var(--line); line-height: 1; letter-spacing: -.04em; transition: color .15s; }
+.toc-card:hover .toc-num { color: var(--blue); }
+.toc-card-title { font-size: 1.02rem; font-weight: 700; color: var(--ink); }
+.toc-card-desc { font-size: .84rem; color: var(--soft); line-height: 1.65; }
 
-.intro-desc { background: var(--blue-light); border-radius: 14px; padding: 1.6rem 2.2rem; font-size: 0.96rem; color: var(--navy-mid); line-height: 1.8; border-left: 4px solid var(--blue); flex-shrink: 0; }
+/* ══════════════════════════
+   INTRO (SLIDE 3)
+══════════════════════════ */
+.intro-desc {
+  background: var(--blue-l); border-radius: 8px; padding: 1.4rem 2rem;
+  font-size: .96rem; color: var(--dark); line-height: 1.85;
+  border-left: 3px solid var(--blue); flex-shrink: 0;
+}
+.intro-desc strong { color: var(--blue); font-weight: 700; }
 
 .timeline-section { flex-shrink: 0; }
-.timeline-label { font-size: 0.82rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+.timeline-label { font-size: .67rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .12em; margin-bottom: .85rem; }
 .timeline-row { display: flex; position: relative; }
-.timeline-row::before { content: ''; position: absolute; left: 7px; right: 7px; top: 7px; height: 2px; background: var(--gray-200); }
-.timeline-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 0 0.3rem; }
-.t-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--blue); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--blue); z-index: 1; flex-shrink: 0; }
-.t-year { font-size: 0.85rem; font-weight: 700; color: var(--blue); text-align: center; margin-top: 0.25rem; }
-.t-text { font-size: 0.73rem; color: var(--gray-600); text-align: center; line-height: 1.45; font-weight: 400; }
+.timeline-row::before { content: ''; position: absolute; left: 7px; right: 7px; top: 7px; height: 1px; background: var(--line); }
+.timeline-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: .45rem; padding: 0 .3rem; }
+.t-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--blue); border: 3px solid var(--white); box-shadow: 0 0 0 2px var(--blue-m); z-index: 1; flex-shrink: 0; }
+.t-year { font-size: .82rem; font-weight: 700; color: var(--blue); text-align: center; margin-top: .2rem; }
+.t-text { font-size: .72rem; color: var(--soft); text-align: center; line-height: 1.45; }
 
-.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; flex-shrink: 0; }
-.kpi-mini { background: var(--navy); border-radius: 12px; padding: 1.3rem 1.2rem; text-align: center; display: flex; flex-direction: column; gap: 0.3rem; }
-.kpi-mini-num { font-size: 2rem; font-weight: 900; color: #fff; line-height: 1; }
-.kpi-mini-label { font-size: 0.8rem; color: rgba(255,255,255,0.65); font-weight: 400; }
-.kpi-mini-badge { font-size: 0.72rem; color: var(--blue-mid); font-weight: 700; margin-top: 0.1rem; }
-
-/* ====== SLIDE 4 — 교육 강점 ====== */
-.strength-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1rem; flex: 1; padding: 1.2rem 3rem; }
-.strength-card { background: #fff; border: 2px solid var(--gray-200); border-radius: 14px; padding: 1.4rem 1.6rem; display: flex; flex-direction: column; gap: 0.6rem; position: relative; overflow: hidden; transition: box-shadow 0.2s; }
-.strength-card:hover { box-shadow: 0 8px 24px rgba(37,99,235,0.12); }
-.strength-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
-.strength-card.c1::after { background: var(--blue); }
-.strength-card.c2::after { background: var(--green); }
-.strength-card.c3::after { background: var(--purple); }
-.strength-card.c4::after { background: var(--gold); }
-.strength-card.c5::after { background: var(--teal); }
-.strength-card.c6::after { background: var(--orange); }
-.strength-icon { font-size: 2rem; line-height: 1; }
-.strength-title { font-size: 1.08rem; font-weight: 800; color: var(--navy); }
-.strength-body { font-size: 0.87rem; color: var(--gray-600); line-height: 1.65; font-weight: 400; flex: 1; }
-
-/* ====== SLIDE 5 — 학과별 연계 ====== */
-.dept-table-wrap { flex: 1; padding: 1.5rem 3rem; display: flex; flex-direction: column; }
-.dept-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 14px; overflow: hidden; flex: 1; }
-.dept-table thead tr { background: var(--navy); }
-.dept-table thead th { color: #fff; font-weight: 700; padding: 1rem 1.3rem; text-align: left; font-size: 0.95rem; }
-.dept-table tbody tr { background: #fff; transition: background 0.15s; }
-.dept-table tbody tr:nth-child(even) { background: var(--gray-100); }
-.dept-table tbody tr:hover { background: var(--blue-light); }
-.dept-table tbody td { padding: 0.9rem 1.3rem; color: var(--navy); border-bottom: 1px solid var(--gray-200); vertical-align: middle; line-height: 1.5; font-size: 0.93rem; }
-.dept-table tbody td:first-child { font-weight: 700; white-space: nowrap; }
-.dept-badge { display: inline-block; background: var(--blue-light); color: var(--blue-dark); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
-.dept-badge.g { background: var(--green-light); color: #14532D; }
-.dept-badge.p { background: var(--purple-light); color: #4C1D95; }
-.dept-badge.o { background: var(--orange-light); color: #9A3412; }
-.dept-badge.t { background: var(--teal-light); color: #164E63; }
-.dept-badge.gold { background: var(--gold-light); color: #78350F; }
-
-/* ====== SLIDE 6 — 강사진 ====== */
-.instructor-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1rem; flex: 1; padding: 1.2rem 3rem; }
-.instructor-card { background: var(--gray-100); border-radius: 14px; padding: 1.3rem 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; }
-.inst-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.3rem; }
-.inst-avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 900; color: #fff; flex-shrink: 0; }
-.inst-name { font-size: 1.05rem; font-weight: 800; color: var(--navy); }
-.inst-dept { font-size: 0.8rem; font-weight: 700; color: var(--blue); margin-top: 0.15rem; }
-.inst-role { font-size: 0.78rem; color: var(--gray-600); font-weight: 400; }
-.inst-career { list-style: none; display: flex; flex-direction: column; gap: 0.28rem; margin-top: 0.3rem; }
-.inst-career li { font-size: 0.82rem; color: var(--gray-600); padding-left: 1rem; position: relative; line-height: 1.5; font-weight: 400; }
-.inst-career li::before { content: '·'; position: absolute; left: 0; color: var(--blue); font-weight: 900; font-size: 1rem; }
-
-/* ====== SLIDE 7 — 커리큘럼 ====== */
-.curr-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, 1fr); gap: 0.7rem; flex: 1; padding: 1rem 3rem; }
-.curr-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 12px; padding: 0.85rem 1.2rem; display: flex; gap: 0.8rem; align-items: flex-start; border-left: 4px solid var(--blue); }
-.curr-card.c-green { border-left-color: var(--green); }
-.curr-card.c-purple { border-left-color: var(--purple); }
-.curr-card.c-navy { border-left-color: var(--navy); }
-.curr-card.c-gold { border-left-color: var(--gold); }
-.curr-card.c-teal { border-left-color: var(--teal); }
-.curr-card.c-orange { border-left-color: var(--orange); }
-.curr-card.c-ai { border-left-color: var(--blue); background: var(--blue-light); }
-.curr-icon { font-size: 1.5rem; flex-shrink: 0; line-height: 1; margin-top: 0.1rem; }
-.curr-name { font-size: 0.92rem; font-weight: 800; color: var(--navy); margin-bottom: 0.2rem; }
-.curr-tools { font-size: 0.76rem; color: var(--gray-600); line-height: 1.45; font-weight: 400; }
-
-/* ====== SLIDE 8 — 교육 성과 ====== */
-.results-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; flex: 1; padding: 1.5rem 3.5rem; }
-.results-section { display: flex; flex-direction: column; gap: 0.8rem; }
-.results-title { font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: 0.2rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--blue); }
-.cert-bar { display: flex; flex-direction: column; gap: 0.3rem; }
-.cert-name-row { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; color: var(--navy); }
-.cert-pct { color: var(--blue); font-weight: 700; }
-.cert-track { height: 11px; background: var(--gray-200); border-radius: 6px; overflow: hidden; margin-top: 0.2rem; }
-.cert-fill { height: 100%; border-radius: 6px; background: var(--blue); }
-.cert-fill.green { background: var(--green); }
-.cert-fill.gold { background: var(--gold); }
-.cert-fill.purple { background: var(--purple); }
-
-.outcome-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.3rem; }
-.outcome-box { background: var(--navy); border-radius: 10px; padding: 1rem 1.2rem; text-align: center; }
-.outcome-num { font-size: 1.8rem; font-weight: 900; color: #fff; line-height: 1; }
-.outcome-label { font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-top: 0.25rem; }
-
-.review-cards { display: flex; flex-direction: column; gap: 0.8rem; flex: 1; }
-.review-card { background: var(--gray-50); border-radius: 12px; padding: 1.1rem 1.4rem; border-left: 4px solid var(--blue); flex: 1; }
-.review-quote-mark { font-size: 1.6rem; color: var(--blue-light); font-weight: 900; line-height: 1; }
-.review-text { font-size: 0.85rem; color: var(--gray-600); line-height: 1.7; font-weight: 400; }
-
-/* ====== SLIDE 9 — 수강 안내 ====== */
-.enroll-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; flex: 1; padding: 1.5rem 3.5rem; }
-.enroll-card { border-radius: 14px; padding: 1.8rem 2rem; display: flex; flex-direction: column; gap: 0.9rem; height: 100%; }
-.enroll-card.blue-card { background: var(--blue); color: #fff; }
-.enroll-card.navy-card { background: var(--navy); color: #fff; }
-.enroll-card.light-card { background: var(--gray-100); border: 2px solid var(--gray-200); }
-.enroll-card-title { font-size: 1.15rem; font-weight: 800; }
-.enroll-row { display: flex; gap: 0.8rem; align-items: flex-start; }
-.enroll-label { font-size: 0.83rem; font-weight: 700; min-width: 65px; opacity: 0.8; flex-shrink: 0; }
-.enroll-value { font-size: 0.9rem; font-weight: 400; line-height: 1.55; }
-.step-flow { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.3rem; }
-.step-node { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 0.45rem 0.9rem; font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
-.step-arrow { font-size: 1rem; opacity: 0.6; }
-
-/* ====== SLIDE 10 — 제휴 & 협력 제안 ====== */
-.collab-content { flex: 1; padding: 1.5rem 3.5rem; display: flex; flex-direction: column; gap: 1.3rem; overflow: hidden; }
-.collab-intro { background: var(--blue-light); border-radius: 12px; padding: 1.4rem 2rem; font-size: 0.96rem; color: var(--navy-mid); line-height: 1.75; border-left: 4px solid var(--blue); flex-shrink: 0; }
-.collab-items { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; flex: 1; }
-.collab-item { background: #fff; border: 2px solid var(--gray-200); border-radius: 12px; padding: 1.5rem 1.8rem; display: flex; flex-direction: column; gap: 0.5rem; border-top: 4px solid var(--blue); }
-.collab-item:nth-child(3) { border-top-color: var(--green); }
-.collab-item:nth-child(4) { border-top-color: var(--purple); }
-.collab-item:nth-child(5) { border-top-color: var(--gold); grid-column: span 1; }
-.collab-num { font-size: 0.75rem; font-weight: 700; color: var(--blue); letter-spacing: 0.08em; }
-.collab-item:nth-child(3) .collab-num { color: var(--green); }
-.collab-item:nth-child(4) .collab-num { color: var(--purple); }
-.collab-item:nth-child(5) .collab-num { color: var(--gold); }
-.collab-item-title { font-size: 1.05rem; font-weight: 800; color: var(--navy); }
-.collab-item-desc { font-size: 0.87rem; color: var(--gray-600); line-height: 1.65; font-weight: 400; }
-
-/* ====== SLIDE 11 — 비전 & 문의처 ====== */
-.vision-wrap { flex: 1; padding: 1.5rem 3.5rem; display: flex; flex-direction: column; gap: 1.5rem; overflow: hidden; }
-.vision-statement { background: var(--navy); border-radius: 16px; padding: 2rem 2.5rem; flex-shrink: 0; }
-.vision-main { font-size: 1.45rem; font-weight: 900; color: #fff; line-height: 1.4; margin-bottom: 0.6rem; }
-.vision-main span { color: var(--blue-mid); }
-.vision-sub { font-size: 0.93rem; color: rgba(255,255,255,0.65); line-height: 1.75; font-weight: 400; }
-.vision-goals { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; flex-shrink: 0; }
-.goal-card { background: var(--gray-100); border-radius: 12px; padding: 1.4rem 1.6rem; display: flex; flex-direction: column; gap: 0.4rem; border-top: 3px solid var(--blue); }
-.goal-num { font-size: 2rem; font-weight: 900; color: var(--blue); line-height: 1; }
-.goal-label { font-size: 0.87rem; color: var(--gray-600); font-weight: 400; line-height: 1.5; }
-.contact-bar { background: var(--blue); border-radius: 14px; padding: 1.3rem 2.5rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; flex-shrink: 0; }
-.contact-item { display: flex; flex-direction: column; gap: 0.2rem; }
-.contact-label { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.06em; }
-.contact-value { font-size: 0.95rem; font-weight: 700; color: #fff; }
-
-/* ====== RESPONSIVE + PRINT ====== */
-@media (max-width: 768px) {
-  #slide-1 { grid-template-columns: 1fr; }
-  .cover-right { display: none; }
-  .cover-h1 { font-size: 2.2rem; }
-  .toc-grid, .results-two-col, .enroll-grid, .collab-items, .vision-goals { grid-template-columns: 1fr; }
-  .strength-grid, .instructor-grid, .curr-grid { grid-template-columns: 1fr 1fr; }
-  .kpi-row { grid-template-columns: 1fr 1fr; }
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; flex-shrink: 0; }
+.kpi-mini {
+  background: var(--navy); border-radius: 8px; padding: 1.2rem 1rem;
+  text-align: center; display: flex; flex-direction: column; gap: .25rem;
 }
+.kpi-mini-num { font-family: 'Inter', sans-serif; font-size: 1.7rem; font-weight: 800; color: #fff; line-height: 1; }
+.kpi-mini-label { font-size: .78rem; color: rgba(255,255,255,.55); }
+.kpi-mini-badge { font-size: .7rem; color: var(--blue-m); font-weight: 600; margin-top: .05rem; }
+
+/* ══════════════════════════
+   STRENGTH (SLIDE 4)
+══════════════════════════ */
+.strength-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: .9rem; flex: 1; padding: 1.2rem 4rem; }
+.strength-card {
+  border: 1px solid var(--line); border-radius: 8px; padding: 1.4rem 1.6rem;
+  display: flex; flex-direction: column; gap: .55rem;
+  border-top: 2px solid var(--blue);
+}
+.strength-icon { font-size: 1.6rem; line-height: 1; }
+.strength-title { font-size: 1rem; font-weight: 700; color: var(--ink); }
+.strength-body { font-size: .87rem; color: var(--mid); line-height: 1.7; flex: 1; }
+
+/* ══════════════════════════
+   DEPT TABLE (SLIDE 5)
+══════════════════════════ */
+.dept-table-wrap { flex: 1; padding: 1.2rem 4rem; display: flex; flex-direction: column; min-height: 0; }
+.dept-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 8px; overflow: hidden; flex: 1; }
+.dept-table thead tr { background: var(--navy); }
+.dept-table thead th { color: #fff; font-weight: 600; padding: .9rem 1.2rem; text-align: left; font-size: .88rem; }
+.dept-table tbody tr { background: var(--white); transition: background .15s; }
+.dept-table tbody tr:nth-child(even) { background: var(--bg); }
+.dept-table tbody tr:hover { background: var(--blue-l); }
+.dept-table tbody td { padding: .75rem 1.2rem; color: var(--dark); border-bottom: 1px solid var(--line); vertical-align: middle; line-height: 1.5; font-size: .88rem; }
+.dept-table tbody td:first-child { font-weight: 700; white-space: nowrap; color: var(--ink); }
+.dept-badge { display: inline-block; background: var(--blue-l); color: var(--blue); padding: .15rem .55rem; border-radius: 3px; font-size: .72rem; font-weight: 600; border: 1px solid var(--blue-m); }
+.dept-badge.g  { background: #e8f4f0; color: #2d5f4f; border-color: #a8d4c8; }
+.dept-badge.p  { background: #eeebf5; color: #4a3878; border-color: #c4b8e0; }
+.dept-badge.o  { background: #f7f0e8; color: #7a4020; border-color: #d4b89a; }
+.dept-badge.t  { background: #e6f4f7; color: #2a5462; border-color: #a0ccd4; }
+.dept-badge.gold { background: #f6f2e6; color: #6b5320; border-color: #d4c48a; }
+
+/* ══════════════════════════
+   INSTRUCTORS (SLIDE 6)
+══════════════════════════ */
+.instructor-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: .9rem; flex: 1; padding: 1.2rem 4rem; }
+.instructor-card { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.5rem; display: flex; flex-direction: column; gap: .35rem; }
+.inst-header { display: flex; align-items: flex-start; gap: .9rem; margin-bottom: .25rem; }
+.inst-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--blue); display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.inst-name { font-size: 1rem; font-weight: 700; color: var(--ink); }
+.inst-dept { font-size: .77rem; font-weight: 600; color: var(--blue); margin-top: .12rem; }
+.inst-role { font-size: .75rem; color: var(--soft); }
+.inst-career { list-style: none; display: flex; flex-direction: column; gap: .25rem; margin-top: .2rem; }
+.inst-career li { font-size: .8rem; color: var(--mid); padding-left: .9rem; position: relative; line-height: 1.5; }
+.inst-career li::before { content: '·'; position: absolute; left: 0; color: var(--blue-m); font-weight: 900; font-size: 1.1rem; line-height: 1.1; }
+
+/* ══════════════════════════
+   CURRICULUM (SLIDE 7)
+══════════════════════════ */
+.curr-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, 1fr); gap: .6rem; flex: 1; padding: .9rem 4rem; }
+.curr-card {
+  border: 1px solid var(--line); border-radius: 7px; padding: .75rem 1.1rem;
+  display: flex; gap: .75rem; align-items: flex-start;
+  border-left: 3px solid var(--blue);
+}
+.curr-icon { font-size: 1.3rem; flex-shrink: 0; line-height: 1; margin-top: .05rem; }
+.curr-name { font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: .18rem; }
+.curr-tools { font-size: .73rem; color: var(--soft); line-height: 1.5; }
+
+/* ══════════════════════════
+   ADMISSION MAP (SLIDE 8)
+══════════════════════════ */
+.adm-card {
+  border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.5rem;
+  display: flex; flex-direction: column; gap: .5rem; flex: 1;
+  border-top: 2px solid var(--blue);
+}
+.adm-card-head { display: flex; align-items: center; gap: .65rem; }
+.adm-icon { font-size: 1.2rem; line-height: 1; }
+.adm-title { font-size: .97rem; font-weight: 700; color: var(--ink); }
+.adm-sub { font-size: .72rem; font-weight: 600; color: var(--blue); }
+.adm-body { font-size: .8rem; color: var(--mid); line-height: 1.65; }
+.adm-body span { font-weight: 700; color: var(--ink); }
+
+/* ══════════════════════════
+   RESULTS (SLIDE 9)
+══════════════════════════ */
+.results-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; flex: 1; padding: 1.4rem 4rem; }
+.results-section { display: flex; flex-direction: column; gap: .75rem; }
+.results-title { font-size: 1rem; font-weight: 700; color: var(--ink); padding-bottom: .5rem; border-bottom: 2px solid var(--blue); margin-bottom: .2rem; }
+.cert-bar { display: flex; flex-direction: column; gap: .3rem; }
+.cert-name-row { display: flex; justify-content: space-between; font-size: .88rem; font-weight: 600; color: var(--ink); }
+.cert-pct { color: var(--blue); font-weight: 700; }
+.cert-track { height: 7px; background: var(--bg); border-radius: 6px; overflow: hidden; margin-top: .15rem; }
+.cert-fill { height: 100%; border-radius: 6px; background: var(--blue); }
+
+.outcome-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: .3rem; }
+.outcome-box { background: var(--navy); border-radius: 8px; padding: .9rem 1rem; text-align: center; }
+.outcome-num { font-family: 'Inter', sans-serif; font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; }
+.outcome-label { font-size: .74rem; color: rgba(255,255,255,.55); margin-top: .2rem; }
+
+.review-cards { display: flex; flex-direction: column; gap: .75rem; flex: 1; }
+.review-card { background: var(--bg); border-radius: 7px; padding: 1rem 1.3rem; border-left: 3px solid var(--blue-m); flex: 1; }
+.review-quote-mark { font-size: 1.4rem; color: var(--line); font-weight: 900; line-height: 1; margin-bottom: .2rem; }
+.review-text { font-size: .83rem; color: var(--mid); line-height: 1.75; }
+
+/* ══════════════════════════
+   VISION / CONTACT (SLIDE 10)
+══════════════════════════ */
+.vision-grid {
+  flex: 1; display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 0; padding: 1.3rem 3.5rem 0; min-height: 0; overflow: hidden;
+}
+.vision-header {
+  grid-column: span 2;
+  background: var(--navy); border-radius: 10px;
+  padding: 1.3rem 2rem; margin-bottom: .9rem;
+  display: flex; flex-direction: column; gap: .45rem; flex-shrink: 0;
+}
+.vision-headline { font-size: 1.2rem; font-weight: 800; color: #fff; line-height: 1.35; }
+.vision-headline span { color: var(--blue-m); }
+.vision-desc { font-size: .87rem; color: rgba(255,255,255,.6); line-height: 1.75; }
+
+.vision-programs {
+  grid-column: span 2;
+  display: flex; flex-direction: column; gap: .4rem;
+  margin-bottom: .9rem; flex-shrink: 0;
+}
+.prog-item {
+  display: flex; align-items: center; gap: .7rem;
+  font-size: .88rem; font-weight: 600; color: var(--dark);
+  padding: .45rem .9rem;
+  background: var(--blue-l); border: 1px solid var(--blue-m);
+  border-radius: 6px;
+}
+.prog-item::before { content: '—'; color: var(--blue); font-weight: 700; flex-shrink: 0; }
+
+.vision-left { display: flex; flex-direction: column; gap: .85rem; padding-right: .65rem; min-height: 0; }
+.vision-right { display: flex; flex-direction: column; gap: .85rem; padding-left: .65rem; min-height: 0; }
+
+.op-hours {
+  background: var(--navy); border-radius: 8px; padding: 1.1rem 1.5rem; color: #fff; flex-shrink: 0;
+}
+.op-title { font-size: .9rem; font-weight: 700; margin-bottom: .7rem; }
+.op-grid { display: grid; grid-template-columns: auto 1fr; gap: .3rem .9rem; font-size: .86rem; }
+.op-label { font-weight: 600; opacity: .65; }
+
+.proc-box {
+  background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+  padding: 1.1rem 1.5rem; flex: 1; min-height: 0;
+}
+.proc-title { font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: .7rem; }
+.proc-steps { display: flex; flex-direction: column; gap: .5rem; }
+.proc-step { display: flex; align-items: center; gap: .75rem; }
+.proc-step-num {
+  background: var(--blue); border-radius: 50%;
+  width: 22px; height: 22px; font-size: .7rem; font-weight: 700;
+  color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.proc-step-text { font-size: .86rem; font-weight: 600; color: var(--ink); }
+
+.goal-label { font-size: .67rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .1em; flex-shrink: 0; }
+.goals { display: flex; flex-direction: column; gap: .7rem; flex: 1; min-height: 0; }
+.goal-card {
+  background: var(--bg); border-radius: 8px; padding: 1rem 1.5rem;
+  border-top: 2px solid var(--blue); flex: 1;
+  display: flex; flex-direction: column; gap: .25rem; justify-content: center;
+}
+.goal-num { font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--blue); line-height: 1; }
+.goal-desc { font-size: .82rem; color: var(--soft); line-height: 1.5; }
+
+.contact-bar {
+  grid-column: span 2;
+  background: var(--navy); border-radius: 8px;
+  padding: 1rem 2rem; margin-top: .9rem; margin-bottom: .9rem;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;
+  flex-shrink: 0;
+}
+.contact-item { display: flex; flex-direction: column; gap: .18rem; }
+.contact-lbl { font-size: .67rem; font-weight: 600; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .08em; }
+.contact-val { font-size: .94rem; font-weight: 700; color: #fff; }
+
 @media print {
-  nav, #nav-pill, #dots-nav, #progress-bar { display: none !important; }
+  #nav-pill, #dots-nav, #progress-bar { display: none !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .slide, .toc-card, .strength-card, .instructor-card, .curr-card, tr { page-break-inside: avoid; break-inside: avoid; }
-  h1, h2, h3, .slide-title { page-break-after: avoid; }
+  h1, .slide-title { page-break-after: avoid; }
   a[href]::after { content: none !important; }
 }
 </style>
 </head>
 <body>
 
-<div id="progress-bar" style="width: 10%;"></div>
+<div id="progress-bar" style="width:10%;"></div>
 
 <div id="dots-nav">
   <div class="dot active" onclick="goTo(0)"></div>
@@ -306,7 +387,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     <div class="cover-left">
       <div class="cover-stripe"></div>
       <div class="cover-overline">School Partnership · 학교 연계 교육 소개서</div>
-      <h1 class="cover-h1">SBS아카데미<br>컴퓨터아트<br><span>학원 구월</span></h1>
+      <h1 class="cover-h1">SBS아카데미<br>컴퓨터아트<br>학원 구월</h1>
+      <div class="cover-rule"></div>
       <p class="cover-tagline">진로탐색부터 자격증 취득, 포트폴리오 완성, 취업까지<br>학생의 성장을 함께 설계하는 교육 파트너</p>
       <div class="cover-tags">
         <span class="cover-tag">학원 소개</span>
@@ -323,23 +405,23 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     </div>
     <div class="cover-right">
       <div class="stat-box">
+        <div class="stat-lbl">누적 수강생</div>
         <div class="stat-num">8,500명+</div>
-        <div class="stat-label">누적 수강생</div>
         <div class="stat-sub">설립 이후 누계</div>
       </div>
       <div class="stat-box">
+        <div class="stat-lbl">자격증 합격</div>
         <div class="stat-num">3,200건+</div>
-        <div class="stat-label">자격증 합격</div>
         <div class="stat-sub">누계 합격 건수</div>
       </div>
       <div class="stat-box">
+        <div class="stat-lbl">취업 · 진학 연계율</div>
         <div class="stat-num">72%</div>
-        <div class="stat-label">취업 · 진학 연계율</div>
         <div class="stat-sub">포트폴리오 기반 연계</div>
       </div>
       <div class="stat-box">
+        <div class="stat-lbl">수강생 만족도</div>
         <div class="stat-num">98%</div>
-        <div class="stat-label">수강생 만족도</div>
         <div class="stat-sub">자체 설문 기준</div>
       </div>
     </div>
@@ -348,9 +430,9 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <!-- SLIDE 2 — 목차 -->
   <div class="slide" id="slide-2">
     <div class="slide-header">
-      <div class="slide-num" style="font-size:0.72rem; font-weight:700;">목차</div>
+      <div class="slide-num">Index</div>
       <div class="slide-title">목차</div>
-      <div class="slide-subtitle">INDEX</div>
+      <div class="slide-subtitle">Table of Contents</div>
     </div>
     <div class="toc-grid">
       <div class="toc-card" onclick="goTo(2)">
@@ -397,102 +479,60 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
       <div class="intro-desc">
         SBS아카데미컴퓨터아트학원 구월지점은 <strong>코리아교육그룹</strong> 산하 교육기관으로, 디자인·영상·웹·IT·건축 등 다양한 디지털 분야 전문 교육을 운영합니다. 학생들이 <strong>진로탐색 단계에서부터 실무역량을 키울 수 있도록</strong> 체계적인 교육 환경을 제공하며, 자격증 취득과 포트폴리오 제작을 통해 취업연계까지 이어지는 교육 시스템을 운영하고 있습니다. 전공 연계 기반의 체험형 교육을 통해 <strong>디지털 역량과 AI 활용 역량</strong>을 함께 강화할 수 있도록 지원합니다.
       </div>
-
       <div class="timeline-section">
         <div class="timeline-label">연혁 타임라인</div>
         <div class="timeline-row">
-          <div class="timeline-item">
-            <div class="t-dot"></div>
-            <div class="t-year">2010</div>
-            <div class="t-text">학원 설립</div>
-          </div>
-          <div class="timeline-item">
-            <div class="t-dot"></div>
-            <div class="t-year">2013</div>
-            <div class="t-text">직업능력개발<br>훈련기관 인증</div>
-          </div>
-          <div class="timeline-item">
-            <div class="t-dot"></div>
-            <div class="t-year">2016</div>
-            <div class="t-text">강의실 확장<br>영상디자인 전문관</div>
-          </div>
-          <div class="timeline-item">
-            <div class="t-dot"></div>
-            <div class="t-year">2019</div>
-            <div class="t-text">우수 직업훈련<br>기관 선정</div>
-          </div>
-          <div class="timeline-item">
-            <div class="t-dot"></div>
-            <div class="t-year">2022</div>
-            <div class="t-text">웹개발 · AI<br>과정 도입</div>
-          </div>
-          <div class="timeline-item">
-            <div class="t-dot"></div>
-            <div class="t-year">2026</div>
-            <div class="t-text">학교 연계<br>교육 확대 운영</div>
-          </div>
+          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2010</div><div class="t-text">학원 설립</div></div>
+          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2013</div><div class="t-text">직업능력개발<br>훈련기관 인증</div></div>
+          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2016</div><div class="t-text">강의실 확장<br>영상디자인 전문관</div></div>
+          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2019</div><div class="t-text">우수 직업훈련<br>기관 선정</div></div>
+          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2022</div><div class="t-text">웹개발 · AI<br>과정 도입</div></div>
+          <div class="timeline-item"><div class="t-dot"></div><div class="t-year">2026</div><div class="t-text">학교 연계<br>교육 확대 운영</div></div>
         </div>
       </div>
-
       <div class="kpi-row">
-        <div class="kpi-mini">
-          <div class="kpi-mini-num">8,500명+</div>
-          <div class="kpi-mini-label">누적 수강생</div>
-          <div class="kpi-mini-badge">설립 이후 누계</div>
-        </div>
-        <div class="kpi-mini">
-          <div class="kpi-mini-num">3,200건+</div>
-          <div class="kpi-mini-label">자격증 합격</div>
-          <div class="kpi-mini-badge">누계 합격 건수</div>
-        </div>
-        <div class="kpi-mini">
-          <div class="kpi-mini-num">72%</div>
-          <div class="kpi-mini-label">취업 · 진학 연계율</div>
-          <div class="kpi-mini-badge">포트폴리오 기반</div>
-        </div>
-        <div class="kpi-mini">
-          <div class="kpi-mini-num">98%</div>
-          <div class="kpi-mini-label">수강생 만족도</div>
-          <div class="kpi-mini-badge">자체 설문 기준</div>
-        </div>
+        <div class="kpi-mini"><div class="kpi-mini-num">8,500명+</div><div class="kpi-mini-label">누적 수강생</div><div class="kpi-mini-badge">설립 이후 누계</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-num">3,200건+</div><div class="kpi-mini-label">자격증 합격</div><div class="kpi-mini-badge">누계 합격 건수</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-num">72%</div><div class="kpi-mini-label">취업 · 진학 연계율</div><div class="kpi-mini-badge">포트폴리오 기반</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-num">98%</div><div class="kpi-mini-label">수강생 만족도</div><div class="kpi-mini-badge">자체 설문 기준</div></div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 4 — 교육 강점 및 차별점 -->
+  <!-- SLIDE 4 — 교육 강점 -->
   <div class="slide" id="slide-4">
     <div class="slide-header">
       <div class="slide-num">02</div>
-      <div class="slide-title">교육 강점 <span>&amp;</span> 차별점</div>
+      <div class="slide-title">교육 강점 &amp; 차별점</div>
       <div class="slide-subtitle">Our Strengths</div>
     </div>
     <div class="strength-grid">
-      <div class="strength-card c1">
+      <div class="strength-card">
         <div class="strength-icon">🎯</div>
         <div class="strength-title">실무 중심 교육</div>
         <div class="strength-body">이론이 아닌 프로젝트 기반의 체험형 교육을 통해 실무역량을 자연스럽게 향상시킬 수 있도록 구성되어 있습니다.</div>
       </div>
-      <div class="strength-card c2">
+      <div class="strength-card">
         <div class="strength-icon">🏆</div>
         <div class="strength-title">자격증 · 포트폴리오 · 취업 연계</div>
         <div class="strength-body">자격증 취득과 동시에 포트폴리오 제작을 진행하며, 이를 기반으로 취업 및 진학 연계까지 이어지는 체계적 지원 시스템을 운영합니다.</div>
       </div>
-      <div class="strength-card c3">
+      <div class="strength-card">
         <div class="strength-icon">📚</div>
         <div class="strength-title">학과 맞춤형 교육 가능</div>
         <div class="strength-body">학교 전공과 연계된 커리큘럼으로 진로탐색 단계부터 방향성을 설정할 수 있도록 돕습니다. 학과별 맞춤 교육 설계가 가능합니다.</div>
       </div>
-      <div class="strength-card c4">
+      <div class="strength-card">
         <div class="strength-icon">🤖</div>
         <div class="strength-title">디지털 · AI 기반 교육</div>
         <div class="strength-body">디지털 역량 강화와 함께 AI 활용 역량을 포함한 최신 교육을 반영하여 변화하는 산업 환경에 대응하는 실무 경쟁력을 높입니다.</div>
       </div>
-      <div class="strength-card c5">
+      <div class="strength-card">
         <div class="strength-icon">🖥️</div>
         <div class="strength-title">온 · 오프라인 교육 운영</div>
         <div class="strength-body">학원 수강, 학교 출강, 온라인 병행 수업 등 학교 상황에 맞는 다양한 운영 방식으로 유연한 교육 진행이 가능합니다.</div>
       </div>
-      <div class="strength-card c6">
+      <div class="strength-card">
         <div class="strength-icon">👥</div>
         <div class="strength-title">학생 관리 · 상담 체계</div>
         <div class="strength-body">출결 관리, 학습 현황 공유, 1대1 진로 상담 및 코칭을 지원하여 학생 개개인의 성장을 체계적으로 관리합니다.</div>
@@ -504,7 +544,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <div class="slide" id="slide-5">
     <div class="slide-header">
       <div class="slide-num">03</div>
-      <div class="slide-title">학과별 <span>연계 가능 과정</span></div>
+      <div class="slide-title">학과별 연계 가능 과정</div>
       <div class="slide-subtitle">Courses by Department</div>
     </div>
     <div class="slide-subheader">학과 전공에 따라 진로탐색 · 실무역량 강화 · 포트폴리오 완성 · 취업연계까지 단계적으로 연계되는 교육 구조를 갖추고 있습니다.</div>
@@ -572,14 +612,14 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <div class="slide" id="slide-6">
     <div class="slide-header">
       <div class="slide-num">04</div>
-      <div class="slide-title">전문 <span>강사진</span></div>
+      <div class="slide-title">전문 강사진</div>
       <div class="slide-subtitle">Our Instructors</div>
     </div>
     <div class="instructor-grid">
       <div class="instructor-card">
         <div class="inst-header">
-          <div class="inst-avatar" style="background: var(--blue);">이</div>
-          <div class="inst-info">
+          <div class="inst-avatar" style="background:var(--blue);">이</div>
+          <div>
             <div class="inst-name">이은상</div>
             <div class="inst-dept">아트웍학과 학과장</div>
             <div class="inst-role">디자인 및 포트폴리오 지도</div>
@@ -593,8 +633,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
       </div>
       <div class="instructor-card">
         <div class="inst-header">
-          <div class="inst-avatar" style="background: var(--navy-mid);">정</div>
-          <div class="inst-info">
+          <div class="inst-avatar" style="background:var(--dark);">정</div>
+          <div>
             <div class="inst-name">정세일</div>
             <div class="inst-dept">모션영상학과 학과장</div>
             <div class="inst-role">영상 및 모션그래픽 실무 교육</div>
@@ -607,8 +647,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
       </div>
       <div class="instructor-card">
         <div class="inst-header">
-          <div class="inst-avatar" style="background: var(--green);">윤</div>
-          <div class="inst-info">
+          <div class="inst-avatar" style="background:#2d5f4f;">윤</div>
+          <div>
             <div class="inst-name">윤찬주</div>
             <div class="inst-dept">인테리어학과 학과장</div>
             <div class="inst-role">건축 및 인테리어 설계 교육</div>
@@ -622,8 +662,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
       </div>
       <div class="instructor-card">
         <div class="inst-header">
-          <div class="inst-avatar" style="background: var(--purple);">이</div>
-          <div class="inst-info">
+          <div class="inst-avatar" style="background:#4a3878;">이</div>
+          <div>
             <div class="inst-name">이동훈</div>
             <div class="inst-dept">모션영상학과 강사</div>
             <div class="inst-role">영상 편집 및 콘텐츠 제작</div>
@@ -635,8 +675,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
       </div>
       <div class="instructor-card">
         <div class="inst-header">
-          <div class="inst-avatar" style="background: var(--gold);">김</div>
-          <div class="inst-info">
+          <div class="inst-avatar" style="background:#6b5320;">김</div>
+          <div>
             <div class="inst-name">김채영</div>
             <div class="inst-dept">시각디자인학과 강사</div>
             <div class="inst-role">디자인 및 포트폴리오 제작 지도</div>
@@ -648,8 +688,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
       </div>
       <div class="instructor-card">
         <div class="inst-header">
-          <div class="inst-avatar" style="background: var(--teal);">심</div>
-          <div class="inst-info">
+          <div class="inst-avatar" style="background:#2a5462;">심</div>
+          <div>
             <div class="inst-name">심수현</div>
             <div class="inst-dept">인테리어학과 강사</div>
             <div class="inst-role">실내건축 및 설계 교육</div>
@@ -667,7 +707,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <div class="slide" id="slide-7">
     <div class="slide-header">
       <div class="slide-num">05</div>
-      <div class="slide-title">교육 <span>커리큘럼</span></div>
+      <div class="slide-title">교육 커리큘럼</div>
       <div class="slide-subtitle">Curriculum Overview</div>
     </div>
     <div class="curr-grid">
@@ -678,49 +718,49 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
           <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 블렌더1-2 → 그래픽디자인1-2 → UXUI(피그마) → 인디자인 → ACP/GTQ1급/컴그기능사 → AI자격증 → AI프롬프트 엔지니어링 → AI크리에이터 시각편집 → 시각/편집 포폴</div>
         </div>
       </div>
-      <div class="curr-card c-teal">
+      <div class="curr-card">
         <div class="curr-icon">🌐</div>
         <div>
           <div class="curr-name">웹디자인학과</div>
           <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 블렌더1-2 → 그래픽디자인1-2 → 웹1→웹2→웹3→웹4 → UXUI(피그마) → ACP/GTQ1급 → 실전OA → AI자격증 → AI바이브코딩 웹 → 웹포폴</div>
         </div>
       </div>
-      <div class="curr-card c-purple">
+      <div class="curr-card">
         <div class="curr-icon">✏️</div>
         <div>
           <div class="curr-name">아트웍학과</div>
           <div class="curr-tools">핸드드로잉1-2 → 핸드드로잉PO → 심화드로잉(예) → 심화드로잉 → 기초디자인 → 디-드로잉1-2 → 디-드로잉PO → 영상 크리에이터 Goal / 핸드드로잉 → 포토샵 → 일러스트 → 프리미어 → 에펙1-3 → 유튜브 기초/심화 → AI크리에이터 → 2D모션포폴</div>
         </div>
       </div>
-      <div class="curr-card c-navy">
+      <div class="curr-card">
         <div class="curr-icon">🎬</div>
         <div>
           <div class="curr-name">영상/모션디자인학과</div>
           <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 디일러 → 블렌더1-2 → 그래픽디자인1-2 → 프리미어 → 에펙1-3 → C4D1-4 → 서브스탠스 페인터 → 언리얼엔진 → ACP/GTQ1급 → 실전OA → AI자격증 → AI프롬프트 → AI크리에이터 → 2D/3D모션포폴</div>
         </div>
       </div>
-      <div class="curr-card c-orange">
+      <div class="curr-card">
         <div class="curr-icon">🎥</div>
         <div>
           <div class="curr-name">마야/CG학과</div>
           <div class="curr-tools">핸드드로잉 → 포토샵 → 일러스트 → 포토웍스 → 디일러 → 프리미어 → 에펙1-3 → 마야1-6 → Asset1-3 → 서브스탠스 페인터 → 언리얼엔진 → ACP/GTQ1급 → AI자격증 → AI프롬프트 엔지니어링 → AI크리에이터 CG마야 → 마야포폴</div>
         </div>
       </div>
-      <div class="curr-card c-green">
+      <div class="curr-card">
         <div class="curr-icon">🏠</div>
         <div>
           <div class="curr-name">인테리어/BIM학과</div>
           <div class="curr-tools">제도 → 포토샵 → 일러스트 → 포토웍스 → 디일러 → 캐드1-2(CAT2급) → 스케치업1-2(엔스케이프) → 3DMAX1-3 → 레빗1-2 → 인테리어 실무 → 실내건축자격증(기능사/산업기사/기사) → ACP/GTQ1급 → 실전OA → AI자격증 → AI크리에이터 인테리어 → 인포폴</div>
         </div>
       </div>
-      <div class="curr-card c-gold">
+      <div class="curr-card">
         <div class="curr-icon">📋</div>
         <div>
           <div class="curr-name">OA/자격증학과</div>
           <div class="curr-tools">컴퓨터 베이직/AI → 실전OA(OA/AI/노션) → AI자격증대비(뤼튼, AI-POT) → 모스365 → 컴활2급 → 컴활1급 / 케이랩&더존1급(전산회계+FAT) → 케이랩1급(전산회계) → 케이랩&더존2급(전산세무+TAT) → 케이랩2급(전산세무)</div>
         </div>
       </div>
-      <div class="curr-card c-ai">
+      <div class="curr-card">
         <div class="curr-icon">💻</div>
         <div>
           <div class="curr-name">IT / 기계설계학과</div>
@@ -730,98 +770,97 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     </div>
   </div>
 
-
   <!-- SLIDE 8 — 입시 로드맵 -->
   <div class="slide" id="slide-8-new">
     <div class="slide-header">
       <div class="slide-num">06</div>
-      <div class="slide-title">입시 <span>로드맵</span></div>
+      <div class="slide-title">입시 로드맵</div>
       <div class="slide-subtitle">College Entrance · 대학 입시 전문 과정</div>
     </div>
     <div class="slide-subheader">특성화고 진학전형 · 예비전형 · 포트폴리오 전형 · 실기전형 전문 대비 — 모든 포트폴리오 과정은 전문 상담을 통해 교육기간이 결정됩니다.</div>
-    <div class="slide-body" style="gap:1rem;">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; flex:1; min-height:0;">
-        <div style="display:flex; flex-direction:column; gap:0.8rem;">
-          <div style="background:var(--blue-light); border:2px solid rgba(37,99,235,0.3); border-radius:14px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:0.55rem; flex:1;">
-            <div style="display:flex; align-items:center; gap:0.7rem;">
-              <span style="font-size:1.4rem;">🎭</span>
+    <div class="slide-body" style="gap:.9rem;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:.9rem; flex:1; min-height:0;">
+        <div style="display:flex; flex-direction:column; gap:.8rem;">
+          <div class="adm-card">
+            <div class="adm-card-head">
+              <span class="adm-icon">🎭</span>
               <div>
-                <div style="font-size:1.0rem; font-weight:800; color:var(--navy);">만화/애니메이션과</div>
-                <div style="font-size:0.77rem; font-weight:700; color:var(--blue);">핸드드로잉 · 디-드로잉 중심</div>
+                <div class="adm-title">만화/애니메이션과</div>
+                <div class="adm-sub">핸드드로잉 · 디-드로잉 중심</div>
               </div>
             </div>
-            <div style="font-size:0.82rem; color:var(--gray-600); line-height:1.6; font-weight:400;">
-              <span style="font-weight:700; color:var(--navy);">중1~중3:</span> 핸드드로잉1→2→PO / 예비심화드로잉<br>
-              <span style="font-weight:700; color:var(--navy);">고1,2 (진학전형):</span> 핸드드로잉1→2→PO / 포토샵 / 디-드로잉1→2→PO<br>
-              <span style="font-weight:700; color:var(--navy);">고3 (실기전형):</span> 심화드로잉(고3) → <strong>Goal</strong>
+            <div class="adm-body">
+              <span>중1~중3:</span> 핸드드로잉1→2→PO / 예비심화드로잉<br>
+              <span>고1,2 (진학전형):</span> 핸드드로잉1→2→PO / 포토샵 / 디-드로잉1→2→PO<br>
+              <span>고3 (실기전형):</span> 심화드로잉(고3) → Goal
             </div>
           </div>
-          <div style="background:var(--purple-light); border:2px solid rgba(124,58,237,0.2); border-radius:14px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:0.55rem; flex:1;">
-            <div style="display:flex; align-items:center; gap:0.7rem;">
-              <span style="font-size:1.4rem;">✏️</span>
+          <div class="adm-card">
+            <div class="adm-card-head">
+              <span class="adm-icon">✏️</span>
               <div>
-                <div style="font-size:1.0rem; font-weight:800; color:var(--navy);">만화컨텐츠학과</div>
-                <div style="font-size:0.77rem; font-weight:700; color:var(--purple);">핸드드로잉 + 디-드로잉</div>
+                <div class="adm-title">만화컨텐츠학과</div>
+                <div class="adm-sub">핸드드로잉 + 디-드로잉</div>
               </div>
             </div>
-            <div style="font-size:0.82rem; color:var(--gray-600); line-height:1.6; font-weight:400;">
-              <span style="font-weight:700; color:var(--navy);">시작~고2:</span> 핸드드로잉1→2→PO / 포토샵 → 일러스트 → 포토웍스<br>
-              <span style="font-weight:700; color:var(--navy);">디-드로잉:</span> 디-드로잉1→2→PO → <strong>Goal</strong><br>
-              <span style="font-weight:700; color:var(--navy);">고3:</span> 심화드로잉(고3) 병행
+            <div class="adm-body">
+              <span>시작~고2:</span> 핸드드로잉1→2→PO / 포토샵 → 일러스트 → 포토웍스<br>
+              <span>디-드로잉:</span> 디-드로잉1→2→PO → Goal<br>
+              <span>고3:</span> 심화드로잉(고3) 병행
             </div>
           </div>
         </div>
-        <div style="display:flex; flex-direction:column; gap:0.8rem;">
-          <div style="background:var(--gold-light); border:2px solid rgba(245,158,11,0.3); border-radius:14px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:0.55rem; flex:1;">
-            <div style="display:flex; align-items:center; gap:0.7rem;">
-              <span style="font-size:1.4rem;">🎬</span>
+        <div style="display:flex; flex-direction:column; gap:.8rem;">
+          <div class="adm-card">
+            <div class="adm-card-head">
+              <span class="adm-icon">🎬</span>
               <div>
-                <div style="font-size:1.0rem; font-weight:800; color:var(--navy);">영상컨텐츠학과</div>
-                <div style="font-size:0.77rem; font-weight:700; color:#92400E;">에펙 / C4D 중심</div>
+                <div class="adm-title">영상컨텐츠학과</div>
+                <div class="adm-sub">에펙 / C4D 중심</div>
               </div>
             </div>
-            <div style="font-size:0.82rem; color:var(--gray-600); line-height:1.6; font-weight:400;">
-              <span style="font-weight:700; color:var(--navy);">고1,2 비전공자:</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→일러스트→포토웍스→디일러→GTQ1급(포토/일러)→프리미어→에펙1→2→3→C4D1→2→3→4→언리얼엔진<br>
-              <span style="font-weight:700; color:var(--navy);">전공자(시작~고2):</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→포토웍스→일러스트→디일러→에펙1→C4D1→2→3→4→언리얼엔진→프리미어→에펙2→3 → 2D/3D모션포폴 → <strong>Goal</strong>
+            <div class="adm-body">
+              <span>고1,2 비전공자:</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→일러스트→포토웍스→디일러→GTQ1급→프리미어→에펙1→2→3→C4D1→2→3→4→언리얼엔진<br>
+              <span>전공자(시작~고2):</span> 포토샵→포토웍스→일러스트→디일러→에펙1→C4D1→2→3→4→언리얼엔진→프리미어→에펙2→3 → 2D/3D모션포폴 → Goal
             </div>
           </div>
-          <div style="background:var(--green-light); border:2px solid rgba(22,163,74,0.2); border-radius:14px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:0.55rem; flex:1;">
-            <div style="display:flex; align-items:center; gap:0.7rem;">
-              <span style="font-size:1.4rem;">🎥</span>
+          <div class="adm-card">
+            <div class="adm-card-head">
+              <span class="adm-icon">🎥</span>
               <div>
-                <div style="font-size:1.0rem; font-weight:800; color:var(--navy);">애니/컨텐츠학과</div>
-                <div style="font-size:0.77rem; font-weight:700; color:#14532D;">CG / 마야 / VFX</div>
+                <div class="adm-title">애니/컨텐츠학과</div>
+                <div class="adm-sub">CG / 마야 / VFX</div>
               </div>
             </div>
-            <div style="font-size:0.82rem; color:var(--gray-600); line-height:1.6; font-weight:400;">
-              <span style="font-weight:700; color:var(--navy);">시작~고2 비전공자:</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→일러스트→포토웍스→디일러→GTQ1급(포토/일러)→프리미어→에펙1→2→3→마야1→2→3→4→5→6→언리얼엔진<br>
-              <span style="font-weight:700; color:var(--navy);">전공자:</span> 포토샵→포토웍스→일러스트→디일러→프리미어→에펙1→2→3→마야1→2→3→4→5→6→언리얼엔진 → 마야포폴/언리얼 → <strong>Goal</strong>
+            <div class="adm-body">
+              <span>시작~고2 비전공자:</span> 핸드드로잉 · 예비심화드로잉 / 포토샵→일러스트→포토웍스→디일러→GTQ1급→프리미어→에펙1→2→3→마야1→2→3→4→5→6→언리얼엔진<br>
+              <span>전공자:</span> 포토샵→포토웍스→일러스트→디일러→프리미어→에펙1→2→3→마야1→2→3→4→5→6→언리얼엔진 → 마야포폴/언리얼 → Goal
             </div>
           </div>
         </div>
       </div>
-      <div style="background:var(--navy); border-radius:12px; padding:1.1rem 2.5rem; flex-shrink:0; display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; align-items:center;">
+      <div style="background:var(--navy); border-radius:8px; padding:1rem 2rem; flex-shrink:0; display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.4rem; align-items:center;">
         <div>
-          <div style="font-size:0.72rem; font-weight:700; color:var(--blue-mid); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.35rem;">📅 특강 시스템</div>
-          <div style="font-size:0.82rem; color:rgba(255,255,255,0.8); line-height:1.65;">1월 겨울방학 특강 · 7월 여름방학 특강<br>8~11월 고3 수시 특강 운영</div>
+          <div style="font-size:.68rem; font-weight:700; color:var(--blue-m); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.3rem;">특강 시스템</div>
+          <div style="font-size:.82rem; color:rgba(255,255,255,.75); line-height:1.65;">1월 겨울방학 특강 · 7월 여름방학 특강<br>8~11월 고3 수시 특강 운영</div>
         </div>
         <div>
-          <div style="font-size:0.72rem; font-weight:700; color:var(--blue-mid); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.35rem;">🎤 모의면접 시스템</div>
-          <div style="font-size:0.82rem; color:rgba(255,255,255,0.8); line-height:1.65;">포트폴리오·면접 전형 대비 상시 진행<br>1:1 개별 / 그룹 모의면접 · 영상 피드백</div>
+          <div style="font-size:.68rem; font-weight:700; color:var(--blue-m); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.3rem;">모의면접 시스템</div>
+          <div style="font-size:.82rem; color:rgba(255,255,255,.75); line-height:1.65;">포트폴리오·면접 전형 대비 상시 진행<br>1:1 개별 / 그룹 모의면접 · 영상 피드백</div>
         </div>
         <div>
-          <div style="font-size:0.72rem; font-weight:700; color:var(--blue-mid); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.35rem;">🏆 자격증 & 공모전</div>
-          <div style="font-size:0.82rem; color:rgba(255,255,255,0.8); line-height:1.65;">GTQ, 컴그기능사 등 입시 자격증 취득<br>대학 입시 공모전 · 실기대회 출전 지원</div>
+          <div style="font-size:.68rem; font-weight:700; color:var(--blue-m); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.3rem;">자격증 &amp; 공모전</div>
+          <div style="font-size:.82rem; color:rgba(255,255,255,.75); line-height:1.65;">GTQ, 컴그기능사 등 입시 자격증 취득<br>대학 입시 공모전 · 실기대회 출전 지원</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 9 (구 8) — 교육 성과 -->
+  <!-- SLIDE 9 — 교육 성과 -->
   <div class="slide" id="slide-8">
     <div class="slide-header">
       <div class="slide-num">07</div>
-      <div class="slide-title">교육 <span>성과</span></div>
+      <div class="slide-title">교육 성과</div>
       <div class="slide-subtitle">Results &amp; Reviews</div>
     </div>
     <div class="results-two-col">
@@ -833,15 +872,15 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
         </div>
         <div class="cert-bar">
           <div class="cert-name-row"><span>ITQ</span><span class="cert-pct">92%</span></div>
-          <div class="cert-track"><div class="cert-fill green" style="width:92%"></div></div>
+          <div class="cert-track"><div class="cert-fill" style="width:92%"></div></div>
         </div>
         <div class="cert-bar">
           <div class="cert-name-row"><span>GTQ 포토샵</span><span class="cert-pct">91%</span></div>
-          <div class="cert-track"><div class="cert-fill gold" style="width:91%"></div></div>
+          <div class="cert-track"><div class="cert-fill" style="width:91%"></div></div>
         </div>
         <div class="cert-bar">
           <div class="cert-name-row"><span>AutoCAD</span><span class="cert-pct">89%</span></div>
-          <div class="cert-track"><div class="cert-fill purple" style="width:89%"></div></div>
+          <div class="cert-track"><div class="cert-fill" style="width:89%"></div></div>
         </div>
         <div class="outcome-row">
           <div class="outcome-box">
@@ -861,12 +900,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
             <div class="review-quote-mark">"</div>
             <div class="review-text">처음 그림을 접하는 상황에서도 강사님의 1대1 피드백과 지속적인 지도 덕분에 실력이 점차 향상되는 것을 느낄 수 있었고, 학습 과정 자체에 대한 흥미를 높일 수 있었습니다.</div>
           </div>
-          <div class="review-card" style="border-left-color: var(--green);">
-            <div class="review-quote-mark" style="color: var(--green-light);">"</div>
+          <div class="review-card">
+            <div class="review-quote-mark">"</div>
             <div class="review-text">어려운 부분이 있을 때마다 직접 찾아와 1대1로 지도해주었고, 단순한 칭찬이 아닌 부족한 부분에 대한 정확한 피드백을 통해 실질적인 실력 향상을 경험할 수 있었습니다.</div>
           </div>
-          <div class="review-card" style="border-left-color: var(--purple);">
-            <div class="review-quote-mark" style="color: var(--purple-light);">"</div>
+          <div class="review-card">
+            <div class="review-quote-mark">"</div>
             <div class="review-text">처음 배우는 과정에서도 강사님의 지속적인 체크와 친절한 설명이 큰 도움이 되었으며, 수업 종료 후에도 스스로 학습을 이어갈 수 있는 동기를 부여받을 수 있었습니다.</div>
           </div>
         </div>
@@ -874,101 +913,84 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     </div>
   </div>
 
-  <!-- SLIDE 10 — 수강 안내 · 비전 · 문의처 (통합) -->
+  <!-- SLIDE 10 — 수강 안내 · 비전 · 문의처 -->
   <div class="slide" id="slide-10">
     <div class="slide-header">
       <div class="slide-num">09</div>
-      <div class="slide-title">수강 안내 <span>&amp;</span> 비전</div>
+      <div class="slide-title">수강 안내 &amp; 비전</div>
       <div class="slide-subtitle">Enrollment · Vision · Contact</div>
     </div>
-    <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto 1fr auto; gap:0; overflow:hidden; padding:1.4rem 3rem 0; min-height:0;">
+    <div class="vision-grid">
 
-      <!-- 상단: 비전 선언 (2열 전체) -->
-      <div style="grid-column:span 2; background:var(--navy); border-radius:14px; padding:1.4rem 2.2rem; margin-bottom:1.1rem; display:flex; flex-direction:column; gap:0.5rem; flex-shrink:0;">
-        <div style="font-size:1.3rem; font-weight:900; color:#fff; line-height:1.35;">학생의 진로를 함께 설계하는 <span style="color:var(--blue-mid);">교육 파트너십</span>을 제안합니다</div>
-        <div style="font-size:0.87rem; color:rgba(255,255,255,0.65); line-height:1.7; font-weight:400;">학교와 본 원은 교육 협력 체계를 구축하여, 학생들의 진로 탐색부터 실무역량 강화, 취업 연계까지 이어지는 실무 중심 교육 프로그램을 공동 운영할 수 있습니다.</div>
+      <!-- 비전 선언 -->
+      <div class="vision-header">
+        <div class="vision-headline">학생의 진로를 함께 설계하는 <span>교육 파트너십</span>을 제안합니다</div>
+        <div class="vision-desc">학교와 본 원은 교육 협력 체계를 구축하여, 학생들의 진로 탐색부터 실무역량 강화, 취업 연계까지 이어지는 실무 중심 교육 프로그램을 공동 운영할 수 있습니다.</div>
       </div>
 
-      <!-- 협력 프로그램 목록 (비전 박스 하단) -->
-      <div style="grid-column:span 2; display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.8rem; margin-top:-0.3rem; flex-shrink:0;">
-        <div style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.25); border-radius:8px; padding:0.45rem 0.9rem; font-size:0.82rem; font-weight:600; color:var(--navy);">📌 진로탐색 특강 및 전공 체험 프로그램 운영</div>
-        <div style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.25); border-radius:8px; padding:0.45rem 0.9rem; font-size:0.82rem; font-weight:600; color:var(--navy);">📌 방학 특강 및 단기 집중 교육 과정 운영</div>
-        <div style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.25); border-radius:8px; padding:0.45rem 0.9rem; font-size:0.82rem; font-weight:600; color:var(--navy);">📌 포트폴리오 제작 및 입시 · 취업 특강</div>
-        <div style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.25); border-radius:8px; padding:0.45rem 0.9rem; font-size:0.82rem; font-weight:600; color:var(--navy);">📌 자격증 취득 대비 과정 운영</div>
-        <div style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.25); border-radius:8px; padding:0.45rem 0.9rem; font-size:0.82rem; font-weight:600; color:var(--navy);">📌 학과 맞춤형 교육 및 출강</div>
+      <!-- 협력 프로그램 -->
+      <div class="vision-programs">
+        <div class="prog-item">진로탐색 특강 및 전공 체험 프로그램 운영</div>
+        <div class="prog-item">방학 특강 및 단기 집중 교육 과정 운영</div>
+        <div class="prog-item">포트폴리오 제작 및 입시 · 취업 특강</div>
+        <div class="prog-item">자격증 취득 대비 과정 운영</div>
+        <div class="prog-item">학과 맞춤형 교육 및 출강</div>
       </div>
 
-      <!-- 좌측: 운영시간 + 교육절차 -->
-      <div style="display:flex; flex-direction:column; gap:0.9rem; padding-right:0.7rem; min-height:0; overflow:hidden;">
-        <!-- 운영 시간 -->
-        <div style="background:var(--blue); border-radius:12px; padding:1.2rem 1.6rem; color:#fff; flex-shrink:0;">
-          <div style="font-size:1rem; font-weight:800; margin-bottom:0.8rem;">⏰ 운영 시간</div>
-          <div style="display:grid; grid-template-columns:auto 1fr; gap:0.35rem 1rem; font-size:0.9rem;">
-            <span style="font-weight:700; opacity:0.8;">평일</span><span>오전 9시 ~ 오후 10시</span>
-            <span style="font-weight:700; opacity:0.8;">주말</span><span>오전 9시 ~ 오후 6시</span>
-            <span style="font-weight:700; opacity:0.8;">공휴일</span><span>휴원</span>
+      <!-- 좌측: 운영시간 + 절차 -->
+      <div class="vision-left">
+        <div class="op-hours">
+          <div class="op-title">운영 시간</div>
+          <div class="op-grid">
+            <span class="op-label">평일</span><span>오전 9시 ~ 오후 10시</span>
+            <span class="op-label">주말</span><span>오전 9시 ~ 오후 6시</span>
+            <span class="op-label">공휴일</span><span>휴원</span>
           </div>
         </div>
-        <!-- 교육 진행 절차 -->
-        <div style="background:var(--gray-100); border:2px solid var(--gray-200); border-radius:12px; padding:1.2rem 1.6rem; flex:1; min-height:0;">
-          <div style="font-size:1rem; font-weight:800; color:var(--navy); margin-bottom:0.8rem;">📋 교육 진행 절차</div>
-          <div style="display:flex; flex-direction:column; gap:0.55rem;">
-            <div style="display:flex; align-items:center; gap:0.8rem;">
-              <div style="background:var(--blue); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:#fff; flex-shrink:0;">1</div>
-              <span style="font-size:0.88rem; font-weight:600; color:var(--navy);">진로 상담 및 과정 선택</span>
-            </div>
-            <div style="display:flex; align-items:center; gap:0.8rem;">
-              <div style="background:var(--blue); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:#fff; flex-shrink:0;">2</div>
-              <span style="font-size:0.88rem; font-weight:600; color:var(--navy);">학교 · 기관 연계 협의</span>
-            </div>
-            <div style="display:flex; align-items:center; gap:0.8rem;">
-              <div style="background:var(--blue); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:#fff; flex-shrink:0;">3</div>
-              <span style="font-size:0.88rem; font-weight:600; color:var(--navy);">교육 과정 설계 · 일정 조율</span>
-            </div>
-            <div style="display:flex; align-items:center; gap:0.8rem;">
-              <div style="background:var(--blue); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:#fff; flex-shrink:0;">4</div>
-              <span style="font-size:0.88rem; font-weight:600; color:var(--navy);">교육 시작 · 학생 출결 관리</span>
-            </div>
-            <div style="display:flex; align-items:center; gap:0.8rem;">
-              <div style="background:var(--blue); border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:#fff; flex-shrink:0;">5</div>
-              <span style="font-size:0.88rem; font-weight:600; color:var(--navy);">포트폴리오 완성 · 취업 · 진학 연계</span>
-            </div>
+        <div class="proc-box">
+          <div class="proc-title">교육 진행 절차</div>
+          <div class="proc-steps">
+            <div class="proc-step"><div class="proc-step-num">1</div><span class="proc-step-text">진로 상담 및 과정 선택</span></div>
+            <div class="proc-step"><div class="proc-step-num">2</div><span class="proc-step-text">학교 · 기관 연계 협의</span></div>
+            <div class="proc-step"><div class="proc-step-num">3</div><span class="proc-step-text">교육 과정 설계 · 일정 조율</span></div>
+            <div class="proc-step"><div class="proc-step-num">4</div><span class="proc-step-text">교육 시작 · 학생 출결 관리</span></div>
+            <div class="proc-step"><div class="proc-step-num">5</div><span class="proc-step-text">포트폴리오 완성 · 취업 · 진학 연계</span></div>
           </div>
         </div>
       </div>
 
-      <!-- 우측: 핵심 목표 3개 -->
-      <div style="display:flex; flex-direction:column; gap:0.9rem; padding-left:0.7rem; min-height:0;">
-        <div style="font-size:0.8rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:0.07em; flex-shrink:0;">핵심 목표</div>
-        <div style="display:flex; flex-direction:column; gap:0.8rem; flex:1; min-height:0;">
-          <div style="background:var(--gray-100); border-radius:12px; padding:1.2rem 1.6rem; border-top:3px solid var(--blue); flex:1; display:flex; flex-direction:column; gap:0.3rem; justify-content:center;">
-            <div style="font-size:2rem; font-weight:900; color:var(--blue); line-height:1;">10개교</div>
-            <div style="font-size:0.85rem; color:var(--gray-600); font-weight:400; line-height:1.5;">협약 학교 확보 목표<br>학교 연계 교육 네트워크 구축</div>
+      <!-- 우측: 핵심 목표 -->
+      <div class="vision-right">
+        <div class="goal-label">핵심 목표</div>
+        <div class="goals">
+          <div class="goal-card">
+            <div class="goal-num">10개교</div>
+            <div class="goal-desc">협약 학교 확보 목표<br>학교 연계 교육 네트워크 구축</div>
           </div>
-          <div style="background:var(--gray-100); border-radius:12px; padding:1.2rem 1.6rem; border-top:3px solid var(--green); flex:1; display:flex; flex-direction:column; gap:0.3rem; justify-content:center;">
-            <div style="font-size:2rem; font-weight:900; color:var(--green); line-height:1;">500건</div>
-            <div style="font-size:0.85rem; color:var(--gray-600); font-weight:400; line-height:1.5;">연간 자격증 합격 목표<br>체계적 자격증 취득 지원</div>
+          <div class="goal-card">
+            <div class="goal-num">500건</div>
+            <div class="goal-desc">연간 자격증 합격 목표<br>체계적 자격증 취득 지원</div>
           </div>
-          <div style="background:var(--gray-100); border-radius:12px; padding:1.2rem 1.6rem; border-top:3px solid var(--gold); flex:1; display:flex; flex-direction:column; gap:0.3rem; justify-content:center;">
-            <div style="font-size:2rem; font-weight:900; color:var(--gold); line-height:1;">75%</div>
-            <div style="font-size:0.85rem; color:var(--gray-600); font-weight:400; line-height:1.5;">취업 · 진학 연계율 목표<br>포트폴리오 기반 진로 설계</div>
+          <div class="goal-card">
+            <div class="goal-num">75%</div>
+            <div class="goal-desc">취업 · 진학 연계율 목표<br>포트폴리오 기반 진로 설계</div>
           </div>
         </div>
       </div>
 
-      <!-- 하단: 연락처 (2열 전체, 한 번만) -->
-      <div style="grid-column:span 2; background:var(--blue); border-radius:12px; padding:1.1rem 2rem; margin-top:1.1rem; margin-bottom:0.8rem; display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; flex-shrink:0; align-items:center;">
-        <div>
-          <div style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.65); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.2rem;">📞 대표번호</div>
-          <div style="font-size:1.05rem; font-weight:800; color:#fff;">032-212-0777</div>
+      <!-- 연락처 -->
+      <div class="contact-bar">
+        <div class="contact-item">
+          <div class="contact-lbl">대표번호</div>
+          <div class="contact-val">032-212-0777</div>
         </div>
-        <div>
-          <div style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.65); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.2rem;">✉️ 이메일</div>
-          <div style="font-size:0.92rem; font-weight:700; color:#fff;">qkrtjdus@koreaedugroup.com</div>
+        <div class="contact-item">
+          <div class="contact-lbl">이메일</div>
+          <div class="contact-val">qkrtjdus@koreaedugroup.com</div>
         </div>
-        <div>
-          <div style="font-size:0.7rem; font-weight:700; color:rgba(255,255,255,0.65); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.2rem;">🌐 홈페이지</div>
-          <div style="font-size:0.95rem; font-weight:800; color:#fff;">guwol.sbsart.com</div>
+        <div class="contact-item">
+          <div class="contact-lbl">홈페이지</div>
+          <div class="contact-val">guwol.sbsart.com</div>
         </div>
       </div>
 
@@ -989,10 +1011,12 @@ function goTo(n) {
   if (n < 0 || n >= total) return;
   slides[current].classList.remove('active');
   slides[current].style.transform = n > current ? 'translateX(-100%)' : 'translateX(100%)';
+  slides[current].style.opacity = '0';
   dots[current].classList.remove('active');
   current = n;
   slides[current].classList.add('active');
   slides[current].style.transform = 'translateX(0)';
+  slides[current].style.opacity = '1';
   dots[current].classList.add('active');
   counter.textContent = (current + 1) + ' / ' + total;
   progressBar.style.width = ((current + 1) / total * 100) + '%';
@@ -1010,7 +1034,7 @@ let touchStartX = 0;
 document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
 document.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(dx) > 50) dx < 0 ? nextSlide() : prevSlide();
+  if (Math.abs(dx) > 30) dx < 0 ? nextSlide() : prevSlide();
 });
 </script>
 </body>
