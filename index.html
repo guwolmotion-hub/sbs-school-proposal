@@ -44,12 +44,11 @@ html, body {
 .slide {
   position: absolute; inset: 0;
   background: var(--bg);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: flex-start;
-  padding: 1.8rem 2.5rem 4.5rem;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.6rem 2rem 4.2rem;
   transition: transform .55s cubic-bezier(.77,0,.175,1), opacity .55s ease;
   transform: translateX(100%); opacity: 0;
-  overflow-y: auto;
+  overflow: hidden;
 }
 .slide.active { transform: translateX(0); opacity: 1; }
 
@@ -58,8 +57,8 @@ html, body {
   background: var(--paper);
   border: 1px solid var(--border);
   border-radius: 8px;
-  width: 100%; max-width: 1000px;
-  flex: 1;                              /* 슬라이드 남은 높이 채움 */
+  width: 100%; max-width: 1100px;
+  height: calc(100vh - 5.8rem);        /* 화면 거의 다 채움, 테두리만 살짝 */
   display: flex; flex-direction: column;
   overflow: hidden;
   box-shadow: 0 2px 16px rgba(0,0,0,.08);
@@ -290,10 +289,10 @@ html, body {
 .nv { font-size: .8rem; color: var(--fg); font-weight: 400; line-height: 1.5; }
 
 /* ─────────── Cover — special ─────────── */
-#slide-1 { padding: 1.8rem 2.5rem 4.5rem; align-items: center; justify-content: center; }
+#slide-1 { padding: 1.6rem 2rem 4.2rem; }
 .cover-paper {
-  width: 100%; max-width: 1000px;
-  flex: 1;
+  width: 100%; max-width: 1100px;
+  height: calc(100vh - 5.8rem);
   display: grid; grid-template-columns: 55% 45%;
   background: var(--paper); border: 1px solid var(--border);
   border-radius: 8px; overflow: hidden;
