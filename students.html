@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>수강생 관리 | SBS아카데미 구월점</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0f1f3d;
+      --blue: #1d3d6e;
+      --accent: #3a7bd5;
+      --accent2: #e8562a;
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --border: #e0e6f0;
+      --text: #1a2540;
+      --sub: #6b7a99;
+      --green: #27ae60;
+      --orange: #e67e22;
+      --red: #e74c3c;
+      --purple: #8e44ad;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      padding: 28px 40px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(15,31,61,.35);
+    }
+    .header-left h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.3px;
+    }
+    .header-left p {
+      font-size: 13px;
+      color: rgba(255,255,255,.6);
+      margin-top: 4px;
+    }
+    .header-badge {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+    }
+
+    /* ── Tab Switcher ── */
+    .tab-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 32px 40px 0;
+    }
+    .tab-btn {
+      position: relative;
+      padding: 14px 48px;
+      border-radius: 14px;
+      border: none;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .25s;
+      letter-spacing: -.2px;
+    }
+    .tab-btn.admission {
+      background: var(--card);
+      color: var(--sub);
+      border: 2px solid var(--border);
+    }
+    .tab-btn.admission.active {
+      background: linear-gradient(135deg, #1d3d6e, #3a7bd5);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(58,123,213,.4);
+    }
+    .tab-btn.employ {
+      background: var(--card);
+      color: var(--sub);
+      border: 2px solid var(--border);
+    }
+    .tab-btn.employ.active {
+      background: linear-gradient(135deg, #7b1d1d, #e8562a);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 6px 20px rgba(232,86,42,.4);
+    }
+    .tab-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.25);
+      border-radius: 20px;
+      padding: 1px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .tab-btn:not(.active) .tab-badge {
+      background: var(--bg);
+      color: var(--sub);
+    }
+
+    /* ── Section ── */
+    .section {
+      display: none;
+      padding: 28px 40px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section.active { display: block; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .section-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .admission-dot { background: var(--accent); }
+    .employ-dot { background: var(--accent2); }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .section-count {
+      margin-left: auto;
+      font-size: 13px;
+      color: var(--sub);
+    }
+
+    /* ── Table ── */
+    .table-wrap {
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(15,31,61,.08);
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead th {
+      background: var(--navy);
+      color: rgba(255,255,255,.85);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+      cursor: pointer;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f0f4ff; }
+    tbody td {
+      padding: 16px 20px;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+    .student-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .mentor-name {
+      color: var(--sub);
+      font-size: 13px;
+    }
+
+    /* ── Status Badge ── */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-plan    { background: #eaf3ff; color: #2563eb; }
+    .badge-making  { background: #fff3e0; color: #d97706; }
+    .badge-revise  { background: #fef3f2; color: #dc2626; }
+    .badge-done    { background: #ecfdf5; color: #059669; }
+    .badge-yes     { background: #ecfdf5; color: #059669; }
+    .badge-no      { background: #fef3f2; color: #dc2626; }
+    .badge-review  { background: #f5f3ff; color: #7c3aed; }
+
+    /* ── Admission School ── */
+    .school-tag {
+      font-size: 12px;
+      color: var(--sub);
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 3px 10px;
+      display: inline-block;
+    }
+
+    /* ── Row Number ── */
+    .row-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--sub);
+    }
+
+    /* ── Detail Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,31,61,.45);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 20px;
+      width: 520px;
+      max-width: 94vw;
+      box-shadow: 0 20px 60px rgba(15,31,61,.3);
+      overflow: hidden;
+      animation: popIn .2s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(.94); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    .modal-header {
+      padding: 24px 28px 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .modal-header.admission-header { background: linear-gradient(135deg, #1d3d6e, #3a7bd5); }
+    .modal-header.employ-header    { background: linear-gradient(135deg, #7b1d1d, #e8562a); }
+    .modal-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .modal-subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,.7);
+      margin-top: 4px;
+    }
+    .modal-close {
+      background: rgba(255,255,255,.2);
+      border: none;
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s;
+      flex-shrink: 0;
+    }
+    .modal-close:hover { background: rgba(255,255,255,.35); }
+    .modal-body { padding: 24px 28px 28px; }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .info-item label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--sub);
+      display: block;
+      margin-bottom: 5px;
+    }
+    .info-item .val {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .memo-box {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--sub);
+      line-height: 1.6;
+    }
+    .memo-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--sub);
+      margin-bottom: 8px;
+    }
+
+    /* ── Progress Bar ── */
+    .progress-wrap { margin-top: 18px; }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--sub);
+      margin-bottom: 7px;
+    }
+    .progress-track {
+      background: var(--border);
+      border-radius: 99px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width .6s ease;
+    }
+    .fill-admission { background: linear-gradient(90deg, #3a7bd5, #60a5fa); }
+    .fill-employ    { background: linear-gradient(90deg, #e8562a, #f97316); }
+
+    @media (max-width: 700px) {
+      header { padding: 20px 20px 18px; }
+      .tab-wrap { padding: 24px 20px 0; }
+      .section { padding: 20px 16px 40px; }
+      thead th, tbody td { padding: 12px 14px; }
+      .tab-btn { padding: 12px 28px; font-size: 14px; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      nav, .modal-overlay { display: none !important; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>수강생 관리 시스템</h1>
+    <p>SBS아카데미 구월점 · 저녁반</p>
+  </div>
+  <div class="header-badge">2026년 4월 기준</div>
+</header>
+
+<!-- Tab Buttons -->
+<div class="tab-wrap">
+  <button class="tab-btn admission active" onclick="switchTab('admission')">
+    🎨 입시반 <span class="tab-badge" id="admission-count">7</span>
+  </button>
+  <button class="tab-btn employ" onclick="switchTab('employ')">
+    💼 취업반 <span class="tab-badge" id="employ-count">6</span>
+  </button>
+</div>
+
+<!-- ══════════ 입시반 섹션 ══════════ -->
+<div class="section active" id="section-admission" style="max-width:1100px;margin:0 auto;">
+  <div class="section-header">
+    <div class="section-dot admission-dot"></div>
+    <div class="section-title">입시 수강생</div>
+    <div class="section-count">총 7명</div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:50px">#</th>
+          <th>수강생</th>
+          <th>담당 멘토</th>
+          <th>목표 학교</th>
+          <th>포폴 주제</th>
+          <th>진행 단계</th>
+          <th>진행률</th>
+        </tr>
+      </thead>
+      <tbody id="admission-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════ 취업반 섹션 ══════════ -->
+<div class="section" id="section-employ" style="max-width:1100px;margin:0 auto;">
+  <div class="section-header">
+    <div class="section-dot employ-dot"></div>
+    <div class="section-title">취업 수강생</div>
+    <div class="section-count">총 6명</div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:50px">#</th>
+          <th>수강생</th>
+          <th>담당 멘토</th>
+          <th>포폴 주제</th>
+          <th>진행 단계</th>
+          <th>진행률</th>
+          <th>취업 희망</th>
+        </tr>
+      </thead>
+      <tbody id="employ-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════ 상세 모달 ══════════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-box">
+    <div class="modal-header" id="modal-header">
+      <div>
+        <div class="modal-title" id="modal-name"></div>
+        <div class="modal-subtitle" id="modal-subtitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-grid" id="modal-info-grid"></div>
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>포트폴리오 진행률</span>
+          <span id="modal-progress-pct"></span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="modal-progress-bar"></div>
+        </div>
+      </div>
+      <div style="margin-top:18px;">
+        <div class="memo-label">메모 / 특이사항</div>
+        <div class="memo-box" id="modal-memo"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════ DATA ════════════════ */
+const admission = [
+  { name:"김지수", mentor:"이현수 멘토", school:"홍익대학교", topic:"브랜드 아이덴티티", stage:"making", pct:65, memo:"로고 시스템 2차 수정 중. 색상 팔레트 완성, 굿즈 목업 작업 예정." },
+  { name:"박서준", mentor:"이현수 멘토", school:"국민대학교", topic:"UX/UI 앱 디자인",   stage:"plan",   pct:30, memo:"사용자 리서치 진행 중. 와이어프레임 미완성 상태." },
+  { name:"최아린", mentor:"정유진 멘토", school:"이화여자대학교", topic:"타이포그래피 포스터", stage:"done", pct:100, memo:"완성. 최종 인쇄본 제출 완료. 추가 작업 없음." },
+  { name:"이도윤", mentor:"정유진 멘토", school:"서울대학교",   topic:"공간 디자인 콘셉트", stage:"revise", pct:80, memo:"3차 수정 요청. 동선 흐름 개선 필요. 멘토 피드백 반영 중." },
+  { name:"한소희", mentor:"강민준 멘토", school:"홍익대학교",   topic:"일러스트 캐릭터",   stage:"making", pct:55, memo:"캐릭터 시리즈 5종 제작 중. 배경 작업 남음." },
+  { name:"윤재혁", mentor:"강민준 멘토", school:"건국대학교",   topic:"패키지 디자인",     stage:"plan",   pct:20, memo:"콘셉트 방향 탐색 단계. 레퍼런스 수집 중." },
+  { name:"송다은", mentor:"이현수 멘토", school:"중앙대학교",   topic:"모션그래픽",        stage:"revise", pct:70, memo:"2차 컷 편집 완료. 사운드 싱크 조정 필요." },
+];
+
+const employ = [
+  { name:"강태양", mentor:"정유진 멘토", topic:"UI/UX 앱 디자인",  stage:"done",   pct:100, wantJob:true,  memo:"포폴 완성. 현재 서류 지원 중. 카카오·네이버 서류 제출." },
+  { name:"오지현", mentor:"강민준 멘토", topic:"브랜드 디자인",    stage:"making", pct:60,  wantJob:true,  memo:"브랜드 북 제작 중. 목업 촬영 일정 조율 필요." },
+  { name:"임준서", mentor:"이현수 멘토", topic:"영상 편집 포폴",   stage:"revise", pct:75,  wantJob:false, memo:"프리랜서 전환 희망. 포폴 완성 후 플랫폼 등록 예정." },
+  { name:"배나연", mentor:"정유진 멘토", topic:"편집 디자인",      stage:"plan",   pct:25,  wantJob:true,  memo:"출판사 취업 목표. 북 디자인 방향으로 포폴 재구성 논의 중." },
+  { name:"최민혁", mentor:"강민준 멘토", topic:"3D 모델링 포폴",   stage:"making", pct:50,  wantJob:true,  memo:"블렌더 작업 중. 게임회사 포트폴리오 기준 맞추는 중." },
+  { name:"신예은", mentor:"이현수 멘토", topic:"소셜미디어 디자인", stage:"done",   pct:95,  wantJob:false, memo:"취업보다 프리랜서 희망. SNS 계정 운영 병행 중." },
+];
+
+/* ════════════════ STAGE LABEL ════════════════ */
+const stageMap = {
+  plan:   { label:"기획중",  cls:"badge-plan" },
+  making: { label:"제작중",  cls:"badge-making" },
+  revise: { label:"수정중",  cls:"badge-revise" },
+  done:   { label:"완성",    cls:"badge-done" },
+};
+
+/* ════════════════ RENDER ════════════════ */
+function renderAdmission() {
+  const tbody = document.getElementById('admission-tbody');
+  tbody.innerHTML = '';
+  admission.forEach((s, i) => {
+    const st = stageMap[s.stage];
+    tbody.innerHTML += `
+      <tr onclick="openModal('admission', ${i})">
+        <td><div class="row-num">${i+1}</div></td>
+        <td><div class="student-name">${s.name}</div></td>
+        <td><div class="mentor-name">${s.mentor}</div></td>
+        <td><span class="school-tag">${s.school}</span></td>
+        <td>${s.topic}</td>
+        <td><span class="badge ${st.cls}">${st.label}</span></td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:1;background:#e8edf5;border-radius:99px;height:6px;min-width:70px;">
+              <div style="width:${s.pct}%;height:100%;border-radius:99px;background:linear-gradient(90deg,#3a7bd5,#60a5fa);"></div>
+            </div>
+            <span style="font-size:12px;color:var(--sub);font-weight:600;">${s.pct}%</span>
+          </div>
+        </td>
+      </tr>`;
+  });
+}
+
+function renderEmploy() {
+  const tbody = document.getElementById('employ-tbody');
+  tbody.innerHTML = '';
+  employ.forEach((s, i) => {
+    const st = stageMap[s.stage];
+    const wj = s.wantJob
+      ? '<span class="badge badge-yes">희망</span>'
+      : '<span class="badge badge-no">미희망</span>';
+    tbody.innerHTML += `
+      <tr onclick="openModal('employ', ${i})">
+        <td><div class="row-num">${i+1}</div></td>
+        <td><div class="student-name">${s.name}</div></td>
+        <td><div class="mentor-name">${s.mentor}</div></td>
+        <td>${s.topic}</td>
+        <td><span class="badge ${st.cls}">${st.label}</span></td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:1;background:#e8edf5;border-radius:99px;height:6px;min-width:70px;">
+              <div style="width:${s.pct}%;height:100%;border-radius:99px;background:linear-gradient(90deg,#e8562a,#f97316);"></div>
+            </div>
+            <span style="font-size:12px;color:var(--sub);font-weight:600;">${s.pct}%</span>
+          </div>
+        </td>
+        <td>${wj}</td>
+      </tr>`;
+  });
+}
+
+/* ════════════════ MODAL ════════════════ */
+function openModal(type, idx) {
+  const s = type === 'admission' ? admission[idx] : employ[idx];
+  const st = stageMap[s.stage];
+  const isAdm = type === 'admission';
+
+  document.getElementById('modal-header').className = 'modal-header ' + (isAdm ? 'admission-header' : 'employ-header');
+  document.getElementById('modal-name').textContent = s.name;
+  document.getElementById('modal-subtitle').textContent = isAdm ? '입시반' : '취업반';
+
+  let gridHTML = `
+    <div class="info-item"><label>담당 멘토</label><div class="val">${s.mentor}</div></div>
+    <div class="info-item"><label>포폴 주제</label><div class="val">${s.topic}</div></div>
+    <div class="info-item"><label>진행 단계</label><div class="val"><span class="badge ${st.cls}">${st.label}</span></div></div>`;
+
+  if (isAdm) {
+    gridHTML += `<div class="info-item"><label>목표 학교</label><div class="val">${s.school}</div></div>`;
+  } else {
+    const wj = s.wantJob ? '<span class="badge badge-yes">희망</span>' : '<span class="badge badge-no">미희망</span>';
+    gridHTML += `<div class="info-item"><label>취업 희망</label><div class="val">${wj}</div></div>`;
+  }
+
+  document.getElementById('modal-info-grid').innerHTML = gridHTML;
+  document.getElementById('modal-progress-pct').textContent = s.pct + '%';
+  const bar = document.getElementById('modal-progress-bar');
+  bar.style.width = s.pct + '%';
+  bar.className = 'progress-fill ' + (isAdm ? 'fill-admission' : 'fill-employ');
+  document.getElementById('modal-memo').textContent = s.memo;
+
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+/* ════════════════ TAB SWITCH ════════════════ */
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelector('.tab-btn.' + tab).classList.add('active');
+  document.getElementById('section-' + tab).classList.add('active');
+}
+
+/* ════════════════ INIT ════════════════ */
+renderAdmission();
+renderEmploy();
+document.getElementById('admission-count').textContent = admission.length;
+document.getElementById('employ-count').textContent = employ.length;
+</script>
+</body>
+</html>
