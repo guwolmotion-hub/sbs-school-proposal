@@ -229,18 +229,8 @@
     .badge-making  { background: #fff3e0; color: #d97706; }
     .badge-revise  { background: #fef3f2; color: #dc2626; }
     .badge-done    { background: #ecfdf5; color: #059669; }
-    .badge-yes     { background: #ecfdf5; color: #059669; }
-    .badge-no      { background: #fef3f2; color: #dc2626; }
-
-    /* ── Admission School ── */
-    .school-tag {
-      font-size: 12px;
-      color: var(--sub);
-      background: var(--bg);
-      border-radius: 8px;
-      padding: 3px 10px;
-      display: inline-block;
-    }
+    .badge-employ  { background: #ecfdf5; color: #059669; }
+    .badge-transfer { background: #eaf3ff; color: #2563eb; }
 
     /* ── Row Number ── */
     .row-num {
@@ -283,10 +273,10 @@
 <!-- Tab Buttons -->
 <div class="tab-wrap">
   <button class="tab-btn admission active" onclick="switchTab('admission')">
-    🎨 입시반 <span class="tab-badge" id="admission-count">7</span>
+    🎨 입시반 <span class="tab-badge" id="admission-count">10</span>
   </button>
   <button class="tab-btn employ" onclick="switchTab('employ')">
-    💼 취업반 <span class="tab-badge" id="employ-count">6</span>
+    💼 취업/편입반 <span class="tab-badge" id="employ-count">3</span>
   </button>
 </div>
 
@@ -295,7 +285,7 @@
   <div class="section-header">
     <div class="section-dot admission-dot"></div>
     <div class="section-title">입시 수강생</div>
-    <div class="section-count">총 7명</div>
+    <div class="section-count">총 10명</div>
   </div>
   <div class="table-wrap">
     <table>
@@ -304,7 +294,7 @@
           <th style="width:50px">#</th>
           <th>수강생</th>
           <th>담당 멘토</th>
-          <th>목표 학교</th>
+          <th>나이</th>
           <th>포폴 주제</th>
           <th>진행 단계</th>
           <th>진행률</th>
@@ -315,12 +305,12 @@
   </div>
 </div>
 
-<!-- ══════════ 취업반 섹션 ══════════ -->
+<!-- ══════════ 취업/편입반 섹션 ══════════ -->
 <div class="section" id="section-employ" style="max-width:1100px;margin:0 auto;">
   <div class="section-header">
     <div class="section-dot employ-dot"></div>
-    <div class="section-title">취업 수강생</div>
-    <div class="section-count">총 6명</div>
+    <div class="section-title">취업/편입 수강생</div>
+    <div class="section-count">총 3명</div>
   </div>
   <div class="table-wrap">
     <table>
@@ -332,7 +322,7 @@
           <th>포폴 주제</th>
           <th>진행 단계</th>
           <th>진행률</th>
-          <th>취업 희망</th>
+          <th>목표</th>
         </tr>
       </thead>
       <tbody id="employ-tbody"></tbody>
@@ -343,22 +333,22 @@
 <script>
 /* ════════════════ DATA ════════════════ */
 const admission = [
-  { name:"김지수", slug:"kim-jisu",     mentor:"이현수 멘토", school:"홍익대학교",     topic:"브랜드 아이덴티티",    stage:"making", pct:65,  memo:"로고 시스템 2차 수정 중. 색상 팔레트 완성, 굿즈 목업 작업 예정." },
-  { name:"박서준", slug:"park-seojun",  mentor:"이현수 멘토", school:"국민대학교",     topic:"UX/UI 앱 디자인",      stage:"plan",   pct:30,  memo:"사용자 리서치 진행 중. 와이어프레임 미완성 상태." },
-  { name:"최아린", slug:"choi-arin",    mentor:"정유진 멘토", school:"이화여자대학교", topic:"타이포그래피 포스터",   stage:"done",   pct:100, memo:"완성. 최종 인쇄본 제출 완료. 추가 작업 없음." },
-  { name:"이도윤", slug:"lee-doyun",    mentor:"정유진 멘토", school:"서울대학교",     topic:"공간 디자인 콘셉트",   stage:"revise", pct:80,  memo:"3차 수정 요청. 동선 흐름 개선 필요. 멘토 피드백 반영 중." },
-  { name:"한소희", slug:"han-sohee",    mentor:"강민준 멘토", school:"홍익대학교",     topic:"일러스트 캐릭터",      stage:"making", pct:55,  memo:"캐릭터 시리즈 5종 제작 중. 배경 작업 남음." },
-  { name:"윤재혁", slug:"yoon-jaehyuk", mentor:"강민준 멘토", school:"건국대학교",     topic:"패키지 디자인",        stage:"plan",   pct:20,  memo:"콘셉트 방향 탐색 단계. 레퍼런스 수집 중." },
-  { name:"송다은", slug:"song-daeun",   mentor:"이현수 멘토", school:"중앙대학교",     topic:"모션그래픽",           stage:"revise", pct:70,  memo:"2차 컷 편집 완료. 사운드 싱크 조정 필요." },
+  { name:"김시우",  slug:"kim-siwoo",   mentor:"이석호", age:19, topic:"모션포폴2D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
+  { name:"남재서",  slug:"nam-jaeseo",  mentor:"이석호", age:19, topic:"모션포폴2D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
+  { name:"안예나",  slug:"an-yena",     mentor:"이석호", age:19, topic:"모션포폴3D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
+  { name:"이예준",  slug:"lee-yejun",   mentor:"문예주", age:16, topic:"모션포폴2D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
+  { name:"김건우",  slug:"kim-geonwoo", mentor:"이석호", age:18, topic:"모션포폴2D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
+  { name:"김수민",  slug:"kim-sumin",   mentor:"최상준", age:19, topic:"모션포폴2D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
+  { name:"한사랑",  slug:"han-sarang",  mentor:"최상준", age:19, topic:"모션포폴2D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
+  { name:"배수담",  slug:"bae-sudam",   mentor:"김단비", age:19, topic:"모션포폴2D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
+  { name:"한결",    slug:"han-gyeol",   mentor:"문예주", age:19, topic:"모션포폴2D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
+  { name:"노원태",  slug:"noh-wontae",  mentor:"함유진", age:19, topic:"모션포폴2D", stage:"making", pct:40, memo:"포트폴리오 진행 중." },
 ];
 
 const employ = [
-  { name:"강태양", slug:"kang-taeyang", mentor:"정유진 멘토", topic:"UI/UX 앱 디자인",   stage:"done",   pct:100, wantJob:true,  memo:"포폴 완성. 현재 서류 지원 중. 카카오·네이버 서류 제출." },
-  { name:"오지현", slug:"oh-jihyun",    mentor:"강민준 멘토", topic:"브랜드 디자인",     stage:"making", pct:60,  wantJob:true,  memo:"브랜드 북 제작 중. 목업 촬영 일정 조율 필요." },
-  { name:"임준서", slug:"lim-junseo",   mentor:"이현수 멘토", topic:"영상 편집 포폴",    stage:"revise", pct:75,  wantJob:false, memo:"프리랜서 전환 희망. 포폴 완성 후 플랫폼 등록 예정." },
-  { name:"배나연", slug:"bae-nayeon",   mentor:"정유진 멘토", topic:"편집 디자인",       stage:"plan",   pct:25,  wantJob:true,  memo:"출판사 취업 목표. 북 디자인 방향으로 포폴 재구성 논의 중." },
-  { name:"최민혁", slug:"choi-minhyuk", mentor:"강민준 멘토", topic:"3D 모델링 포폴",    stage:"making", pct:50,  wantJob:true,  memo:"블렌더 작업 중. 게임회사 포트폴리오 기준 맞추는 중." },
-  { name:"신예은", slug:"shin-yeeun",   mentor:"이현수 멘토", topic:"소셜미디어 디자인", stage:"done",   pct:95,  wantJob:false, memo:"취업보다 프리랜서 희망. SNS 계정 운영 병행 중." },
+  { name:"박슬비",  slug:"park-seulbi", mentor:"천서현", topic:"모션포폴2D", stage:"making", pct:40, goal:"취업",  memo:"포트폴리오 진행 중." },
+  { name:"정재민",  slug:"jung-jaemin", mentor:"이석호", topic:"모션포폴2D", stage:"making", pct:40, goal:"편입",  memo:"포트폴리오 진행 중." },
+  { name:"오현빈",  slug:"oh-hyunbin",  mentor:"김단비", topic:"모션포폴2D", stage:"making", pct:40, goal:"편입",  memo:"포트폴리오 진행 중." },
 ];
 
 /* ════════════════ STAGE LABEL ════════════════ */
@@ -380,7 +370,7 @@ function renderAdmission() {
         <td><div class="row-num">${i+1}</div></td>
         <td><a class="student-name-link" href="student/${s.slug}.html" onclick="event.stopPropagation()">${s.name}</a></td>
         <td><div class="mentor-name">${s.mentor}</div></td>
-        <td><span class="school-tag">${s.school}</span></td>
+        <td>${s.age}세</td>
         <td>${s.topic}</td>
         <td><span class="badge ${st.cls}">${st.label}</span></td>
         <td>
@@ -400,9 +390,9 @@ function renderEmploy() {
   tbody.innerHTML = '';
   employ.forEach((s, i) => {
     const st = stageMap[s.stage];
-    const wj = s.wantJob
-      ? '<span class="badge badge-yes">희망</span>'
-      : '<span class="badge badge-no">미희망</span>';
+    const goalBadge = s.goal === '취업'
+      ? '<span class="badge badge-employ">취업</span>'
+      : '<span class="badge badge-transfer">편입</span>';
     tbody.innerHTML += `
       <tr class="employ-row" onclick="window.location='student/${s.slug}.html'">
         <td><div class="row-num">${i+1}</div></td>
@@ -418,7 +408,7 @@ function renderEmploy() {
             <span style="font-size:12px;color:var(--sub);font-weight:600;">${s.pct}%</span>
           </div>
         </td>
-        <td>${wj}</td>
+        <td>${goalBadge}</td>
       </tr>`;
   });
 }
