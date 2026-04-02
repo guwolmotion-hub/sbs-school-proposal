@@ -32,6 +32,31 @@
     .back-btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--sub); font-size: 14px; font-weight: 500; padding: 10px 18px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); box-shadow: 0 1px 6px rgba(15,31,61,.06); transition: all .2s; }
     .back-btn:hover { color: var(--accent); border-color: var(--accent); background: #eaf3ff; }
     @media (max-width: 600px) { .hero { padding: 36px 20px 28px; } .hero h1 { font-size: 28px; } .container { padding: 24px 16px 48px; } .info-grid { grid-template-columns: 1fr; } }
+    /* === 출석 현황 스타일 === */
+    .attendance-section { background: var(--card); border-radius: 14px; padding: 22px 24px; box-shadow: 0 2px 12px rgba(15,31,61,.07); border: 1px solid var(--border); margin-bottom: 20px; page-break-inside: avoid; break-inside: avoid; }
+    .attendance-section > label { font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--sub); display: block; margin-bottom: 16px; }
+    .attendance-row { display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    .attendance-dates { display: flex; gap: 10px; flex-wrap: wrap; flex: 1; }
+    .att-date-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .att-date-label { font-size: 11px; font-weight: 600; color: var(--sub); }
+    .att-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .att-present { background: #ecfdf5; color: #059669; }
+    .att-absent  { background: #fef3f2; color: #dc2626; }
+    .att-none    { background: #f3f4f6; color: #9ca3af; }
+    .attendance-summary { display: flex; flex-direction: column; gap: 6px; padding: 12px 16px; background: #f8faff; border-radius: 10px; border: 1px solid var(--border); font-size: 13px; white-space: nowrap; }
+    .att-sum-present { color: #059669; font-weight: 600; }
+    .att-sum-absent  { color: #dc2626; font-weight: 600; }
+    /* === 피드백 섹션 스타일 === */
+    .feedback-section { margin-bottom: 24px; }
+    .feedback-section > label { font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--sub); display: block; margin-bottom: 14px; }
+    .feedback-card { border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; border: 1px solid var(--border); page-break-inside: avoid; break-inside: avoid; }
+    .feedback-card.present { background: var(--card); box-shadow: 0 1px 8px rgba(15,31,61,.06); }
+    .feedback-card.absent  { background: #f9fafb; opacity: 0.6; }
+    .feedback-card-header  { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .feedback-card.absent .feedback-card-header { margin-bottom: 0; }
+    .feedback-date { font-size: 14px; font-weight: 700; color: var(--text); }
+    .feedback-content { border: 1.5px dashed #d1d5db; border-radius: 8px; padding: 12px; min-height: 60px; color: #9ca3af; font-size: 13px; line-height: 1.6; }
+    @media (max-width: 600px) { .attendance-row { flex-direction: column; } .attendance-summary { width: 100%; } }
     @media print { * { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .back-btn { display: none !important; } .info-card, .progress-card, .memo-card { page-break-inside: avoid; break-inside: avoid; } h1, h2 { page-break-after: avoid; } a[href]::after { content: none !important; } }
   </style>
 </head>
@@ -57,6 +82,88 @@
     <div class="progress-track"><div class="progress-fill" style="width:40%"></div></div>
   </div>
   <div class="memo-card"><label>메모 / 특이사항</label><div class="memo-text">포트폴리오 진행 중.</div></div>
+
+  <!-- 출석 현황 섹션 -->
+  <div class="attendance-section">
+    <label>출석 현황 (수업 6회)</label>
+    <div class="attendance-row">
+      <div class="attendance-dates">
+      <div class="att-date-item">
+        <span class="att-date-label">03-17</span>
+        <span class="att-badge att-absent">결석</span>
+      </div>
+      <div class="att-date-item">
+        <span class="att-date-label">03-19</span>
+        <span class="att-badge att-absent">결석</span>
+      </div>
+      <div class="att-date-item">
+        <span class="att-date-label">03-24</span>
+        <span class="att-badge att-absent">결석</span>
+      </div>
+      <div class="att-date-item">
+        <span class="att-date-label">03-26</span>
+        <span class="att-badge att-present">출석</span>
+      </div>
+      <div class="att-date-item">
+        <span class="att-date-label">03-31</span>
+        <span class="att-badge att-present">출석</span>
+      </div>
+      <div class="att-date-item">
+        <span class="att-date-label">04-02</span>
+        <span class="att-badge att-present">출석</span>
+      </div>
+      </div>
+      <div class="attendance-summary">
+        <span class="att-sum-present">출석 3회</span>
+        <span class="att-sum-absent">결석 3회</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 날짜별 피드백 섹션 -->
+  <div class="feedback-section">
+    <label>날짜별 피드백</label>
+    <div class="feedback-card absent">
+      <div class="feedback-card-header">
+        <span class="feedback-date">03-17 월</span>
+        <span class="att-badge att-absent">결석</span>
+      </div>
+    </div>
+    <div class="feedback-card absent">
+      <div class="feedback-card-header">
+        <span class="feedback-date">03-19 수</span>
+        <span class="att-badge att-absent">결석</span>
+      </div>
+    </div>
+    <div class="feedback-card absent">
+      <div class="feedback-card-header">
+        <span class="feedback-date">03-24 월</span>
+        <span class="att-badge att-absent">결석</span>
+      </div>
+    </div>
+    <div class="feedback-card present">
+      <div class="feedback-card-header">
+        <span class="feedback-date">03-26 수</span>
+        <span class="att-badge att-present">출석</span>
+      </div>
+      <div class="feedback-content">피드백을 입력하세요.</div>
+    </div>
+    <div class="feedback-card present">
+      <div class="feedback-card-header">
+        <span class="feedback-date">03-31 월</span>
+        <span class="att-badge att-present">출석</span>
+      </div>
+      <div class="feedback-content">피드백을 입력하세요.</div>
+    </div>
+    <div class="feedback-card present">
+      <div class="feedback-card-header">
+        <span class="feedback-date">04-02 수</span>
+        <span class="att-badge att-present">출석</span>
+      </div>
+      <div class="feedback-content">피드백을 입력하세요.</div>
+    </div>
+  </div>
+
   <a class="back-btn" href="../students.html">← 목록으로 돌아가기</a>
 </div>
 </body>
