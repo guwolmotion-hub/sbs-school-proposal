@@ -272,6 +272,7 @@ function savePortfolioMedia(){
   if(fileInput&&fileInput.files&&fileInput.files[0]){
     const reader=new FileReader();
     reader.onload=e=>_commitPortfolio(sid,{type,url:e.target.result,title:title||fileInput.files[0].name});
+    reader.onerror=()=>showToast('파일 읽기 실패',3000);
     reader.readAsDataURL(fileInput.files[0]);
   }else if(url){
     _commitPortfolio(sid,{type,url,title});
@@ -281,10 +282,16 @@ function savePortfolioMedia(){
 function _commitPortfolio(sid,item){
   const d=DB.get();
   const s=d.students.find(x=>x.id===sid);
-  if(!s)return;
+  if(!s){showToast('오류: 학생을 찾을 수 없습니다');return;}
   if(!s.portfolio)s.portfolio=[];
   s.portfolio.push(item);
-  DB.save(d);closeModal();renderApp();showToast('업로드됨 ✓');
+  try{
+    DB.save(d);
+    closeModal();renderApp();showToast('업로드됨 ✓');
+  }catch(e){
+    s.portfolio.pop();
+    showToast('저장 실패: 파일이 너무 큽니다. 더 작은 파일이나 URL을 사용하세요.',4000);
+  }
 }
 
 function removePortfolioMedia(sid,idx){
