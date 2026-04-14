@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>포트폴리오 관리 | SBS아카데미 구월점</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0f1f3d;--blue:#1d3d6e;--accent:#3a7bd5;--bg:#f4f6fb;--card:#fff;--border:#e0e6f0;--text:#1a2540;--sub:#6b7a99}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.hd{background:linear-gradient(135deg,var(--navy),var(--blue));padding:16px 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(15,31,61,.35);position:sticky;top:0;z-index:50}
+.hd-left h1{color:#fff;font-size:17px;font-weight:700}
+.hd-left p{color:rgba(255,255,255,.55);font-size:12px;margin-top:2px}
+.hd-right{display:flex;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:5px;border:none;border-radius:10px;padding:8px 16px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#2d6bc4;box-shadow:0 4px 12px rgba(58,123,213,.4)}
+.btn-ghost{background:rgba(255,255,255,.13);color:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.22)}.btn-ghost:hover{background:rgba(255,255,255,.22)}
+.btn-outline{background:var(--card);color:var(--sub);border:1px solid var(--border)}.btn-outline:hover{color:var(--accent);border-color:var(--accent);background:#eaf3ff}
+.btn-sm{padding:5px 11px;font-size:12px;border-radius:8px}
+.wrap{max-width:1100px;margin:0 auto;padding:26px 22px 60px}
+.tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.tab{padding:8px 20px;border-radius:12px;border:2px solid var(--border);background:var(--card);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--sub)}
+.tab.ta{background:linear-gradient(135deg,#1d3d6e,#3a7bd5);color:#fff;border-color:transparent;box-shadow:0 4px 16px rgba(58,123,213,.3)}
+.tcnt{display:inline-block;background:rgba(255,255,255,.25);border-radius:20px;padding:1px 9px;font-size:12px;margin-left:5px}
+.tab:not(.ta) .tcnt{background:var(--bg);color:var(--sub)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.b-adm{background:#eaf3ff;color:#2563eb}.b-emp{background:#ecfdf5;color:#059669}.b-trf{background:#f3e8ff;color:#7c3aed}
+/* PORTFOLIO CARD */
+.port-card{background:var(--card);border-radius:16px;border:1px solid var(--border);padding:20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(15,31,61,.07)}
+.port-card-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.port-name{font-size:16px;font-weight:700}
+.port-meta{font-size:12px;color:var(--sub)}
+/* THUMBNAIL GRID */
+.thumb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.thumb{border-radius:10px;overflow:hidden;position:relative;background:#1a2540;aspect-ratio:16/9;cursor:pointer}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.thumb:hover img{transform:scale(1.05)}
+.thumb-vbg{width:100%;height:100%;background:linear-gradient(135deg,#0f1f3d,#1d3d6e);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.thumb-vbg .vi{font-size:30px}
+.thumb-vbg .vt{font-size:10px;color:rgba(255,255,255,.6);padding:0 8px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;max-width:140px}
+.thumb-del{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.65);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;z-index:3;opacity:0;transition:opacity .15s;padding:0;line-height:1}
+.thumb:hover .thumb-del{opacity:1}
+.thumb-title-bar{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.75));padding:18px 7px 6px;font-size:10px;color:rgba(255,255,255,.9);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thumb-play-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.thumb-play-icon span{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-size:16px}
+.thumb-add{border:2px dashed var(--border);background:#fafbfe;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:var(--sub);gap:5px}
+.thumb-add:hover{border-color:var(--accent);background:#eaf3ff;color:var(--accent)}
+.thumb-add-icon{font-size:22px;line-height:1}
+.thumb-add-txt{font-size:11px;font-weight:600}
+.empty-port{padding:16px 0;font-size:13px;color:var(--sub);text-align:center}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,31,61,.5);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:20px;width:480px;max-width:94vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(15,31,61,.3);animation:pop .2s ease}
+@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-hd{padding:20px 22px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1}
+.modal-hd h3{font-size:16px;font-weight:700}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--sub);line-height:1;padding:2px 6px}
+.modal-body{padding:18px 22px}
+.modal-foot{padding:0 22px 18px;display:flex;justify-content:flex-end;gap:8px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--sub);margin-bottom:5px;letter-spacing:.3px;text-transform:uppercase}
+.field input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:border-color .2s;background:#fafbfe}
+.field input:focus{border-color:var(--accent);background:#fff}
+.type-toggle{display:flex;gap:8px;margin-bottom:16px}
+.type-btn{flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--sub)}
+.type-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.file-input-wrap input[type=file]{width:100%;padding:9px 10px;border:1.5px dashed var(--border);border-radius:10px;font-family:inherit;font-size:13px;cursor:pointer;background:#fafbfe;color:var(--sub)}
+.file-input-wrap input[type=file]:hover{border-color:var(--accent);background:#eaf3ff}
+.divider-or{text-align:center;color:var(--sub);font-size:12px;margin:10px 0;position:relative}
+.divider-or::before,.divider-or::after{content:'';position:absolute;top:50%;width:44%;height:1px;background:var(--border)}
+.divider-or::before{left:0}.divider-or::after{right:0}
+.img-preview{width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin-top:8px;display:none}
+/* LIGHTBOX */
+.lb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:500;display:none;align-items:center;justify-content:center}
+.lb-overlay.open{display:flex}
+.lb-close{position:absolute;top:16px;right:20px;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:22px;cursor:pointer;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s}
+.lb-close:hover{background:rgba(255,255,255,.25)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:none;color:#fff;font-size:38px;cursor:pointer;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:10;line-height:1;padding-bottom:3px}
+.lb-nav:hover{background:rgba(255,255,255,.25)}
+#lb-prev{left:16px}#lb-next{right:16px}
+.lb-center{display:flex;flex-direction:column;align-items:center}
+#lb-content{display:flex;align-items:center;justify-content:center}
+#lb-content img{max-width:90vw;max-height:82vh;object-fit:contain;border-radius:4px;display:block}
+#lb-content video{max-width:90vw;max-height:82vh;background:#000;border-radius:4px;display:block}
+.yt-lb{width:min(90vw,1100px);aspect-ratio:16/9;background:#000;border-radius:4px;overflow:hidden}
+.yt-lb iframe{width:100%;height:100%;border:none;display:block}
+#lb-info{margin-top:14px;text-align:center}
+.lb-title-text{font-size:14px;color:rgba(255,255,255,.85);display:block}
+.lb-counter-text{font-size:12px;color:rgba(255,255,255,.4);display:block;margin-top:4px}
+#toast{position:fixed;bottom:22px;right:22px;background:var(--navy);color:#fff;padding:11px 18px;border-radius:11px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(15,31,61,.3);z-index:400;display:none;animation:slideUp .2s ease}
+@keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+.empty{text-align:center;padding:60px 20px;color:var(--sub)}
+.empty p{font-size:32px;margin-bottom:8px}.empty span{font-size:14px}
+@media(max-width:700px){
+  .hd{padding:13px 14px}.wrap{padding:18px 12px 48px}
+  .thumb-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+  .lb-nav{width:40px;height:40px;font-size:28px}
+  #lb-prev{left:8px}#lb-next{right:8px}
+}
+</style>
+</head>
+<body>
+<div class="hd">
+  <div class="hd-left"><h1>포트폴리오 관리</h1><p>SBS아카데미 구월점 · 저녁반</p></div>
+  <div class="hd-right">
+    <a href="students.html" class="btn btn-ghost btn-sm">👥 수강생 관리</a>
+  </div>
+</div>
+<div id="app"></div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box" id="modal-box"></div>
+</div>
+
+<div id="lightbox" class="lb-overlay">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button id="lb-prev" class="lb-nav" onclick="lbNav(-1)">‹</button>
+  <div class="lb-center">
+    <div id="lb-content"></div>
+    <div id="lb-info">
+      <span id="lb-title" class="lb-title-text"></span>
+      <span id="lb-counter" class="lb-counter-text"></span>
+    </div>
+  </div>
+  <button id="lb-next" class="lb-nav" onclick="lbNav(1)">›</button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const DEPTS=['영상/모션2D','영상/모션3D','시각편집','아트웍','인테리어','CG/마야','웹'];
+const BASE_DAYS=[
+  {date:'03-17',day:'월',holiday:false},{date:'03-19',day:'수',holiday:false},
+  {date:'03-24',day:'월',holiday:false},{date:'03-26',day:'수',holiday:false},
+  {date:'03-31',day:'월',holiday:true},{date:'04-02',day:'수',holiday:false},
+  {date:'04-07',day:'월',holiday:false},{date:'04-09',day:'수',holiday:false},
+];
+const DEPT_MAP={'kim-siwoo':'영상/모션2D','nam-jaeseo':'영상/모션2D','an-yena':'영상/모션3D','lee-yejun':'영상/모션2D','kim-geonwoo':'영상/모션2D','kim-sumin':'영상/모션2D','han-sarang':'영상/모션2D','bae-sudam':'영상/모션2D','han-gyeol':'영상/모션2D','noh-wontae':'영상/모션2D','park-seulbi':'영상/모션2D','jung-jaemin':'영상/모션2D','oh-hyunbin':'영상/모션2D'};
+
+const DB={
+  KEY:'sbs_mgr_v1',
+  get(){
+    try{
+      const r=localStorage.getItem(this.KEY);
+      if(r){
+        const data=JSON.parse(r);
+        data.students.forEach(s=>{
+          if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';
+          if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));
+          if(!s.portfolio)s.portfolio=[];
+        });
+        return data;
+      }
+      return {students:[]};
+    }catch(e){return {students:[]};}
+  },
+  save(d){localStorage.setItem(this.KEY,JSON.stringify(d));return d;}
+};
+
+let TAB=DEPTS[0];
+let UPLOAD_SID=null;
+let UPLOAD_TYPE='image';
+let LB={sid:null,idx:0};
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function ytId(url){const m=String(url).match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);return m?m[1]:null}
+function showToast(msg,ms=2200){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',ms)}
+
+function renderApp(){
+  const d=DB.get();
+  const deptCounts=Object.fromEntries(DEPTS.map(dep=>[dep,d.students.filter(s=>(s.dept||'영상/모션2D')===dep).length]));
+  const list=d.students.filter(s=>(s.dept||'영상/모션2D')===TAB);
+
+  document.getElementById('app').innerHTML=`
+    <div class="wrap">
+      <div class="tabs">
+        ${DEPTS.map(dept=>`<button class="tab ${TAB===dept?'ta':''}" onclick="setTab('${esc(dept)}')">${esc(dept)}<span class="tcnt">${deptCounts[dept]}</span></button>`).join('')}
+      </div>
+      ${list.length
+        ?list.map(s=>renderStudentCard(s)).join('')
+        :'<div class="empty"><p>📂</p><span>이 학과에 등록된 수강생이 없습니다</span></div>'}
+    </div>`;
+}
+
+function renderStudentCard(s){
+  const isE=s.type==='employ';
+  const typeBadge=isE?(s.goal==='편입'?'<span class="badge b-trf">편입</span>':'<span class="badge b-emp">취업</span>'):'<span class="badge b-adm">입시</span>';
+  const port=s.portfolio||[];
+  const thumbsHtml=port.map((m,idx)=>renderThumb(m,idx,s.id)).join('');
+  return `<div class="port-card">
+    <div class="port-card-hd">
+      <div><span class="port-name">${esc(s.name)}</span><span class="port-meta"> · ${esc(s.mentor)}</span></div>
+      ${typeBadge}
+      <div style="margin-left:auto"><button class="btn btn-primary btn-sm" onclick="openUpload('${esc(s.id)}')">+ 업로드</button></div>
+    </div>
+    <div class="thumb-grid">
+      ${thumbsHtml}
+      <div class="thumb thumb-add" onclick="openUpload('${esc(s.id)}')">
+        <div class="thumb-add-icon">+</div>
+        <div class="thumb-add-txt">추가</div>
+      </div>
+    </div>
+    ${port.length===0?'<div class="empty-port">아직 업로드된 포트폴리오가 없습니다</div>':''}
+  </div>`;
+}
+
+function renderThumb(m,idx,sid){
+  const del=`<button class="thumb-del" onclick="event.stopPropagation();removePortfolioMedia('${esc(sid)}',${idx})" title="삭제">✕</button>`;
+  const click=`onclick="openLightbox('${esc(sid)}',${idx})"`;
+  if(m.type==='image'){
+    return `<div class="thumb" ${click}>${del}<img src="${esc(m.url)}" alt="${esc(m.title||'')}">${m.title?`<div class="thumb-title-bar">${esc(m.title)}</div>`:''}</div>`;
+  }
+  if(m.type==='video'){
+    const vid=ytId(m.url);
+    if(vid){
+      return `<div class="thumb" ${click}>${del}<img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg" alt="${esc(m.title||'')}"><div class="thumb-play-icon"><span>▶</span></div><div class="thumb-title-bar">▶ ${esc(m.title||'YouTube')}</div></div>`;
+    }
+    return `<div class="thumb" ${click}>${del}<div class="thumb-vbg"><div class="vi">▶</div><div class="vt">${esc(m.title||'영상')}</div></div>${m.title?`<div class="thumb-title-bar">${esc(m.title)}</div>`:''}</div>`;
+  }
+  return '';
+}
+
+function setTab(t){TAB=t;renderApp();}
+
+function openUpload(sid){
+  UPLOAD_SID=sid;UPLOAD_TYPE='image';
+  openModal(`<div class="modal-hd"><h3>포트폴리오 업로드</h3><button class="modal-close" onclick="closeModal()">×</button></div>
+    <div class="modal-body">
+      <div class="type-toggle">
+        <button class="type-btn active" id="ut-img" onclick="setUploadType('image')">🖼 이미지</button>
+        <button class="type-btn" id="ut-vid" onclick="setUploadType('video')">▶ 영상</button>
+      </div>
+      <div class="field"><label>파일 업로드</label>
+        <div class="file-input-wrap"><input type="file" id="uf-file" accept="image/*" onchange="previewUpload(this)"></div>
+        <img id="uf-preview" class="img-preview" alt="미리보기">
+      </div>
+      <div class="divider-or">또는</div>
+      <div class="field"><label>URL</label><input id="uf-url" placeholder="https://..."></div>
+      <div class="field"><label>제목 (선택)</label><input id="uf-title" placeholder="작품 제목"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal()">취소</button>
+      <button class="btn btn-primary" onclick="savePortfolioMedia()">업로드</button>
+    </div>`);
+}
+
+function setUploadType(t){
+  UPLOAD_TYPE=t;
+  document.getElementById('ut-img').classList.toggle('active',t==='image');
+  document.getElementById('ut-vid').classList.toggle('active',t==='video');
+  const fi=document.getElementById('uf-file');
+  if(fi)fi.accept=t==='image'?'image/*':'video/*';
+  const p=document.getElementById('uf-preview');
+  if(p)p.style.display='none';
+}
+
+function previewUpload(input){
+  if(!input.files||!input.files[0]||UPLOAD_TYPE!=='image')return;
+  const reader=new FileReader();
+  reader.onload=e=>{const p=document.getElementById('uf-preview');if(p){p.src=e.target.result;p.style.display='block';}};
+  reader.readAsDataURL(input.files[0]);
+}
+
+function savePortfolioMedia(){
+  const sid=UPLOAD_SID;
+  const fileInput=document.getElementById('uf-file');
+  const url=document.getElementById('uf-url').value.trim();
+  const title=document.getElementById('uf-title').value.trim();
+  const type=UPLOAD_TYPE;
+  if(fileInput&&fileInput.files&&fileInput.files[0]){
+    const reader=new FileReader();
+    reader.onload=e=>_commitPortfolio(sid,{type,url:e.target.result,title:title||fileInput.files[0].name});
+    reader.readAsDataURL(fileInput.files[0]);
+  }else if(url){
+    _commitPortfolio(sid,{type,url,title});
+  }else{alert('파일을 선택하거나 URL을 입력하세요.');}
+}
+
+function _commitPortfolio(sid,item){
+  const d=DB.get();
+  const s=d.students.find(x=>x.id===sid);
+  if(!s)return;
+  if(!s.portfolio)s.portfolio=[];
+  s.portfolio.push(item);
+  DB.save(d);closeModal();renderApp();showToast('업로드됨 ✓');
+}
+
+function removePortfolioMedia(sid,idx){
+  if(!confirm('삭제하시겠습니까?'))return;
+  const d=DB.get();
+  const s=d.students.find(x=>x.id===sid);
+  if(!s||!s.portfolio)return;
+  s.portfolio.splice(idx,1);
+  DB.save(d);renderApp();showToast('삭제됨');
+}
+
+function openLightbox(sid,idx){
+  LB={sid,idx};renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lb-content').innerHTML='';
+}
+
+function lbNav(dir){
+  const d=DB.get();
+  const s=d.students.find(x=>x.id===LB.sid);
+  const items=s?s.portfolio||[]:[];
+  const n=LB.idx+dir;
+  if(n<0||n>=items.length)return;
+  LB.idx=n;renderLightbox();
+}
+
+function renderLightbox(){
+  const d=DB.get();
+  const s=d.students.find(x=>x.id===LB.sid);
+  if(!s)return;
+  const items=s.portfolio||[];
+  const m=items[LB.idx];
+  if(!m)return;
+  let content='';
+  if(m.type==='image'){
+    content=`<img src="${esc(m.url)}" alt="${esc(m.title||'')}">`;
+  }else if(m.type==='video'){
+    const vid=ytId(m.url);
+    if(vid){content=`<div class="yt-lb"><iframe src="https://www.youtube.com/embed/${vid}?autoplay=1" allowfullscreen allow="autoplay"></iframe></div>`;}
+    else{content=`<video src="${esc(m.url)}" controls autoplay></video>`;}
+  }
+  document.getElementById('lb-content').innerHTML=content;
+  document.getElementById('lb-title').textContent=m.title||'';
+  document.getElementById('lb-counter').textContent=`${LB.idx+1} / ${items.length}`;
+  document.getElementById('lb-prev').style.display=LB.idx>0?'flex':'none';
+  document.getElementById('lb-next').style.display=LB.idx<items.length-1?'flex':'none';
+}
+
+function openModal(html){document.getElementById('modal-box').innerHTML=html;document.getElementById('modal-overlay').classList.add('open');}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+
+document.addEventListener('keydown',e=>{
+  const lb=document.getElementById('lightbox');
+  if(lb.classList.contains('open')){
+    if(e.key==='Escape')closeLightbox();
+    if(e.key==='ArrowLeft')lbNav(-1);
+    if(e.key==='ArrowRight')lbNav(1);
+    return;
+  }
+  if(e.key==='Escape')closeModal();
+});
+
+renderApp();
+</script>
+</body>
+</html>

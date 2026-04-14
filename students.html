@@ -30,6 +30,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .tab.te{background:linear-gradient(135deg,#7b1d1d,#e8562a);color:#fff;border-color:transparent;box-shadow:0 4px 16px rgba(232,86,42,.3)}
 .tcnt{display:inline-block;background:rgba(255,255,255,.25);border-radius:20px;padding:1px 9px;font-size:12px;margin-left:5px}
 .tab:not(.ta):not(.te) .tcnt{background:var(--bg);color:var(--sub)}
+/* SUBTABS */
+.subtabs{display:flex;gap:8px;margin-bottom:18px}
+.subtab{padding:8px 22px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--sub)}
+.subtab.sta{background:linear-gradient(135deg,#1d3d6e,#3a7bd5);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(58,123,213,.3)}
+.subtab.ste{background:linear-gradient(135deg,#7b1d1d,#e8562a);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(232,86,42,.3)}
+.scnt{display:inline-block;background:rgba(255,255,255,.25);border-radius:20px;padding:1px 8px;font-size:11px;margin-left:4px}
+.subtab:not(.sta):not(.ste) .scnt{background:var(--bg);color:var(--sub)}
 /* TABLE */
 .tbl-wrap{background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 2px 16px rgba(15,31,61,.08);border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse}
@@ -225,13 +232,14 @@ const SEED = {
 /* ═══════ DB ═══════ */
 const DB = {
   KEY:'sbs_mgr_v1',
-  get(){try{const r=localStorage.getItem(this.KEY);if(r){const data=JSON.parse(r);data.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));});return data;}return this.reset();}catch(e){return this.reset();}},
+  get(){try{const r=localStorage.getItem(this.KEY);if(r){const data=JSON.parse(r);data.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));if(!s.portfolio)s.portfolio=[];});return data;}return this.reset();}catch(e){return this.reset();}},
   save(d){localStorage.setItem(this.KEY,JSON.stringify(d));return d},
-  reset(){const d=JSON.parse(JSON.stringify(SEED));d.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));});return this.save(d);}
+  reset(){const d=JSON.parse(JSON.stringify(SEED));d.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));if(!s.portfolio)s.portfolio=[];});return this.save(d);}
 };
 
 /* ═══════ STATE ═══════ */
 let TAB=DEPTS[0];
+let SUBTAB='admission';
 let EXPANDED=new Set();
 
 /* ═══════ UTILS ═══════ */
@@ -269,6 +277,7 @@ function renderHeader(studentId){
     hd.innerHTML=`
       <div class="hd-left"><h1>수강생 관리</h1><p>SBS아카데미 구월점 · 저녁반</p></div>
       <div class="hd-right">
+        <a href="portfolio.html" class="btn btn-ghost btn-sm" style="text-decoration:none">📁 포트폴리오</a>
         <button class="btn btn-primary btn-sm" onclick="openAddStudent()">+ 학생 추가</button>
       </div>`;
   }
@@ -277,12 +286,19 @@ function renderHeader(studentId){
 /* ═══════ LIST VIEW ═══════ */
 function renderList(){
   const d=DB.get();
-  const list=d.students.filter(s=>(s.dept||'영상/모션2D')===TAB);
+  const deptStudents=d.students.filter(s=>(s.dept||'영상/모션2D')===TAB);
+  const admCnt=deptStudents.filter(s=>s.type==='admission').length;
+  const empCnt=deptStudents.filter(s=>s.type==='employ').length;
+  const list=deptStudents.filter(s=>s.type===SUBTAB);
 
   document.getElementById('app').innerHTML=`
     <div class="wrap">
       <div class="tabs" style="flex-wrap:wrap">
         ${DEPTS.map(dept=>{const cnt=d.students.filter(s=>(s.dept||'영상/모션2D')===dept).length;return `<button class="tab ${TAB===dept?'ta':''}" onclick="setTab('${esc(dept)}')">${esc(dept)}<span class="tcnt">${cnt}</span></button>`;}).join('')}
+      </div>
+      <div class="subtabs">
+        <button class="subtab ${SUBTAB==='admission'?'sta':''}" onclick="setSubTab('admission')">🎨 입시반 <span class="scnt">${admCnt}</span></button>
+        <button class="subtab ${SUBTAB==='employ'?'ste':''}" onclick="setSubTab('employ')">💼 취업·편입반 <span class="scnt">${empCnt}</span></button>
       </div>
       <div class="tbl-wrap">
         <table>
@@ -316,6 +332,7 @@ function renderRow(s,i){
 }
 
 function setTab(t){TAB=t;renderList();}
+function setSubTab(t){SUBTAB=t;renderList();}
 
 /* ═══════ STUDENT DETAIL ═══════ */
 function renderStudentDetail(id){
