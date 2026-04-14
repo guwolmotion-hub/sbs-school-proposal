@@ -136,6 +136,17 @@ tbody td{padding:13px 16px;font-size:14px;vertical-align:middle}
 /* EMPTY */
 .empty{text-align:center;padding:60px 20px;color:var(--sub)}
 .empty p{font-size:28px;margin-bottom:8px}.empty span{font-size:14px}
+/* FILE INPUT */
+.file-input-wrap{margin-bottom:0}
+.file-input-wrap input[type=file]{width:100%;padding:9px 10px;border:1.5px dashed var(--border);border-radius:10px;font-family:inherit;font-size:13px;cursor:pointer;background:#fafbfe;color:var(--sub)}
+.file-input-wrap input[type=file]:hover{border-color:var(--accent);background:#eaf3ff}
+.divider-or{text-align:center;color:var(--sub);font-size:12px;margin:10px 0;position:relative}
+.divider-or::before,.divider-or::after{content:'';position:absolute;top:50%;width:44%;height:1px;background:var(--border)}
+.divider-or::before{left:0}.divider-or::after{right:0}
+.img-preview{width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin-top:8px;display:none}
+/* ROW ACTIONS */
+.row-del{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:7px;padding:4px 9px;font-size:12px;cursor:pointer;font-weight:600}
+.row-del:hover{background:#fee2e2}
 @media(max-width:700px){
   .hd{padding:13px 14px}.wrap{padding:18px 12px 48px}
   .info-grid{grid-template-columns:1fr 1fr}.hero{padding:26px 18px 22px}
@@ -282,8 +293,9 @@ function renderList(){
             <th>수강생</th><th>담당 멘토</th><th>나이</th><th>포폴 주제</th>
             <th>진행 단계</th><th>진행률</th>
             ${TAB==='employ'?'<th>목표</th>':''}
+            <th style="width:60px"></th>
           </tr></thead>
-          <tbody>${list.length?list.map((s,i)=>renderRow(s,i)).join(''):'<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--sub)">수강생이 없습니다</td></tr>'}</tbody>
+          <tbody>${list.length?list.map((s,i)=>renderRow(s,i)).join(''):'<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--sub)">수강생이 없습니다</td></tr>'}</tbody>
         </table>
       </div>
     </div>`;
@@ -302,6 +314,7 @@ function renderRow(s,i){
     <td><span class="badge ${st.c}">${st.l}</span></td>
     <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill${isE?'-e':''}" style="width:${s.pct}%"></div></div><span class="prog-pct">${s.pct}%</span></div></td>
     ${isE?`<td>${goalBadge}</td>`:''}
+    <td onclick="event.stopPropagation()"><button class="row-del" onclick="confirmDeleteFromList('${esc(s.id)}','${esc(s.name)}')">삭제</button></td>
   </tr>`;
 }
 
@@ -384,7 +397,8 @@ function renderDayCard(s,day,num){
         oninput="debounce('${esc(id)}-${esc(day.date)}',()=>autoSaveFb('${esc(id)}','${esc(day.date)}'),900)"
         placeholder="피드백 내용을 입력하세요...">${esc(fb.text||'')}</textarea>
       <div class="fb-toolbar">
-        <span>추가:</span>
+        <button class="btn btn-primary btn-sm" onclick="saveFbNow('${esc(id)}','${esc(day.date)}')">💾 저장</button>
+        <span style="margin-left:4px">첨부:</span>
         <button class="btn btn-outline btn-sm" onclick="openAddImage('${esc(id)}','${esc(day.date)}')">🖼 이미지</button>
         <button class="btn btn-outline btn-sm" onclick="openAddVideo('${esc(id)}','${esc(day.date)}')">▶️ 영상</button>
         <button class="btn btn-outline btn-sm" onclick="openAddLink('${esc(id)}','${esc(day.date)}')">🔗 링크</button>
@@ -408,9 +422,10 @@ function renderMediaItem(m,idx,sid,date){
   if(m.type==='image') return `<div class="media-item">${del}<img src="${esc(m.url)}" onerror="this.src=''" alt="${esc(m.caption||'')}"><div class="img-caption">${esc(m.caption||'이미지')}</div></div>`;
   if(m.type==='video'){
     const vid=ytId(m.url);
-    return vid
-      ?`<div class="media-item">${del}<div class="yt-wrap"><iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe></div>${m.title?`<div class="img-caption">${esc(m.title)}</div>`:''}</div>`
-      :`<div class="media-item">${del}<div class="link-card"><div class="link-icon">▶</div><div><a href="${esc(m.url)}" target="_blank">${esc(m.title||m.url)}</a></div></div></div>`;
+    if(vid) return `<div class="media-item">${del}<div class="yt-wrap"><iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe></div>${m.title?`<div class="img-caption">${esc(m.title)}</div>`:''}</div>`;
+    if(m.url.startsWith('data:video/')||/\.(mp4|webm|mov|avi)$/i.test(m.url))
+      return `<div class="media-item">${del}<video src="${esc(m.url)}" controls style="width:100%;max-height:300px;background:#000;display:block"></video>${m.title?`<div class="img-caption">${esc(m.title)}</div>`:''}</div>`;
+    return `<div class="media-item">${del}<div class="link-card"><div class="link-icon">▶</div><div><a href="${esc(m.url)}" target="_blank">${esc(m.title||m.url)}</a></div></div></div>`;
   }
   if(m.type==='link') return `<div class="media-item">${del}<div class="link-card"><div class="link-icon">🔗</div><div><a href="${esc(m.url)}" target="_blank">${esc(m.title||m.url)}</a>${m.desc?`<div class="link-title">${esc(m.desc)}</div>`:''}</div></div></div>`;
   return '';
@@ -630,6 +645,11 @@ function saveNewClassDay(){
 function openAddImage(sid,date){
   openModal(`<div class="modal-hd"><h3>이미지 추가</h3><button class="modal-close" onclick="closeModal()">×</button></div>
     <div class="modal-body">
+      <div class="field"><label>파일 업로드</label>
+        <div class="file-input-wrap"><input type="file" id="mi-file" accept="image/*" onchange="previewImg(this)"></div>
+        <img id="mi-preview" class="img-preview" alt="미리보기">
+      </div>
+      <div class="divider-or">또는</div>
       <div class="field"><label>이미지 URL</label><input id="mi-url" placeholder="https://..."></div>
       <div class="field"><label>설명 (선택)</label><input id="mi-cap" placeholder="이미지 설명"></div>
     </div>
@@ -639,9 +659,20 @@ function openAddImage(sid,date){
     </div>`);
 }
 
+function previewImg(input){
+  if(!input.files||!input.files[0])return;
+  const reader=new FileReader();
+  reader.onload=e=>{const p=document.getElementById('mi-preview');if(p){p.src=e.target.result;p.style.display='block';}};
+  reader.readAsDataURL(input.files[0]);
+}
+
 function openAddVideo(sid,date){
   openModal(`<div class="modal-hd"><h3>영상 추가</h3><button class="modal-close" onclick="closeModal()">×</button></div>
     <div class="modal-body">
+      <div class="field"><label>파일 업로드 (MP4, MOV 등)</label>
+        <div class="file-input-wrap"><input type="file" id="mv-file" accept="video/*"></div>
+      </div>
+      <div class="divider-or">또는</div>
       <div class="field"><label>YouTube / 영상 URL</label><input id="mv-url" placeholder="https://youtube.com/watch?v=..."></div>
       <div class="field"><label>제목 (선택)</label><input id="mv-title" placeholder="영상 제목"></div>
     </div>
@@ -664,30 +695,67 @@ function openAddLink(sid,date){
     </div>`);
 }
 
-function saveMedia(sid,date,type){
+function _commitMedia(sid,date,item){
   const d=DB.get();
   const s=d.students.find(x=>x.id===sid);
   if(!s)return;
   if(!s.feedback[date])s.feedback[date]={text:'',media:[]};
-  let item;
-  if(type==='image'){
-    const url=document.getElementById('mi-url').value.trim();
-    if(!url){alert('URL을 입력하세요.');return;}
-    item={type:'image',url,caption:document.getElementById('mi-cap').value.trim()};
-  }else if(type==='video'){
-    const url=document.getElementById('mv-url').value.trim();
-    if(!url){alert('URL을 입력하세요.');return;}
-    item={type:'video',url,title:document.getElementById('mv-title').value.trim()};
-  }else{
-    const url=document.getElementById('ml-url').value.trim();
-    const title=document.getElementById('ml-title').value.trim();
-    if(!url||!title){alert('URL과 제목을 입력하세요.');return;}
-    item={type:'link',url,title,desc:document.getElementById('ml-desc').value.trim()};
-  }
   s.feedback[date].media.push(item);
   DB.save(d);closeModal();
   EXPANDED.add(date+'-'+sid);
   renderStudentDetail(sid);showToast('추가됨 ✓');
+}
+
+function saveMedia(sid,date,type){
+  if(type==='image'){
+    const fileInput=document.getElementById('mi-file');
+    const url=document.getElementById('mi-url').value.trim();
+    const cap=document.getElementById('mi-cap').value.trim();
+    if(fileInput&&fileInput.files&&fileInput.files[0]){
+      const reader=new FileReader();
+      reader.onload=e=>_commitMedia(sid,date,{type:'image',url:e.target.result,caption:cap});
+      reader.readAsDataURL(fileInput.files[0]);
+    }else if(url){
+      _commitMedia(sid,date,{type:'image',url,caption:cap});
+    }else{alert('파일을 선택하거나 URL을 입력하세요.');}
+  }else if(type==='video'){
+    const fileInput=document.getElementById('mv-file');
+    const url=document.getElementById('mv-url').value.trim();
+    const title=document.getElementById('mv-title').value.trim();
+    if(fileInput&&fileInput.files&&fileInput.files[0]){
+      const reader=new FileReader();
+      reader.onload=e=>_commitMedia(sid,date,{type:'video',url:e.target.result,title:title||fileInput.files[0].name});
+      reader.readAsDataURL(fileInput.files[0]);
+    }else if(url){
+      _commitMedia(sid,date,{type:'video',url,title});
+    }else{alert('파일을 선택하거나 URL을 입력하세요.');}
+  }else{
+    const url=document.getElementById('ml-url').value.trim();
+    const title=document.getElementById('ml-title').value.trim();
+    if(!url||!title){alert('URL과 제목을 입력하세요.');return;}
+    _commitMedia(sid,date,{type:'link',url,title,desc:document.getElementById('ml-desc').value.trim()});
+  }
+}
+
+function saveFbNow(sid,date){
+  const el=document.getElementById(`fbt-${sid}-${date}`);
+  if(!el)return;
+  const d=DB.get();
+  const s=d.students.find(x=>x.id===sid);
+  if(!s)return;
+  if(!s.feedback[date])s.feedback[date]={text:'',media:[]};
+  s.feedback[date].text=el.value;
+  DB.save(d);showToast('피드백 저장됨 ✓');
+}
+
+function confirmDeleteFromList(sid,name){
+  openModal(`<div class="modal-hd"><h3>학생 삭제</h3><button class="modal-close" onclick="closeModal()">×</button></div>
+    <div class="modal-body"><p style="font-size:15px;margin-bottom:6px"><strong>${esc(name)}</strong> 수강생을 삭제하시겠습니까?</p>
+    <p style="font-size:13px;color:var(--sub)">삭제된 데이터는 복구할 수 없습니다.</p></div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal()">취소</button>
+      <button class="btn btn-danger" onclick="deleteStudent('${esc(sid)}')">삭제</button>
+    </div>`);
 }
 
 /* ═══════ MODAL ═══════ */
