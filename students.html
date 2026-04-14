@@ -166,17 +166,19 @@ tbody td{padding:13px 16px;font-size:14px;vertical-align:middle}
 
 <script>
 /* ═══════ SEED DATA ═══════ */
+const DEPTS=['영상/모션2D','영상/모션3D','시각편집','아트웍','인테리어','CG/마야','웹'];
+const BASE_DAYS=[
+  {date:'03-17',day:'월',holiday:false},
+  {date:'03-19',day:'수',holiday:false},
+  {date:'03-24',day:'월',holiday:false},
+  {date:'03-26',day:'수',holiday:false},
+  {date:'03-31',day:'월',holiday:true},
+  {date:'04-02',day:'수',holiday:false},
+  {date:'04-07',day:'월',holiday:false},
+  {date:'04-09',day:'수',holiday:false},
+];
+const DEPT_MAP={'kim-siwoo':'영상/모션2D','nam-jaeseo':'영상/모션2D','an-yena':'영상/모션3D','lee-yejun':'영상/모션2D','kim-geonwoo':'영상/모션2D','kim-sumin':'영상/모션2D','han-sarang':'영상/모션2D','bae-sudam':'영상/모션2D','han-gyeol':'영상/모션2D','noh-wontae':'영상/모션2D','park-seulbi':'영상/모션2D','jung-jaemin':'영상/모션2D','oh-hyunbin':'영상/모션2D'};
 const SEED = {
-  classDays:[
-    {date:'03-17',day:'월',holiday:false},
-    {date:'03-19',day:'수',holiday:false},
-    {date:'03-24',day:'월',holiday:false},
-    {date:'03-26',day:'수',holiday:false},
-    {date:'03-31',day:'월',holiday:true},
-    {date:'04-02',day:'수',holiday:false},
-    {date:'04-07',day:'월',holiday:false},
-    {date:'04-09',day:'수',holiday:false},
-  ],
   students:[
     {id:'kim-siwoo',name:'김시우',type:'admission',mentor:'이석호',age:19,contact:'010-3519-5079',topic:'모션포폴2D',stage:'making',pct:40,goal:null,
       attendance:{'03-17':'present','03-19':'present','03-24':'present','03-26':'present','04-02':'absent','04-07':'pending','04-09':'pending'},
@@ -223,13 +225,13 @@ const SEED = {
 /* ═══════ DB ═══════ */
 const DB = {
   KEY:'sbs_mgr_v1',
-  get(){try{const r=localStorage.getItem(this.KEY);return r?JSON.parse(r):this.reset()}catch(e){return this.reset()}},
+  get(){try{const r=localStorage.getItem(this.KEY);if(r){const data=JSON.parse(r);data.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));});return data;}return this.reset();}catch(e){return this.reset();}},
   save(d){localStorage.setItem(this.KEY,JSON.stringify(d));return d},
-  reset(){return this.save(JSON.parse(JSON.stringify(SEED)))}
+  reset(){const d=JSON.parse(JSON.stringify(SEED));d.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));});return this.save(d);}
 };
 
 /* ═══════ STATE ═══════ */
-let TAB='admission';
+let TAB=DEPTS[0];
 let EXPANDED=new Set();
 
 /* ═══════ UTILS ═══════ */
@@ -267,7 +269,6 @@ function renderHeader(studentId){
     hd.innerHTML=`
       <div class="hd-left"><h1>수강생 관리</h1><p>SBS아카데미 구월점 · 저녁반</p></div>
       <div class="hd-right">
-        <button class="btn btn-ghost btn-sm" onclick="openAddClassDay()">+ 수업일 추가</button>
         <button class="btn btn-primary btn-sm" onclick="openAddStudent()">+ 학생 추가</button>
       </div>`;
   }
@@ -276,23 +277,19 @@ function renderHeader(studentId){
 /* ═══════ LIST VIEW ═══════ */
 function renderList(){
   const d=DB.get();
-  const admission=d.students.filter(s=>s.type==='admission');
-  const employ=d.students.filter(s=>s.type==='employ');
-  const list=TAB==='admission'?admission:employ;
+  const list=d.students.filter(s=>(s.dept||'영상/모션2D')===TAB);
 
   document.getElementById('app').innerHTML=`
     <div class="wrap">
-      <div class="tabs">
-        <button class="tab ${TAB==='admission'?'ta':''}" onclick="setTab('admission')">🎨 입시반 <span class="tcnt">${admission.length}</span></button>
-        <button class="tab ${TAB==='employ'?'te':''}" onclick="setTab('employ')">💼 취업·편입반 <span class="tcnt">${employ.length}</span></button>
+      <div class="tabs" style="flex-wrap:wrap">
+        ${DEPTS.map(dept=>{const cnt=d.students.filter(s=>(s.dept||'영상/모션2D')===dept).length;return `<button class="tab ${TAB===dept?'ta':''}" onclick="setTab('${esc(dept)}')">${esc(dept)}<span class="tcnt">${cnt}</span></button>`;}).join('')}
       </div>
       <div class="tbl-wrap">
         <table>
           <thead><tr>
             <th style="width:46px">#</th>
             <th>수강생</th><th>담당 멘토</th><th>나이</th><th>포폴 주제</th>
-            <th>진행 단계</th><th>진행률</th>
-            ${TAB==='employ'?'<th>목표</th>':''}
+            <th>진행 단계</th><th>진행률</th><th>유형</th>
             <th style="width:60px"></th>
           </tr></thead>
           <tbody>${list.length?list.map((s,i)=>renderRow(s,i)).join(''):'<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--sub)">수강생이 없습니다</td></tr>'}</tbody>
@@ -304,7 +301,7 @@ function renderList(){
 function renderRow(s,i){
   const st=STAGES[s.stage]||STAGES.making;
   const isE=s.type==='employ';
-  const goalBadge=isE?(s.goal==='취업'?'<span class="badge b-employ">취업</span>':'<span class="badge b-transfer">편입</span>'):'';
+  const typeBadge=isE?(s.goal==='취업'?'<span class="badge b-employ">취업</span>':'<span class="badge b-transfer">편입</span>'):'<span class="badge b-plan">입시</span>';
   return `<tr onclick="location.hash='/student/${esc(s.id)}'">
     <td><div style="width:32px;height:32px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--sub)">${i+1}</div></td>
     <td><span class="sname">${esc(s.name)}</span></td>
@@ -313,7 +310,7 @@ function renderRow(s,i){
     <td>${esc(s.topic)}</td>
     <td><span class="badge ${st.c}">${st.l}</span></td>
     <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill${isE?'-e':''}" style="width:${s.pct}%"></div></div><span class="prog-pct">${s.pct}%</span></div></td>
-    ${isE?`<td>${goalBadge}</td>`:''}
+    <td>${typeBadge}</td>
     <td onclick="event.stopPropagation()"><button class="row-del" onclick="confirmDeleteFromList('${esc(s.id)}','${esc(s.name)}')">삭제</button></td>
   </tr>`;
 }
@@ -329,7 +326,7 @@ function renderStudentDetail(id){
   const st=STAGES[s.stage]||STAGES.making;
 
   // attendance summary
-  const days=d.classDays;
+  const days=s.days||[];
   const attCounts={present:0,absent:0,holiday:0};
   days.forEach(day=>{
     const att=day.holiday?'holiday':(s.attendance[day.date]||'pending');
@@ -367,6 +364,7 @@ function renderStudentDetail(id){
       </div>
       <div class="sec-label"><span>출결 현황</span>
         <span style="font-size:12px;font-weight:500;color:var(--sub)">출석 ${attCounts.present}회 · 결석 ${attCounts.absent}회 · 휴강 ${attCounts.holiday}회</span>
+        <button class="btn btn-outline btn-sm" style="margin-left:auto;font-size:11px" onclick="openAddClassDay('${esc(id)}')">+ 수업일 추가</button>
         <hr>
       </div>
       <div id="days-container">${daysHtml}</div>
@@ -450,7 +448,7 @@ function setAtt(sid,date,status,e){
   DB.save(d);
   // re-render just this day
   const d2=DB.get(),s2=d2.students.find(x=>x.id===sid);
-  const days=d2.classDays;
+  const days=s2.days||[];
   const dayObj=days.find(x=>x.date===date);
   const num=days.findIndex(x=>x.date===date)+1;
   const card=document.querySelector(`.day-card .day-hd[onclick*="${date}"]`)?.closest('.day-card');
@@ -529,14 +527,17 @@ function openAddStudent(){
     <div class="modal-body">
       <div class="field-row">
         <div class="field"><label>이름 *</label><input id="f-name" placeholder="홍길동"></div>
-        <div class="field"><label>반 구분 *</label><select id="f-type"><option value="admission">입시반</option><option value="employ">취업·편입반</option></select></div>
+        <div class="field"><label>학과 *</label><select id="f-dept">${DEPTS.map(d=>`<option value="${d}"${d===TAB?' selected':''}>${d}</option>`).join('')}</select></div>
       </div>
       <div class="field-row">
+        <div class="field"><label>반 구분</label><select id="f-type"><option value="admission">입시반</option><option value="employ">취업·편입반</option></select></div>
         <div class="field"><label>담당 멘토 *</label><input id="f-mentor" placeholder="멘토명"></div>
-        <div class="field"><label>나이</label><input id="f-age" type="number" placeholder="19"></div>
       </div>
-      <div class="field"><label>연락처</label><input id="f-contact" placeholder="010-0000-0000"></div>
-      <div class="field"><label>포폴 주제</label><input id="f-topic" placeholder="모션포폴2D"></div>
+      <div class="field-row">
+        <div class="field"><label>나이</label><input id="f-age" type="number" placeholder="19"></div>
+        <div class="field"><label>연락처</label><input id="f-contact" placeholder="010-0000-0000"></div>
+      </div>
+      <div class="field"><label>포폴 주제</label><input id="f-topic" placeholder="포트폴리오 주제"></div>
       <div class="field-row">
         <div class="field"><label>진행 단계</label><select id="f-stage"><option value="plan">기획중</option><option value="making" selected>제작중</option><option value="revise">수정중</option><option value="done">완성</option></select></div>
         <div class="field"><label>목표 (취업·편입)</label><select id="f-goal"><option value="">-</option><option value="취업">취업</option><option value="편입">편입</option></select></div>
@@ -553,19 +554,21 @@ function saveNewStudent(){
   const mentor=document.getElementById('f-mentor').value.trim();
   if(!name||!mentor){alert('이름과 담당 멘토는 필수입니다.');return;}
   const id=name.replace(/\s/g,'')+'-'+Date.now();
+  const newDept=document.getElementById('f-dept').value;
   const d=DB.get();
+  const days=JSON.parse(JSON.stringify(BASE_DAYS));
   const fb={},att={};
-  d.classDays.forEach(day=>{fb[day.date]={text:'',media:[]};att[day.date]=day.holiday?'holiday':'pending';});
+  days.forEach(day=>{fb[day.date]={text:'',media:[]};att[day.date]=day.holiday?'holiday':'pending';});
   d.students.push({
-    id,name,type:document.getElementById('f-type').value,
+    id,name,dept:newDept,type:document.getElementById('f-type').value,
     mentor,age:parseInt(document.getElementById('f-age').value)||0,
     contact:document.getElementById('f-contact').value.trim(),
     topic:document.getElementById('f-topic').value.trim()||'미정',
     stage:document.getElementById('f-stage').value,pct:0,
     goal:document.getElementById('f-goal').value||null,
-    attendance:att,feedback:fb
+    days,attendance:att,feedback:fb
   });
-  DB.save(d);closeModal();renderList();showToast(`${name} 수강생 추가됨`);
+  DB.save(d);closeModal();TAB=newDept;renderList();showToast(`${name} 수강생 추가됨`);
 }
 
 function openEditStudent(sid){
@@ -576,17 +579,18 @@ function openEditStudent(sid){
     <div class="modal-body">
       <div class="field-row">
         <div class="field"><label>이름</label><input id="ef-name" value="${esc(s.name)}"></div>
+        <div class="field"><label>학과</label><select id="ef-dept">${DEPTS.map(dept=>`<option value="${dept}"${(s.dept||'영상/모션2D')===dept?' selected':''}>${dept}</option>`).join('')}</select></div>
+      </div>
+      <div class="field-row">
         <div class="field"><label>반 구분</label><select id="ef-type"><option value="admission" ${s.type==='admission'?'selected':''}>입시반</option><option value="employ" ${s.type==='employ'?'selected':''}>취업·편입반</option></select></div>
-      </div>
-      <div class="field-row">
         <div class="field"><label>담당 멘토</label><input id="ef-mentor" value="${esc(s.mentor)}"></div>
-        <div class="field"><label>나이</label><input id="ef-age" type="number" value="${s.age}"></div>
       </div>
-      <div class="field"><label>연락처</label><input id="ef-contact" value="${esc(s.contact||'')}"></div>
-      <div class="field"><label>포폴 주제</label><input id="ef-topic" value="${esc(s.topic)}"></div>
       <div class="field-row">
-        <div class="field"><label>목표 (취업·편입)</label><select id="ef-goal"><option value="" ${!s.goal?'selected':''}>-</option><option value="취업" ${s.goal==='취업'?'selected':''}>취업</option><option value="편입" ${s.goal==='편입'?'selected':''}>편입</option></select></div>
+        <div class="field"><label>나이</label><input id="ef-age" type="number" value="${s.age}"></div>
+        <div class="field"><label>연락처</label><input id="ef-contact" value="${esc(s.contact||'')}"></div>
       </div>
+      <div class="field"><label>포폴 주제</label><input id="ef-topic" value="${esc(s.topic)}"></div>
+      <div class="field"><label>목표 (취업·편입)</label><select id="ef-goal"><option value="" ${!s.goal?'selected':''}>-</option><option value="취업" ${s.goal==='취업'?'selected':''}>취업</option><option value="편입" ${s.goal==='편입'?'selected':''}>편입</option></select></div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-outline" onclick="closeModal()">취소</button>
@@ -599,6 +603,7 @@ function saveEditStudent(sid){
   const s=d.students.find(x=>x.id===sid);
   if(!s)return;
   s.name=document.getElementById('ef-name').value.trim()||s.name;
+  s.dept=document.getElementById('ef-dept').value||s.dept;
   s.type=document.getElementById('ef-type').value;
   s.mentor=document.getElementById('ef-mentor').value.trim();
   s.age=parseInt(document.getElementById('ef-age').value)||s.age;
@@ -609,7 +614,7 @@ function saveEditStudent(sid){
 }
 
 /* ═══════ ADD CLASS DAY ═══════ */
-function openAddClassDay(){
+function openAddClassDay(sid){
   openModal(`<div class="modal-hd"><h3>수업일 추가</h3><button class="modal-close" onclick="closeModal()">×</button></div>
     <div class="modal-body">
       <div class="field-row">
@@ -620,25 +625,27 @@ function openAddClassDay(){
     </div>
     <div class="modal-foot">
       <button class="btn btn-outline" onclick="closeModal()">취소</button>
-      <button class="btn btn-primary" onclick="saveNewClassDay()">추가</button>
+      <button class="btn btn-primary" onclick="saveNewClassDay('${sid}')">추가</button>
     </div>`);
 }
 
-function saveNewClassDay(){
+function saveNewClassDay(sid){
   const date=document.getElementById('cd-date').value.trim();
   const day=document.getElementById('cd-day').value.trim();
   if(!date||!day){alert('날짜와 요일을 입력하세요.');return;}
   const holiday=document.getElementById('cd-holiday').value==='1';
   const d=DB.get();
-  if(d.classDays.find(x=>x.date===date)){alert('이미 존재하는 날짜입니다.');return;}
-  d.classDays.push({date,day,holiday});
-  d.classDays.sort((a,b)=>a.date.localeCompare(b.date));
-  d.students.forEach(s=>{
-    if(!s.attendance[date])s.attendance[date]=holiday?'holiday':'pending';
-    if(!s.feedback[date])s.feedback[date]={text:'',media:[]};
-  });
+  const s=d.students.find(x=>x.id===sid);
+  if(!s)return;
+  if(!s.days)s.days=[];
+  if(s.days.find(x=>x.date===date)){alert('이미 존재하는 날짜입니다.');return;}
+  s.days.push({date,day,holiday});
+  s.days.sort((a,b)=>a.date.localeCompare(b.date));
+  if(!s.attendance[date])s.attendance[date]=holiday?'holiday':'pending';
+  if(!s.feedback[date])s.feedback[date]={text:'',media:[]};
   DB.save(d);closeModal();showToast(`${date} 수업일 추가됨`);
-  renderApp();
+  EXPANDED.add(date+'-'+sid);
+  renderStudentDetail(sid);
 }
 
 /* ═══════ MEDIA MODALS ═══════ */
