@@ -182,7 +182,7 @@ tbody td{padding:13px 16px;font-size:14px;vertical-align:middle}
 <script>
 /* ═══════ SEED DATA ═══════ */
 const DEPTS=['영상/모션2D','영상/모션3D','시각편집','아트웍','인테리어','CG/마야','웹'];
-const YEARS=[2024,2025,2026,2027];
+const YEARS=[2026,2027];
 const BASE_DAYS=[
   {date:'03-17',day:'월',holiday:false},
   {date:'03-19',day:'수',holiday:false},
@@ -248,8 +248,8 @@ const DB = {
 
 /* ═══════ STATE ═══════ */
 let TAB=DEPTS[0];
-let YEAR=2026;
-let MONTH=4;
+let YEAR=null;
+let MONTH=null;
 let SUBTAB='admission';
 let EXPANDED=new Set();
 
@@ -298,24 +298,30 @@ function renderHeader(studentId){
 function renderList(){
   const d=DB.get();
   const allStudents=d.students;
-  const deptStudents=allStudents.filter(s=>(s.dept||'영상/모션2D')===TAB&&(s.year||2026)===YEAR&&(s.month||3)===MONTH);
-  const admCnt=deptStudents.filter(s=>s.type==='admission').length;
-  const empCnt=deptStudents.filter(s=>s.type==='employ'&&s.goal!=='편입').length;
-  const traCnt=deptStudents.filter(s=>s.type==='employ'&&s.goal==='편입').length;
-  let list;
-  if(SUBTAB==='admission')list=deptStudents.filter(s=>s.type==='admission');
-  else if(SUBTAB==='employ')list=deptStudents.filter(s=>s.type==='employ'&&s.goal!=='편입');
-  else list=deptStudents.filter(s=>s.type==='employ'&&s.goal==='편입');
 
-  document.getElementById('app').innerHTML=`
-    <div class="wrap">
-      <div class="tabs" style="flex-wrap:wrap">
-        ${DEPTS.map(dept=>{const cnt=allStudents.filter(s=>(s.dept||'영상/모션2D')===dept&&(s.year||2026)===YEAR&&(s.month||3)===MONTH).length;return `<button class="tab ${TAB===dept?'ta':''}" onclick="setTab('${esc(dept)}')">${esc(dept)}<span class="tcnt">${cnt}</span></button>`;}).join('')}
-      </div>
-      <div class="ym-row">
-        <span class="ym-label">년도</span>
-        ${YEARS.map(y=>`<button class="ybtn ${YEAR===y?'ya':''}" onclick="setYear(${y})">${y}년</button>`).join('')}
-      </div>
+  const deptCnt=(dept)=>allStudents.filter(s=>{
+    if((s.dept||'영상/모션2D')!==dept)return false;
+    if(YEAR!==null&&(s.year||2026)!==YEAR)return false;
+    if(MONTH!==null&&(s.month||3)!==MONTH)return false;
+    return true;
+  }).length;
+
+  let extraHtml='';
+  if(YEAR!==null&&MONTH===null){
+    extraHtml=`<div class="ym-row">
+      <span class="ym-label">월</span>
+      ${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>`<button class="mbtn" onclick="setMonth(${m})">${m}월</button>`).join('')}
+    </div>`;
+  }else if(YEAR!==null&&MONTH!==null){
+    const deptStudents=allStudents.filter(s=>(s.dept||'영상/모션2D')===TAB&&(s.year||2026)===YEAR&&(s.month||3)===MONTH);
+    const admCnt=deptStudents.filter(s=>s.type==='admission').length;
+    const empCnt=deptStudents.filter(s=>s.type==='employ'&&s.goal!=='편입').length;
+    const traCnt=deptStudents.filter(s=>s.type==='employ'&&s.goal==='편입').length;
+    let list;
+    if(SUBTAB==='admission')list=deptStudents.filter(s=>s.type==='admission');
+    else if(SUBTAB==='employ')list=deptStudents.filter(s=>s.type==='employ'&&s.goal!=='편입');
+    else list=deptStudents.filter(s=>s.type==='employ'&&s.goal==='편입');
+    extraHtml=`
       <div class="ym-row">
         <span class="ym-label">월</span>
         ${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>`<button class="mbtn ${MONTH===m?'ma':''}" onclick="setMonth(${m})">${m}월</button>`).join('')}
@@ -335,7 +341,19 @@ function renderList(){
           </tr></thead>
           <tbody>${list.length?list.map((s,i)=>renderRow(s,i)).join(''):'<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--sub)">수강생이 없습니다</td></tr>'}</tbody>
         </table>
+      </div>`;
+  }
+
+  document.getElementById('app').innerHTML=`
+    <div class="wrap">
+      <div class="tabs" style="flex-wrap:wrap">
+        ${DEPTS.map(dept=>`<button class="tab ${TAB===dept?'ta':''}" onclick="setTab('${esc(dept)}')">${esc(dept)}<span class="tcnt">${deptCnt(dept)}</span></button>`).join('')}
       </div>
+      <div class="ym-row">
+        <span class="ym-label">년도</span>
+        ${YEARS.map(y=>`<button class="ybtn ${YEAR===y?'ya':''}" onclick="setYear(${y})">${y}년</button>`).join('')}
+      </div>
+      ${extraHtml}
     </div>`;
 }
 
@@ -357,7 +375,7 @@ function renderRow(s,i){
 }
 
 function setTab(t){TAB=t;renderList();}
-function setYear(y){YEAR=y;renderList();}
+function setYear(y){YEAR=y;MONTH=null;renderList();}
 function setMonth(m){MONTH=m;renderList();}
 function setSubTab(t){SUBTAB=t;renderList();}
 
@@ -578,8 +596,8 @@ function openAddStudent(){
         <div class="field"><label>담당 멘토 *</label><input id="f-mentor" placeholder="멘토명"></div>
       </div>
       <div class="field-row">
-        <div class="field"><label>등록 년도</label><select id="f-year">${YEARS.map(y=>`<option value="${y}"${y===YEAR?' selected':''}>${y}년</option>`).join('')}</select></div>
-        <div class="field"><label>등록 월</label><select id="f-month">${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>`<option value="${m}"${m===MONTH?' selected':''}>${m}월</option>`).join('')}</select></div>
+        <div class="field"><label>등록 년도</label><select id="f-year">${YEARS.map(y=>`<option value="${y}"${y===(YEAR||2026)?' selected':''}>${y}년</option>`).join('')}</select></div>
+        <div class="field"><label>등록 월</label><select id="f-month">${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>`<option value="${m}"${m===(MONTH||4)?' selected':''}>${m}월</option>`).join('')}</select></div>
       </div>
       <div class="field-row">
         <div class="field"><label>나이</label><input id="f-age" type="number" placeholder="19"></div>
@@ -603,8 +621,8 @@ function saveNewStudent(){
   const ct=document.getElementById('f-type').value;
   const type=ct==='admission'?'admission':'employ';
   const goal=ct==='employ'?'취업':ct==='transfer'?'편입':null;
-  const newYear=parseInt(document.getElementById('f-year').value)||YEAR;
-  const newMonth=parseInt(document.getElementById('f-month').value)||MONTH;
+  const newYear=parseInt(document.getElementById('f-year').value)||2026;
+  const newMonth=parseInt(document.getElementById('f-month').value)||4;
   const d=DB.get();
   const days=JSON.parse(JSON.stringify(BASE_DAYS));
   const fb={},att={};
