@@ -251,7 +251,8 @@ const SEED = {
 /* ═══════ DB (Firebase Firestore) ═══════ */
 (function(){try{firebase.initializeApp(FIREBASE_CONFIG);}catch(e){if(!/already exists/.test(e.message))throw e;}})();
 const _db=firebase.firestore();
-const _storage=firebase.storage();
+let _storage=null;try{_storage=firebase.storage();}catch(e){console.warn('Storage 비활성화됨 - 파일 업로드 불가');}
+
 
 const DB={
   _cache:null,

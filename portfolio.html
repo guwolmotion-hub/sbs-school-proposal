@@ -161,7 +161,7 @@ var CATS=['전체','영상/모션2D','영상/모션3D','시각편집','아트웍
 
 (function(){try{firebase.initializeApp(FIREBASE_CONFIG);}catch(e){if(!/already exists/.test(e.message))throw e;}})();
 var _db=firebase.firestore();
-var _storage=firebase.storage();
+var _storage=null;try{_storage=firebase.storage();}catch(e){console.warn('Storage 비활성화됨');}
 
 var DB={
   _cache:null,
