@@ -353,7 +353,7 @@ function debounce(key,fn,ms=800){clearTimeout(_dbt[key]);_dbt[key]=setTimeout(fn
 
 /* ═══════ RENDER APP ═══════ */
 function renderApp(){
-  const hash=location.hash.slice(1)||'/';
+  const hash=decodeURIComponent(location.hash.slice(1))||'/';
   if(hash.startsWith('/student/')){
     const id=hash.slice(9);
     renderHeader(id);
@@ -702,7 +702,7 @@ function saveNewStudent(){
   const name=document.getElementById('f-name').value.trim();
   const mentor=document.getElementById('f-mentor').value.trim();
   if(!name||!mentor){alert('이름과 담당 멘토는 필수입니다.');return;}
-  const id=name.replace(/\s/g,'')+'-'+Date.now();
+  const id='s'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
   const newDept=document.getElementById('f-dept').value;
   const ct=document.getElementById('f-type').value;
   const type=ct==='admission'?'admission':'employ';
