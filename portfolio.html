@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>포트폴리오 | SBS아카데미 구월점</title>
+<title>포트폴리오 | SBS아카데미컴퓨터아트학원 구월지점</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{--navy:#0f1f3d;--blue:#1d3d6e;--accent:#3a7bd5;--bg:#f4f6fb;--card:#fff;--border:#e0e6f0;--text:#1a2540;--sub:#6b7a99}
@@ -116,7 +116,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 </head>
 <body>
 <div class="hd">
-  <div class="hd-left"><h1>포트폴리오</h1><p>SBS아카데미 구월점 · 수업 작업물 갤러리</p></div>
+  <div class="hd-left"><h1>포트폴리오</h1><p>SBS아카데미컴퓨터아트학원 구월지점 · 수업 작업물 갤러리</p></div>
   <div class="hd-right">
     <button class="btn btn-primary btn-sm" onclick="openAddModal()">+ 작업물 추가</button>
     <a href="students.html" class="btn btn-ghost btn-sm">👥 수강생 관리</a>
@@ -212,32 +212,38 @@ function setTab(t){TAB=t;renderApp();}
 function openAddModal(){
   UPLOAD_TYPE='image';
   const defaultCat=TAB==='전체'?'영상/모션2D':TAB;
-  openModal(`<div class="modal-hd"><h3>작업물 추가</h3><button class="modal-close" onclick="closeModal()">×</button></div>
-    <div class="modal-body">
-      <div class="type-toggle">
-        <button class="type-btn active" id="ut-img" onclick="setType('image')">🖼 이미지</button>
-        <button class="type-btn" id="ut-vid" onclick="setType('video')">▶ 영상</button>
-      </div>
-      <div class="field"><label>파일 업로드</label>
-        <div class="upload-area" id="ua" onclick="document.getElementById('uf-file').click()">
-          <input type="file" id="uf-file" accept="image/*" onchange="onFileSelect(this)">
-          <div class="ua-icon">📁</div>
-          <div class="ua-text">클릭하여 파일 선택</div>
-          <div class="ua-sub">이미지: JPG · PNG · GIF &nbsp;|&nbsp; 영상: MP4 · MOV</div>
-        </div>
-        <img id="uf-preview" class="upload-preview" alt="미리보기">
-      </div>
-      <div class="divider-or">또는</div>
-      <div class="field"><label>URL (유튜브 포함)</label><input id="uf-url" placeholder="https://..."></div>
-      <div class="field"><label>제목</label><input id="uf-title" placeholder="작품 제목"></div>
-      <div class="field"><label>학과 / 카테고리</label>
-        <select id="uf-cat">${CATS.filter(c=>c!=='전체').map(c=>`<option value="${c}"${c===defaultCat?' selected':''}>${c}</option>`).join('')}</select>
-      </div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeModal()">취소</button>
-      <button class="btn btn-primary" onclick="saveItem()">추가</button>
-    </div>`);
+  const catOpts=CATS.filter(c=>c!=='전체').map(c=>'<option value="'+c+'"'+(c===defaultCat?' selected':'')+'>'+c+'</option>').join('');
+  const html=''
+    +'<div class="modal-hd"><h3>작업물 추가</h3><button class="modal-close" onclick="closeModal()">\u00d7</button></div>'
+    +'<div class="modal-body">'
+    +'<div class="type-toggle">'
+    +'<button class="type-btn active" id="ut-img" onclick="setType(\'image\')">🖼 이미지</button>'
+    +'<button class="type-btn" id="ut-vid" onclick="setType(\'video\')">▶ 영상</button>'
+    +'</div>'
+    +'<div class="field"><label>파일 업로드</label>'
+    +'<div class="upload-area" id="ua" onclick="triggerFileInput()">'
+    +'<input type="file" id="uf-file" accept="image/*" onchange="onFileSelect(this)">'
+    +'<div class="ua-icon">📁</div>'
+    +'<div class="ua-text">클릭하여 파일 선택</div>'
+    +'<div class="ua-sub">이미지: JPG · PNG · GIF · WEBP&nbsp;&nbsp;|&nbsp;&nbsp;영상: MP4 · MOV</div>'
+    +'</div>'
+    +'<img id="uf-preview" class="upload-preview" alt="미리보기">'
+    +'</div>'
+    +'<div class="divider-or">또는</div>'
+    +'<div class="field"><label>URL (유튜브 포함)</label><input id="uf-url" placeholder="https://..."></div>'
+    +'<div class="field"><label>제목</label><input id="uf-title" placeholder="작품 제목"></div>'
+    +'<div class="field"><label>학과 / 카테고리</label><select id="uf-cat">'+catOpts+'</select></div>'
+    +'</div>'
+    +'<div class="modal-foot">'
+    +'<button class="btn btn-outline" onclick="closeModal()">취소</button>'
+    +'<button class="btn btn-primary" onclick="saveItem()">추가</button>'
+    +'</div>';
+  openModal(html);
+}
+
+function triggerFileInput(){
+  const f=document.getElementById('uf-file');
+  if(f)f.click();
 }
 
 function setType(t){
