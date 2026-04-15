@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>SBS아카데미컴퓨터아트학원 구월지점</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
 <style>
 :root{--navy:#0f1f3d;--blue:#1d3d6e;--accent:#3a7bd5;--bg:#f0f4fa;--card:#fff;--border:#e0e6f0;--text:#1a2540;--sub:#6b7a99;--sw:256px}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -185,15 +189,18 @@ var now=new Date();
 var days=['일','월','화','수','목','금','토'];
 document.getElementById('today').textContent=now.getFullYear()+'년 '+(now.getMonth()+1)+'월 '+now.getDate()+'일 ('+days[now.getDay()]+')';
 
-// 통계
+// 통계 (Firebase)
 try{
-  var sd=localStorage.getItem('sbs_mgr_v1');
-  if(sd){var sdata=JSON.parse(sd);document.getElementById('stat-students').textContent=(sdata.students||[]).length;}
-}catch(e){}
-try{
-  var pd=localStorage.getItem('sbs_portfolio_v1');
-  if(pd){var pdata=JSON.parse(pd);document.getElementById('stat-portfolio').textContent=(pdata.items||[]).length;}
-}catch(e){}
+  (function(){try{firebase.initializeApp(FIREBASE_CONFIG);}catch(e){if(!/already exists/.test(e.message))throw e;}})();
+  var _mainDb=firebase.firestore();
+  Promise.all([
+    _mainDb.collection('sbs_students').get(),
+    _mainDb.collection('sbs_portfolio').get()
+  ]).then(function(results){
+    document.getElementById('stat-students').textContent=results[0].size;
+    document.getElementById('stat-portfolio').textContent=results[1].size;
+  }).catch(function(e){console.warn('Stats load error:',e);});
+}catch(e){console.warn('Firebase init error:',e);}
 </script>
 </body>
 </html>

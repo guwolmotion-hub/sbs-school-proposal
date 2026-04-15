@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>수강생 관리 | SBS아카데미컴퓨터아트학원 구월지점</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
 <style>
 :root{--navy:#0f1f3d;--blue:#1d3d6e;--accent:#3a7bd5;--accent2:#e8562a;--bg:#f4f6fb;--card:#fff;--border:#e0e6f0;--text:#1a2540;--sub:#6b7a99}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -162,6 +166,11 @@ tbody td{padding:13px 16px;font-size:14px;vertical-align:middle}
 /* ROW ACTIONS */
 .row-del{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:7px;padding:4px 9px;font-size:12px;cursor:pointer;font-weight:600}
 .row-del:hover{background:#fee2e2}
+/* LOADING OVERLAY */
+#loading-overlay{position:fixed;inset:0;background:rgba(15,31,61,.92);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.loading-spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.2);border-top-color:#3a7bd5;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{color:rgba(255,255,255,.7);font-size:14px;font-weight:500}
 @media(max-width:700px){
   .hd{padding:13px 14px}.wrap{padding:18px 12px 48px}
   .info-grid{grid-template-columns:1fr 1fr}.hero{padding:26px 18px 22px}
@@ -238,12 +247,86 @@ const SEED = {
   ]
 };
 
-/* ═══════ DB ═══════ */
-const DB = {
-  KEY:'sbs_mgr_v1',
-  get(){try{const r=localStorage.getItem(this.KEY);if(r){const data=JSON.parse(r);data.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));if(!s.portfolio)s.portfolio=[];if(!s.year)s.year=2026;if(!s.month)s.month=3;});return data;}return this.reset();}catch(e){return this.reset();}},
-  save(d){localStorage.setItem(this.KEY,JSON.stringify(d));return d},
-  reset(){const d=JSON.parse(JSON.stringify(SEED));d.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));if(!s.portfolio)s.portfolio=[];if(!s.year)s.year=2026;if(!s.month)s.month=3;});return this.save(d);}
+/* ═══════ DB (Firebase Firestore) ═══════ */
+(function(){try{firebase.initializeApp(FIREBASE_CONFIG);}catch(e){if(!/already exists/.test(e.message))throw e;}})();
+const _db=firebase.firestore();
+const _storage=firebase.storage();
+
+const DB={
+  _cache:null,
+
+  get(){return this._cache||{students:[]};},
+
+  save(d){
+    if(!this._cache){this._cache=d;return d;}
+    const prev=this._cache.students||[];
+    this._cache=d;
+    const cur=d.students||[];
+    const changed=cur.filter(s=>{const o=prev.find(x=>x.id===s.id);return!o||JSON.stringify(o)!==JSON.stringify(s);});
+    const deleted=prev.filter(s=>!cur.find(x=>x.id===s.id));
+    changed.forEach(s=>{_db.collection('sbs_students').doc(s.id).set(JSON.parse(JSON.stringify(s))).catch(()=>showToast('저장 오류 발생'));});
+    deleted.forEach(s=>{_db.collection('sbs_students').doc(s.id).delete().catch(console.error);});
+    return d;
+  },
+
+  async _seed(data){
+    const batch=_db.batch();
+    data.students.forEach(s=>{batch.set(_db.collection('sbs_students').doc(s.id),JSON.parse(JSON.stringify(s)));});
+    await batch.commit();
+  },
+
+  async load(){
+    const snapshot=await _db.collection('sbs_students').get();
+    if(snapshot.empty){
+      let data;
+      const ls=localStorage.getItem('sbs_mgr_v1');
+      if(ls){
+        try{
+          data=JSON.parse(ls);
+          data.students.forEach(s=>{
+            if(s.feedback)Object.keys(s.feedback).forEach(dt=>{
+              if(s.feedback[dt].media)s.feedback[dt].media=s.feedback[dt].media.filter(m=>m.url&&!m.url.startsWith('data:'));
+            });
+          });
+        }catch(e){data=null;}
+      }
+      if(!data)data=JSON.parse(JSON.stringify(SEED));
+      data.students.forEach(s=>{
+        if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';
+        if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));
+        if(!s.portfolio)s.portfolio=[];
+        if(!s.year)s.year=2026;
+        if(!s.month)s.month=3;
+      });
+      this._cache=data;
+      await this._seed(data);
+    }else{
+      this._cache={students:snapshot.docs.map(doc=>{
+        const s=doc.data();
+        if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';
+        if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));
+        if(!s.portfolio)s.portfolio=[];
+        if(!s.year)s.year=2026;
+        if(!s.month)s.month=3;
+        return s;
+      })};
+    }
+    return this._cache;
+  },
+
+  reset(){
+    const data=JSON.parse(JSON.stringify(SEED));
+    data.students.forEach(s=>{
+      if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';
+      if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));
+      if(!s.portfolio)s.portfolio=[];
+      if(!s.year)s.year=2026;
+      if(!s.month)s.month=3;
+    });
+    this._cache=data;
+    this._seed(data);
+    return data;
+  }
 };
 
 /* ═══════ STATE ═══════ */
@@ -772,33 +855,37 @@ function openAddLink(sid,date){
     </div>`);
 }
 
-function _commitMedia(sid,date,item){
+function _commitMedia(sid,date,item,file){
+  if(file){
+    showToast('업로드 중...',60000);
+    const ref=_storage.ref('feedback/'+sid+'/'+date+'/'+Date.now()+'_'+file.name);
+    ref.put(file).then(snap=>snap.ref.getDownloadURL()).then(url=>{
+      item.url=url;
+      _doCommitMedia(sid,date,item);
+    }).catch(()=>showToast('업로드 실패. URL을 사용하거나 파일 크기를 줄여주세요.',5000));
+  }else{
+    _doCommitMedia(sid,date,item);
+  }
+}
+function _doCommitMedia(sid,date,item){
   const d=DB.get();
   const s=d.students.find(x=>x.id===sid);
   if(!s){showToast('오류: 학생을 찾을 수 없습니다');return;}
   if(!s.feedback[date])s.feedback[date]={text:'',media:[]};
   s.feedback[date].media.push(item);
-  try{
-    DB.save(d);
-    closeModal();
-    EXPANDED.add(date+'-'+sid);
-    renderStudentDetail(sid);showToast('추가됨 ✓');
-  }catch(e){
-    s.feedback[date].media.pop();
-    showToast('저장 실패: 파일이 너무 큽니다. 더 작은 파일이나 URL을 사용하세요.',4000);
-  }
+  DB.save(d);
+  closeModal();
+  EXPANDED.add(date+'-'+sid);
+  renderStudentDetail(sid);showToast('추가됨 ✓');
 }
 
 function saveMedia(sid,date,type){
   if(type==='image'){
     const fileInput=document.getElementById('mi-file');
-    const url=document.getElementById('mi-url').value.trim();
+    const url=(document.getElementById('mi-url').value||'').trim();
     const cap=document.getElementById('mi-cap').value.trim();
     if(fileInput&&fileInput.files&&fileInput.files[0]){
-      const reader=new FileReader();
-      reader.onload=e=>_commitMedia(sid,date,{type:'image',url:e.target.result,caption:cap});
-      reader.onerror=()=>showToast('파일 읽기 실패',3000);
-      reader.readAsDataURL(fileInput.files[0]);
+      _commitMedia(sid,date,{type:'image',url:'',caption:cap},fileInput.files[0]);
     }else if(url){
       _commitMedia(sid,date,{type:'image',url,caption:cap});
     }else{alert('파일을 선택하거나 URL을 입력하세요.');}
@@ -807,9 +894,7 @@ function saveMedia(sid,date,type){
     const url=document.getElementById('mv-url').value.trim();
     const title=document.getElementById('mv-title').value.trim();
     if(fileInput&&fileInput.files&&fileInput.files[0]){
-      const reader=new FileReader();
-      reader.onload=e=>_commitMedia(sid,date,{type:'video',url:e.target.result,title:title||fileInput.files[0].name});
-      reader.readAsDataURL(fileInput.files[0]);
+      _commitMedia(sid,date,{type:'video',url:'',title:title||fileInput.files[0].name},fileInput.files[0]);
     }else if(url){
       _commitMedia(sid,date,{type:'video',url,title});
     }else{alert('파일을 선택하거나 URL을 입력하세요.');}
@@ -852,10 +937,23 @@ function closeModal(){
 }
 
 /* ═══════ INIT ═══════ */
-var navDept=localStorage.getItem('sbs_nav_dept');
-if(navDept&&DEPTS.indexOf(navDept)!==-1){TAB=navDept;localStorage.removeItem('sbs_nav_dept');}
-window.addEventListener('hashchange',renderApp);
-renderApp();
+async function initApp(){
+  const overlay=document.getElementById('loading-overlay');
+  overlay.style.display='flex';
+  try{
+    await DB.load();
+    overlay.style.display='none';
+    var navDept=localStorage.getItem('sbs_nav_dept');
+    if(navDept&&DEPTS.indexOf(navDept)!==-1){TAB=navDept;localStorage.removeItem('sbs_nav_dept');}
+    window.addEventListener('hashchange',renderApp);
+    renderApp();
+  }catch(e){
+    overlay.innerHTML='<div style="text-align:center;padding:40px"><div style="font-size:36px;margin-bottom:16px">⚠️</div><div style="color:#fff;font-size:18px;font-weight:600;margin-bottom:8px">Firebase 연결 오류</div><div style="color:rgba(255,255,255,.6);font-size:13px;max-width:320px;line-height:1.6">'+e.message+'</div><div style="color:rgba(255,255,255,.4);font-size:12px;margin-top:12px">firebase-config.js 설정을 확인하세요</div></div>';
+    console.error(e);
+  }
+}
+initApp();
 </script>
+<div id="loading-overlay"><div class="loading-spinner"></div><div class="loading-text">Firebase 데이터 로딩 중...</div></div>
 </body>
 </html>
