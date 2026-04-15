@@ -146,64 +146,73 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div id="toast"></div>
 
 <script>
-const CATS=['전체','영상/모션2D','영상/모션3D','시각편집','아트웍','인테리어','CG/마야','웹'];
+var CATS=['전체','영상/모션2D','영상/모션3D','시각편집','아트웍','인테리어','CG/마야','웹'];
 
-const DB={
+var DB={
   KEY:'sbs_portfolio_v1',
-  get(){try{const r=localStorage.getItem(this.KEY);return r?JSON.parse(r):{items:[]};}catch(e){return {items:[];};}},
-  save(d){localStorage.setItem(this.KEY,JSON.stringify(d));return d;}
+  get:function(){try{var r=localStorage.getItem(this.KEY);return r?JSON.parse(r):{items:[]};}catch(e){return {items:[]};}},
+  save:function(d){localStorage.setItem(this.KEY,JSON.stringify(d));return d;}
 };
 
-let TAB='전체';
-let UPLOAD_TYPE='image';
-let LB_ITEMS=[];
-let LB_IDX=0;
+var TAB='전체';
+var UPLOAD_TYPE='image';
+var LB_ITEMS=[];
+var LB_IDX=0;
 
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function ytId(url){const m=String(url||'').match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);return m?m[1]:null}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
-function showToast(msg,ms=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',ms)}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function ytId(url){var m=String(url||'').match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);return m?m[1]:null;}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function showToast(msg,ms){if(!ms)ms=2500;var t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._t);t._t=setTimeout(function(){t.style.display='none';},ms);}
 
 function renderApp(){
-  const d=DB.get();
-  const all=d.items||[];
-  const list=TAB==='전체'?all:all.filter(x=>x.category===TAB);
-  const counts=Object.fromEntries(CATS.map(c=>[c,c==='전체'?all.length:all.filter(x=>x.category===c).length]));
+  var d=DB.get();
+  var all=d.items||[];
+  var list=TAB==='전체'?all:all.filter(function(x){return x.category===TAB;});
+  var counts={};
+  for(var i=0;i<CATS.length;i++){
+    var c=CATS[i];
+    counts[c]=c==='전체'?all.length:all.filter(function(x){return x.category===c;}).length;
+  }
 
-  document.getElementById('app').innerHTML=`
-    <div class="wrap">
-      <div class="tabs">
-        ${CATS.map(c=>`<button class="tab ${TAB===c?'ta':''}" onclick="setTab('${esc(c)}')">${esc(c)}<span class="tcnt">${counts[c]}</span></button>`).join('')}
-      </div>
-      ${list.length
-        ?`<div class="gallery-grid">${list.map((item,idx)=>renderCard(item,idx)).join('')}</div>`
-        :`<div class="empty"><p>🎬</p><span>아직 업로드된 작업물이 없습니다</span>
-           <button class="btn btn-primary" onclick="openAddModal()">+ 작업물 추가</button></div>`}
-    </div>`;
+  var tabsHtml='';
+  for(var i=0;i<CATS.length;i++){
+    var c=CATS[i];
+    tabsHtml+='<button class="tab '+(TAB===c?'ta':'')+'" onclick="setTab(\''+esc(c)+'\')">'+esc(c)+'<span class="tcnt">'+counts[c]+'</span></button>';
+  }
+
+  var contentHtml='';
+  if(list.length>0){
+    var cards='';
+    for(var i=0;i<list.length;i++) cards+=renderCard(list[i],i);
+    contentHtml='<div class="gallery-grid">'+cards+'</div>';
+  }else{
+    contentHtml='<div class="empty"><p>\uD83C\uDFAC</p><span>\uC544\uC9C1 \uC5C5\uB85C\uB4DC\uB41C \uC791\uC5C5\uBB3C\uC774 \uC5C6\uC2B5\uB2C8\uB2E4</span><button class="btn btn-primary" onclick="openAddModal()">+ \uC791\uC5C5\uBB3C \uCD94\uAC00</button></div>';
+  }
+
+  document.getElementById('app').innerHTML='<div class="wrap"><div class="tabs">'+tabsHtml+'</div>'+contentHtml+'</div>';
 }
 
 function renderCard(item,idx){
-  const isVideo=item.type==='video';
-  const vid=isVideo?ytId(item.url):null;
-  let thumb='';
+  var isVideo=item.type==='video';
+  var vid=isVideo?ytId(item.url):null;
+  var thumb='';
   if(item.type==='image'){
-    thumb=`<img src="${esc(item.url)}" alt="${esc(item.title||'')}">`;
+    thumb='<img src="'+esc(item.url)+'" alt="'+esc(item.title||'')+'">';
   }else if(vid){
-    thumb=`<img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg" alt="${esc(item.title||'')}">`;
+    thumb='<img src="https://img.youtube.com/vi/'+vid+'/mqdefault.jpg" alt="'+esc(item.title||'')+'">';
   }else{
-    thumb=`<div class="gallery-vbg"><div class="gv-play">▶</div><div class="gv-title">${esc(item.title||'영상')}</div></div>`;
+    thumb='<div class="gallery-vbg"><div class="gv-play">\u25B6</div><div class="gv-title">'+esc(item.title||'\uC601\uC0C1')+'</div></div>';
   }
-  return `<div class="gallery-item" onclick="openLightbox(${idx})">
-    ${thumb}
-    ${isVideo?'<div class="g-play-icon">▶</div>':''}
-    <div class="gallery-overlay">
-      <div class="g-title">${esc(item.title||'제목 없음')}</div>
-      <div class="g-meta">
-        <span class="g-cat">${esc(item.category||'')}</span>
-        <button class="g-del" onclick="event.stopPropagation();deleteItem('${esc(item.id)}')">✕</button>
-      </div>
-    </div>
-  </div>`;
+  var playIcon=isVideo?'<div class="g-play-icon">\u25B6</div>':'';
+  return '<div class="gallery-item" onclick="openLightbox('+idx+')">'
+    +thumb
+    +playIcon
+    +'<div class="gallery-overlay">'
+    +'<div class="g-title">'+esc(item.title||'\uC81C\uBAA9 \uC5C6\uC74C')+'</div>'
+    +'<div class="g-meta">'
+    +'<span class="g-cat">'+esc(item.category||'')+'</span>'
+    +'<button class="g-del" onclick="event.stopPropagation();deleteItem(\''+esc(item.id)+'\')">\u2715</button>'
+    +'</div></div></div>';
 }
 
 function setTab(t){TAB=t;renderApp();}
@@ -242,57 +251,60 @@ function openAddModal(){
 }
 
 function triggerFileInput(){
-  const f=document.getElementById('uf-file');
+  var f=document.getElementById('uf-file');
   if(f)f.click();
 }
 
 function setType(t){
   UPLOAD_TYPE=t;
-  document.getElementById('ut-img').classList.toggle('active',t==='image');
-  document.getElementById('ut-vid').classList.toggle('active',t==='video');
-  const fi=document.getElementById('uf-file');
+  var img=document.getElementById('ut-img');
+  var vid=document.getElementById('ut-vid');
+  if(img)img.className='type-btn'+(t==='image'?' active':'');
+  if(vid)vid.className='type-btn'+(t==='video'?' active':'');
+  var fi=document.getElementById('uf-file');
   if(fi)fi.accept=t==='image'?'image/*':'video/*';
-  const p=document.getElementById('uf-preview');
+  var p=document.getElementById('uf-preview');
   if(p)p.style.display='none';
-  const ua=document.getElementById('ua');
-  if(ua)ua.querySelector('.ua-sub').textContent=t==='image'?'JPG · PNG · GIF · WEBP':'MP4 · MOV · WEBM';
+  var ua=document.getElementById('ua');
+  if(ua){var sub=ua.querySelector('.ua-sub');if(sub)sub.textContent=t==='image'?'JPG · PNG · GIF · WEBP':'MP4 · MOV · WEBM';}
 }
 
 function onFileSelect(input){
   if(!input.files||!input.files[0])return;
-  const file=input.files[0];
-  const ua=document.getElementById('ua');
-  if(ua)ua.querySelector('.ua-text').textContent='✓ '+file.name;
-  const titleEl=document.getElementById('uf-title');
+  var file=input.files[0];
+  var ua=document.getElementById('ua');
+  if(ua){var txt=ua.querySelector('.ua-text');if(txt)txt.textContent='\u2713 '+file.name;}
+  var titleEl=document.getElementById('uf-title');
   if(titleEl&&!titleEl.value)titleEl.value=file.name.replace(/\.[^.]+$/,'');
   if(UPLOAD_TYPE==='image'){
-    const reader=new FileReader();
-    reader.onload=e=>{const p=document.getElementById('uf-preview');if(p){p.src=e.target.result;p.style.display='block';}};
+    var reader=new FileReader();
+    reader.onload=function(e){var p=document.getElementById('uf-preview');if(p){p.src=e.target.result;p.style.display='block';}};
     reader.readAsDataURL(file);
   }
 }
 
 function saveItem(){
-  const fileInput=document.getElementById('uf-file');
-  const url=(document.getElementById('uf-url').value||'').trim();
-  const title=(document.getElementById('uf-title').value||'').trim();
-  const category=document.getElementById('uf-cat').value;
-  const type=UPLOAD_TYPE;
+  var fileInput=document.getElementById('uf-file');
+  var url=(document.getElementById('uf-url').value||'').trim();
+  var title=(document.getElementById('uf-title').value||'').trim();
+  var category=document.getElementById('uf-cat').value;
+  var type=UPLOAD_TYPE;
   if(fileInput&&fileInput.files&&fileInput.files[0]){
-    showToast('파일 처리 중...', 30000);
-    const reader=new FileReader();
-    reader.onload=e=>_commit({id:uid(),type,url:e.target.result,title:title||fileInput.files[0].name,category,addedAt:Date.now()});
-    reader.onerror=()=>showToast('파일 읽기 실패');
+    var fname=fileInput.files[0].name;
+    showToast('\uD30C\uC77C \uCC98\uB9AC \uC911...',30000);
+    var reader=new FileReader();
+    reader.onload=function(e){_commit({id:uid(),type:type,url:e.target.result,title:title||fname,category:category,addedAt:Date.now()});};
+    reader.onerror=function(){showToast('\uD30C\uC77C \uC77D\uAE30 \uC2E4\uD328');};
     reader.readAsDataURL(fileInput.files[0]);
   }else if(url){
-    _commit({id:uid(),type,url,title:title||url,category,addedAt:Date.now()});
+    _commit({id:uid(),type:type,url:url,title:title||url,category:category,addedAt:Date.now()});
   }else{
-    alert('파일을 선택하거나 URL을 입력하세요.');
+    alert('\uD30C\uC77C\uC744 \uC120\uD0DD\uD558\uAC70\uB098 URL\uC744 \uC785\uB825\uD558\uC138\uC694.');
   }
 }
 
 function _commit(item){
-  const d=DB.get();
+  var d=DB.get();
   if(!d.items)d.items=[];
   d.items.unshift(item);
   try{
@@ -300,24 +312,25 @@ function _commit(item){
     closeModal();
     TAB=item.category;
     renderApp();
-    showToast('추가됨 ✓');
+    showToast('\uCD94\uAC00\uB428 \u2713');
   }catch(e){
     d.items.shift();
-    showToast('저장 실패: 파일이 너무 큽니다. URL을 사용하거나 파일을 압축하세요.',5000);
+    showToast('\uC800\uC7A5 \uC2E4\uD328: \uD30C\uC77C\uC774 \uB108\uBB34 \uD07D\uB2C8\uB2E4. URL\uC744 \uC0AC\uC6A9\uD558\uAC70\uB098 \uD30C\uC77C\uC744 \uC555\uCD95\uD558\uC138\uC694.',5000);
   }
 }
 
 function deleteItem(id){
-  if(!confirm('이 작업물을 삭제하시겠습니까?'))return;
-  const d=DB.get();
-  d.items=(d.items||[]).filter(x=>x.id!==id);
-  DB.save(d);renderApp();showToast('삭제됨');
+  if(!confirm('\uC774 \uC791\uC5C5\uBB3C\uC744 \uC0AD\uC81C\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?'))return;
+  var d=DB.get();
+  d.items=(d.items||[]).filter(function(x){return x.id!==id;});
+  DB.save(d);renderApp();showToast('\uC0AD\uC81C\uB428');
 }
 
 /* ── LIGHTBOX ── */
 function openLightbox(idx){
-  const d=DB.get();
-  LB_ITEMS=TAB==='전체'?[...(d.items||[])]:(d.items||[]).filter(x=>x.category===TAB);
+  var d=DB.get();
+  var all=d.items||[];
+  LB_ITEMS=TAB==='전체'?all.slice():all.filter(function(x){return x.category===TAB;});
   LB_IDX=idx;
   renderLightbox();
   document.getElementById('lightbox').classList.add('open');
@@ -329,25 +342,25 @@ function closeLightbox(){
 }
 
 function lbNav(dir){
-  const n=LB_IDX+dir;
+  var n=LB_IDX+dir;
   if(n<0||n>=LB_ITEMS.length)return;
   LB_IDX=n;renderLightbox();
 }
 
 function renderLightbox(){
-  const item=LB_ITEMS[LB_IDX];if(!item)return;
-  let content='';
+  var item=LB_ITEMS[LB_IDX];if(!item)return;
+  var content='';
   if(item.type==='image'){
-    content=`<img src="${esc(item.url)}" alt="${esc(item.title||'')}">`;
+    content='<img src="'+esc(item.url)+'" alt="'+esc(item.title||'')+'">';
   }else{
-    const vid=ytId(item.url);
-    if(vid)content=`<div class="yt-lb"><iframe src="https://www.youtube.com/embed/${vid}?autoplay=1" allowfullscreen allow="autoplay" style="width:100%;height:100%;border:none;display:block"></iframe></div>`;
-    else content=`<video src="${esc(item.url)}" controls autoplay></video>`;
+    var vid=ytId(item.url);
+    if(vid)content='<div class="yt-lb"><iframe src="https://www.youtube.com/embed/'+vid+'?autoplay=1" allowfullscreen allow="autoplay" style="width:100%;height:100%;border:none;display:block"></iframe></div>';
+    else content='<video src="'+esc(item.url)+'" controls autoplay></video>';
   }
   document.getElementById('lb-content').innerHTML=content;
   document.getElementById('lb-title').textContent=item.title||'';
   document.getElementById('lb-cat').textContent=item.category||'';
-  document.getElementById('lb-counter').textContent=`${LB_IDX+1} / ${LB_ITEMS.length}`;
+  document.getElementById('lb-counter').textContent=(LB_IDX+1)+' / '+LB_ITEMS.length;
   document.getElementById('lb-prev').style.display=LB_IDX>0?'flex':'none';
   document.getElementById('lb-next').style.display=LB_IDX<LB_ITEMS.length-1?'flex':'none';
 }
@@ -356,7 +369,7 @@ function renderLightbox(){
 function openModal(html){document.getElementById('modal-box').innerHTML=html;document.getElementById('modal-overlay').classList.add('open');}
 function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
 
-document.addEventListener('keydown',e=>{
+document.addEventListener('keydown',function(e){
   if(document.getElementById('lightbox').classList.contains('open')){
     if(e.key==='Escape')closeLightbox();
     if(e.key==='ArrowLeft')lbNav(-1);
