@@ -7,10 +7,11 @@
 // 3. 아래 config 값을 Firebase Console에서 복사하여 붙여넣기
 // ──────────────────────────────────────────────────
 const FIREBASE_CONFIG = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+  apiKey:            "AIzaSyAHtoSBLQYb1yF8TeSKWMzYd7J1_skgV8U",
+  authDomain:        "portfolioguwol.firebaseapp.com",
+  projectId:         "portfolioguwol",
+  storageBucket:     "portfolioguwol.firebasestorage.app",
+  messagingSenderId: "172250471131",
+  appId:             "1:172250471131:web:9f110270c55b2515eb8afe",
+  measurementId:     "G-JDM5EVD11M"
 };
