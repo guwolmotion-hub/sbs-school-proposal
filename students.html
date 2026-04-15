@@ -257,7 +257,7 @@ let _storage=null;try{_storage=firebase.storage();}catch(e){console.warn('Storag
 const DB={
   _cache:null,
 
-  get(){return this._cache||{students:[]};},
+  get(){return this._cache?JSON.parse(JSON.stringify(this._cache)):{students:[]};},
 
   save(d){
     if(!this._cache){this._cache=d;return d;}

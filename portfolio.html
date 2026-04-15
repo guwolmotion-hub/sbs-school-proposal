@@ -165,7 +165,7 @@ var _storage=null;try{_storage=firebase.storage();}catch(e){console.warn('Storag
 
 var DB={
   _cache:null,
-  get:function(){return this._cache||{items:[]};},
+  get:function(){return this._cache?JSON.parse(JSON.stringify(this._cache)):{items:[]};},
   save:function(d){
     if(!this._cache){this._cache=d;return d;}
     var prev=this._cache.items||[];
