@@ -35,6 +35,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .subtab{padding:8px 22px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--sub)}
 .subtab.sta{background:linear-gradient(135deg,#1d3d6e,#3a7bd5);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(58,123,213,.3)}
 .subtab.ste{background:linear-gradient(135deg,#7b1d1d,#e8562a);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(232,86,42,.3)}
+.subtab.str{background:linear-gradient(135deg,#065f46,#059669);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(5,150,105,.3)}
+/* YEAR/MONTH NAV */
+.ym-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+.ym-label{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;margin-right:2px}
+.ybtn,.mbtn{padding:6px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--sub)}
+.ybtn:hover,.mbtn:hover{border-color:var(--accent);color:var(--accent)}
+.ybtn.ya{background:linear-gradient(135deg,#1d3d6e,#3a7bd5);color:#fff;border-color:transparent;box-shadow:0 2px 10px rgba(58,123,213,.3)}
+.mbtn.ma{background:linear-gradient(135deg,#3a7bd5,#60a5fa);color:#fff;border-color:transparent;box-shadow:0 2px 10px rgba(58,123,213,.25)}
 .scnt{display:inline-block;background:rgba(255,255,255,.25);border-radius:20px;padding:1px 8px;font-size:11px;margin-left:4px}
 .subtab:not(.sta):not(.ste) .scnt{background:var(--bg);color:var(--sub)}
 /* TABLE */
@@ -174,6 +182,7 @@ tbody td{padding:13px 16px;font-size:14px;vertical-align:middle}
 <script>
 /* ═══════ SEED DATA ═══════ */
 const DEPTS=['영상/모션2D','영상/모션3D','시각편집','아트웍','인테리어','CG/마야','웹'];
+const YEARS=[2024,2025,2026,2027];
 const BASE_DAYS=[
   {date:'03-17',day:'월',holiday:false},
   {date:'03-19',day:'수',holiday:false},
@@ -232,13 +241,15 @@ const SEED = {
 /* ═══════ DB ═══════ */
 const DB = {
   KEY:'sbs_mgr_v1',
-  get(){try{const r=localStorage.getItem(this.KEY);if(r){const data=JSON.parse(r);data.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));if(!s.portfolio)s.portfolio=[];});return data;}return this.reset();}catch(e){return this.reset();}},
+  get(){try{const r=localStorage.getItem(this.KEY);if(r){const data=JSON.parse(r);data.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));if(!s.portfolio)s.portfolio=[];if(!s.year)s.year=2026;if(!s.month)s.month=3;});return data;}return this.reset();}catch(e){return this.reset();}},
   save(d){localStorage.setItem(this.KEY,JSON.stringify(d));return d},
-  reset(){const d=JSON.parse(JSON.stringify(SEED));d.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));if(!s.portfolio)s.portfolio=[];});return this.save(d);}
+  reset(){const d=JSON.parse(JSON.stringify(SEED));d.students.forEach(s=>{if(!s.dept)s.dept=DEPT_MAP[s.id]||'영상/모션2D';if(!s.days)s.days=JSON.parse(JSON.stringify(BASE_DAYS));if(!s.portfolio)s.portfolio=[];if(!s.year)s.year=2026;if(!s.month)s.month=3;});return this.save(d);}
 };
 
 /* ═══════ STATE ═══════ */
 let TAB=DEPTS[0];
+let YEAR=2026;
+let MONTH=4;
 let SUBTAB='admission';
 let EXPANDED=new Set();
 
@@ -286,19 +297,33 @@ function renderHeader(studentId){
 /* ═══════ LIST VIEW ═══════ */
 function renderList(){
   const d=DB.get();
-  const deptStudents=d.students.filter(s=>(s.dept||'영상/모션2D')===TAB);
+  const allStudents=d.students;
+  const deptStudents=allStudents.filter(s=>(s.dept||'영상/모션2D')===TAB&&(s.year||2026)===YEAR&&(s.month||3)===MONTH);
   const admCnt=deptStudents.filter(s=>s.type==='admission').length;
-  const empCnt=deptStudents.filter(s=>s.type==='employ').length;
-  const list=deptStudents.filter(s=>s.type===SUBTAB);
+  const empCnt=deptStudents.filter(s=>s.type==='employ'&&s.goal!=='편입').length;
+  const traCnt=deptStudents.filter(s=>s.type==='employ'&&s.goal==='편입').length;
+  let list;
+  if(SUBTAB==='admission')list=deptStudents.filter(s=>s.type==='admission');
+  else if(SUBTAB==='employ')list=deptStudents.filter(s=>s.type==='employ'&&s.goal!=='편입');
+  else list=deptStudents.filter(s=>s.type==='employ'&&s.goal==='편입');
 
   document.getElementById('app').innerHTML=`
     <div class="wrap">
       <div class="tabs" style="flex-wrap:wrap">
-        ${DEPTS.map(dept=>{const cnt=d.students.filter(s=>(s.dept||'영상/모션2D')===dept).length;return `<button class="tab ${TAB===dept?'ta':''}" onclick="setTab('${esc(dept)}')">${esc(dept)}<span class="tcnt">${cnt}</span></button>`;}).join('')}
+        ${DEPTS.map(dept=>{const cnt=allStudents.filter(s=>(s.dept||'영상/모션2D')===dept&&(s.year||2026)===YEAR&&(s.month||3)===MONTH).length;return `<button class="tab ${TAB===dept?'ta':''}" onclick="setTab('${esc(dept)}')">${esc(dept)}<span class="tcnt">${cnt}</span></button>`;}).join('')}
+      </div>
+      <div class="ym-row">
+        <span class="ym-label">년도</span>
+        ${YEARS.map(y=>`<button class="ybtn ${YEAR===y?'ya':''}" onclick="setYear(${y})">${y}년</button>`).join('')}
+      </div>
+      <div class="ym-row">
+        <span class="ym-label">월</span>
+        ${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>`<button class="mbtn ${MONTH===m?'ma':''}" onclick="setMonth(${m})">${m}월</button>`).join('')}
       </div>
       <div class="subtabs">
         <button class="subtab ${SUBTAB==='admission'?'sta':''}" onclick="setSubTab('admission')">🎨 입시반 <span class="scnt">${admCnt}</span></button>
-        <button class="subtab ${SUBTAB==='employ'?'ste':''}" onclick="setSubTab('employ')">💼 취업·편입반 <span class="scnt">${empCnt}</span></button>
+        <button class="subtab ${SUBTAB==='employ'?'ste':''}" onclick="setSubTab('employ')">💼 취업반 <span class="scnt">${empCnt}</span></button>
+        <button class="subtab ${SUBTAB==='transfer'?'str':''}" onclick="setSubTab('transfer')">🎓 편입반 <span class="scnt">${traCnt}</span></button>
       </div>
       <div class="tbl-wrap">
         <table>
@@ -332,6 +357,8 @@ function renderRow(s,i){
 }
 
 function setTab(t){TAB=t;renderList();}
+function setYear(y){YEAR=y;renderList();}
+function setMonth(m){MONTH=m;renderList();}
 function setSubTab(t){SUBTAB=t;renderList();}
 
 /* ═══════ STUDENT DETAIL ═══════ */
@@ -547,18 +574,19 @@ function openAddStudent(){
         <div class="field"><label>학과 *</label><select id="f-dept">${DEPTS.map(d=>`<option value="${d}"${d===TAB?' selected':''}>${d}</option>`).join('')}</select></div>
       </div>
       <div class="field-row">
-        <div class="field"><label>반 구분</label><select id="f-type"><option value="admission">입시반</option><option value="employ">취업·편입반</option></select></div>
+        <div class="field"><label>반 구분</label><select id="f-type"><option value="admission">🎨 입시반</option><option value="employ">💼 취업반</option><option value="transfer">🎓 편입반</option></select></div>
         <div class="field"><label>담당 멘토 *</label><input id="f-mentor" placeholder="멘토명"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>등록 년도</label><select id="f-year">${YEARS.map(y=>`<option value="${y}"${y===YEAR?' selected':''}>${y}년</option>`).join('')}</select></div>
+        <div class="field"><label>등록 월</label><select id="f-month">${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>`<option value="${m}"${m===MONTH?' selected':''}>${m}월</option>`).join('')}</select></div>
       </div>
       <div class="field-row">
         <div class="field"><label>나이</label><input id="f-age" type="number" placeholder="19"></div>
         <div class="field"><label>연락처</label><input id="f-contact" placeholder="010-0000-0000"></div>
       </div>
       <div class="field"><label>포폴 주제</label><input id="f-topic" placeholder="포트폴리오 주제"></div>
-      <div class="field-row">
-        <div class="field"><label>진행 단계</label><select id="f-stage"><option value="plan">기획중</option><option value="making" selected>제작중</option><option value="revise">수정중</option><option value="done">완성</option></select></div>
-        <div class="field"><label>목표 (취업·편입)</label><select id="f-goal"><option value="">-</option><option value="취업">취업</option><option value="편입">편입</option></select></div>
-      </div>
+      <div class="field"><label>진행 단계</label><select id="f-stage"><option value="plan">기획중</option><option value="making" selected>제작중</option><option value="revise">수정중</option><option value="done">완성</option></select></div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-outline" onclick="closeModal()">취소</button>
@@ -572,20 +600,26 @@ function saveNewStudent(){
   if(!name||!mentor){alert('이름과 담당 멘토는 필수입니다.');return;}
   const id=name.replace(/\s/g,'')+'-'+Date.now();
   const newDept=document.getElementById('f-dept').value;
+  const ct=document.getElementById('f-type').value;
+  const type=ct==='admission'?'admission':'employ';
+  const goal=ct==='employ'?'취업':ct==='transfer'?'편입':null;
+  const newYear=parseInt(document.getElementById('f-year').value)||YEAR;
+  const newMonth=parseInt(document.getElementById('f-month').value)||MONTH;
   const d=DB.get();
   const days=JSON.parse(JSON.stringify(BASE_DAYS));
   const fb={},att={};
   days.forEach(day=>{fb[day.date]={text:'',media:[]};att[day.date]=day.holiday?'holiday':'pending';});
   d.students.push({
-    id,name,dept:newDept,type:document.getElementById('f-type').value,
+    id,name,dept:newDept,type,goal,year:newYear,month:newMonth,
     mentor,age:parseInt(document.getElementById('f-age').value)||0,
     contact:document.getElementById('f-contact').value.trim(),
     topic:document.getElementById('f-topic').value.trim()||'미정',
     stage:document.getElementById('f-stage').value,pct:0,
-    goal:document.getElementById('f-goal').value||null,
     days,attendance:att,feedback:fb
   });
-  DB.save(d);closeModal();TAB=newDept;renderList();showToast(`${name} 수강생 추가됨`);
+  DB.save(d);closeModal();TAB=newDept;YEAR=newYear;MONTH=newMonth;
+  SUBTAB=ct==='admission'?'admission':ct==='transfer'?'transfer':'employ';
+  renderList();showToast(`${name} 수강생 추가됨`);
 }
 
 function openEditStudent(sid){

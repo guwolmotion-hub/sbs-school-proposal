@@ -73,7 +73,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 /* UPLOAD AREA */
 .upload-area{position:relative;border:2px dashed var(--border);border-radius:12px;padding:22px 16px;text-align:center;cursor:pointer;transition:all .2s;background:#fafbfe}
 .upload-area:hover,.upload-area.drag{border-color:var(--accent);background:#eaf3ff}
-.upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-area input[type=file]{display:none}
 .ua-icon{font-size:26px;margin-bottom:5px}
 .ua-text{font-size:13px;color:var(--sub);font-weight:500}
 .ua-sub{font-size:11px;color:var(--sub);margin-top:2px;opacity:.65}
@@ -219,7 +219,7 @@ function openAddModal(){
         <button class="type-btn" id="ut-vid" onclick="setType('video')">▶ 영상</button>
       </div>
       <div class="field"><label>파일 업로드</label>
-        <div class="upload-area" id="ua">
+        <div class="upload-area" id="ua" onclick="document.getElementById('uf-file').click()">
           <input type="file" id="uf-file" accept="image/*" onchange="onFileSelect(this)">
           <div class="ua-icon">📁</div>
           <div class="ua-text">클릭하여 파일 선택</div>
