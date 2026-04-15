@@ -288,6 +288,7 @@ function renderHeader(studentId){
     hd.innerHTML=`
       <div class="hd-left"><h1>수강생 관리</h1><p>SBS아카데미컴퓨터아트학원 구월지점 · 수강생 관리 페이지</p></div>
       <div class="hd-right">
+        <a href="main.html" class="btn btn-ghost btn-sm" style="text-decoration:none">🏠 홈</a>
         <a href="portfolio.html" class="btn btn-ghost btn-sm" style="text-decoration:none">📁 포트폴리오</a>
         <button class="btn btn-primary btn-sm" onclick="openAddStudent()">+ 학생 추가</button>
       </div>`;
@@ -851,6 +852,8 @@ function closeModal(){
 }
 
 /* ═══════ INIT ═══════ */
+var navDept=localStorage.getItem('sbs_nav_dept');
+if(navDept&&DEPTS.indexOf(navDept)!==-1){TAB=navDept;localStorage.removeItem('sbs_nav_dept');}
 window.addEventListener('hashchange',renderApp);
 renderApp();
 </script>
