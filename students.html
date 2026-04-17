@@ -10,14 +10,38 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 <script src="firebase-config.js"></script>
 <style>
-:root{--navy:#0f1f3d;--blue:#1d3d6e;--accent:#3a7bd5;--accent2:#e8562a;--bg:#f4f6fb;--card:#fff;--border:#e0e6f0;--text:#1a2540;--sub:#6b7a99}
+:root{--navy:#0f1f3d;--blue:#1d3d6e;--accent:#3a7bd5;--accent2:#e8562a;--bg:#f0f4fa;--card:#fff;--border:#e0e6f0;--text:#1a2540;--sub:#6b7a99;--sw:256px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-/* HEADER */
-.hd{background:linear-gradient(135deg,var(--navy),var(--blue));padding:16px 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(15,31,61,.35);position:sticky;top:0;z-index:50}
-.hd-left h1{color:#fff;font-size:17px;font-weight:700}
-.hd-left p{color:rgba(255,255,255,.55);font-size:12px;margin-top:2px}
-.hd-right{display:flex;gap:8px}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+/* SIDEBAR */
+.sb{width:var(--sw);min-height:100vh;background:linear-gradient(180deg,#080f1e 0%,#0d1a30 60%,#0f2040 100%);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;overflow-y:auto}
+.sb-brand{padding:26px 20px 22px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo{display:flex;align-items:center;gap:11px;margin-bottom:5px}
+.sb-logo-mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#3a7bd5,#60a5fa);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.sb-logo-text{font-size:12px;font-weight:800;color:#fff;line-height:1.4}
+.sb-point{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
+.sb-sec{padding:18px 20px 8px;font-size:10px;font-weight:700;color:rgba(255,255,255,.28);letter-spacing:1.8px;text-transform:uppercase}
+.sb-items{padding:0 10px 10px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;transition:all .18s;text-decoration:none;margin-bottom:1px}
+.sb-item:hover{background:rgba(255,255,255,.07)}
+.sb-item.active{background:rgba(58,123,213,.25)}
+.sb-item-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.sb-item-name{font-size:13px;font-weight:500;color:rgba(255,255,255,.65)}
+.sb-item:hover .sb-item-name,.sb-item.active .sb-item-name{color:#fff}
+.sb-foot{margin-top:auto;padding:16px 10px;border-top:1px solid rgba(255,255,255,.07)}
+.sb-foot-link{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:10px;color:rgba(255,255,255,.45);font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;transition:all .18s;margin-bottom:2px}
+.sb-foot-link:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+/* MAIN */
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:13px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 8px rgba(15,31,61,.05)}
+.content{padding:28px 32px 64px;flex:1}
+/* HERO */
+.hero-main{border-radius:18px;background:linear-gradient(135deg,#0a1628 0%,#0f2245 45%,#1a3a7a 100%);padding:36px 40px;margin-bottom:22px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:-60px;right:-30px;width:280px;height:280px;background:radial-gradient(circle,rgba(58,123,213,.22),transparent 65%);pointer-events:none}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:12px}
+.hero-title-main{font-size:26px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:8px}
+.hero-title-main em{font-style:normal;color:#60a5fa}
+.hero-sub-main{font-size:13px;color:rgba(255,255,255,.55);line-height:1.8}
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:5px;border:none;border-radius:10px;padding:8px 16px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
 .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#2d6bc4;box-shadow:0 4px 12px rgba(58,123,213,.4)}
@@ -26,7 +50,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .btn-sm{padding:5px 11px;font-size:12px;border-radius:8px}
 .btn-danger{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}.btn-danger:hover{background:#fee2e2}
 /* WRAP */
-.wrap{max-width:1100px;margin:0 auto;padding:26px 22px 60px}
+.wrap{max-width:1100px;margin:0 auto;padding:0}
 /* TABS */
 .tabs{display:flex;gap:8px;margin-bottom:22px}
 .tab{padding:10px 26px;border-radius:12px;border:2px solid var(--border);background:var(--card);font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--sub)}
@@ -74,9 +98,9 @@ tbody td{padding:13px 16px;font-size:14px;vertical-align:middle}
 .prog-fill-e{background:linear-gradient(90deg,#e8562a,#f97316)}
 .prog-pct{font-size:12px;color:var(--sub);font-weight:600;white-space:nowrap}
 /* STUDENT DETAIL */
-.hero{padding:36px 28px 28px;color:#fff;position:relative}
-.hero.ha{background:linear-gradient(135deg,#1d3d6e,#3a7bd5)}
-.hero.he{background:linear-gradient(135deg,#7b1d1d,#e8562a)}
+.detail-hero{padding:36px 28px 28px;color:#fff;position:relative;border-radius:0}
+.detail-hero.ha{background:linear-gradient(135deg,#1d3d6e,#3a7bd5)}
+.detail-hero.he{background:linear-gradient(135deg,#7b1d1d,#e8562a)}
 .hero-tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600;margin-bottom:10px}
 .hero-name{font-size:30px;font-weight:700;margin-bottom:5px}
 .hero-mentor{font-size:13px;color:rgba(255,255,255,.7)}
@@ -171,18 +195,52 @@ tbody td{padding:13px 16px;font-size:14px;vertical-align:middle}
 .loading-spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.2);border-top-color:#3a7bd5;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{color:rgba(255,255,255,.7);font-size:14px;font-weight:500}
+@media(max-width:960px){:root{--sw:210px}.content{padding:20px 20px 52px}}
 @media(max-width:700px){
-  .hd{padding:13px 14px}.wrap{padding:18px 12px 48px}
-  .info-grid{grid-template-columns:1fr 1fr}.hero{padding:26px 18px 22px}
-  .hero-name{font-size:24px}.hd-left h1{font-size:15px}
+  .sb{display:none}.main{margin-left:0}.content{padding:16px 14px 48px}
+  .info-grid{grid-template-columns:1fr 1fr}.detail-hero{padding:26px 18px 22px}
+  .hero-name{font-size:24px}
   .field-row{grid-template-columns:1fr}
 }
-@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media print{nav,.sb{display:none!important}.main{margin-left:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body>
-<div class="hd" id="hd"></div>
-<div id="app"></div>
+<aside class="sb" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo">
+      <div class="sb-logo-mark">🎓</div>
+      <div class="sb-logo-text">SBS아카데미<br>컴퓨터아트학원</div>
+    </div>
+    <div class="sb-point">구월지점</div>
+  </div>
+  <div class="sb-sec">학과</div>
+  <div class="sb-items" id="sb-dept-list"></div>
+  <div class="sb-foot">
+    <a href="main.html" class="sb-foot-link"><span>🏠</span> 홈</a>
+    <a href="portfolio.html" class="sb-foot-link"><span>🎬</span> 포트폴리오</a>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div style="font-size:13px;color:var(--sub);font-weight:600">수강생 관리</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span id="today" style="font-size:13px;color:var(--sub);font-weight:500"></span>
+      <button class="btn btn-primary btn-sm" onclick="openAddStudent()">+ 학생 추가</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="hero-main">
+      <div class="hero-glow"></div>
+      <div class="hero-badge">수강생 관리</div>
+      <div class="hero-title-main">학과별 <em>수강생 현황</em></div>
+      <div class="hero-sub-main">출결 · 피드백 · 진행률을 한 곳에서 관리하세요</div>
+    </div>
+    <div id="app"></div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal-box" id="modal-box"></div>
 </div>
@@ -351,32 +409,29 @@ function showToast(msg,ms=2200){const t=document.getElementById('toast');t.textC
 let _dbt={};
 function debounce(key,fn,ms=800){clearTimeout(_dbt[key]);_dbt[key]=setTimeout(fn,ms)}
 
+/* ═══════ SIDEBAR INIT ═══════ */
+function initSidebar(){
+  const list=document.getElementById('sb-dept-list');
+  if(!list)return;
+  const DEPT_COLORS={'영상/모션2D':'#3a7bd5','영상/모션3D':'#7c3aed','시각편집':'#e8562a','아트웍':'#059669','인테리어':'#d97706','CG/마야':'#dc2626','웹':'#0891b2'};
+  DEPTS.forEach(dept=>{
+    const el=document.createElement('div');
+    el.className='sb-item'+(TAB===dept?' active':'');
+    el.id='sb-dept-'+dept;
+    el.innerHTML=`<span class="sb-item-dot" style="background:${DEPT_COLORS[dept]||'#3a7bd5'}"></span><span class="sb-item-name">${dept}</span>`;
+    el.onclick=()=>{setTab(dept);};
+    list.appendChild(el);
+  });
+}
+
 /* ═══════ RENDER APP ═══════ */
 function renderApp(){
   const hash=decodeURIComponent(location.hash.slice(1))||'/';
   if(hash.startsWith('/student/')){
     const id=hash.slice(9);
-    renderHeader(id);
     renderStudentDetail(id);
   }else{
-    renderHeader(null);
     renderList();
-  }
-}
-
-/* ═══════ HEADER ═══════ */
-function renderHeader(studentId){
-  const hd=document.getElementById('hd');
-  if(studentId){
-    hd.innerHTML=`<div class="hd-left"><h1>수강생 관리</h1><p>SBS아카데미컴퓨터아트학원 구월지점 · 수강생 관리 페이지</p></div><div class="hd-right"></div>`;
-  }else{
-    hd.innerHTML=`
-      <div class="hd-left"><h1>수강생 관리</h1><p>SBS아카데미컴퓨터아트학원 구월지점 · 수강생 관리 페이지</p></div>
-      <div class="hd-right">
-        <a href="main.html" class="btn btn-ghost btn-sm" style="text-decoration:none">🏠 홈</a>
-        <a href="portfolio.html" class="btn btn-ghost btn-sm" style="text-decoration:none">📁 포트폴리오</a>
-        <button class="btn btn-primary btn-sm" onclick="openAddStudent()">+ 학생 추가</button>
-      </div>`;
   }
 }
 
@@ -460,7 +515,13 @@ function renderRow(s,i){
   </tr>`;
 }
 
-function setTab(t){TAB=t;renderList();}
+function setTab(t){
+  TAB=t;
+  document.querySelectorAll('.sb-item').forEach(el=>{
+    el.classList.toggle('active',el.id==='sb-dept-'+t);
+  });
+  renderList();
+}
 function setYear(y){YEAR=y;MONTH=null;renderList();}
 function setMonth(m){MONTH=m;renderList();}
 function setSubTab(t){SUBTAB=t;renderList();}
@@ -485,7 +546,7 @@ function renderStudentDetail(id){
   const daysHtml=days.map((day,idx)=>renderDayCard(s,day,idx+1)).join('');
 
   document.getElementById('app').innerHTML=`
-    <div class="hero ${isE?'he':'ha'}">
+    <div class="detail-hero ${isE?'he':'ha'}">
       <div class="hero-actions">
         <button class="btn btn-ghost btn-sm" onclick="openEditStudent('${esc(id)}')">✏️ 정보 수정</button>
         <button class="btn btn-ghost btn-sm" style="color:#fca5a5" onclick="confirmDelete('${esc(id)}')">🗑 삭제</button>
@@ -969,6 +1030,12 @@ function closeModal(){
 
 /* ═══════ INIT ═══════ */
 async function initApp(){
+  // 날짜 표시
+  const now=new Date();
+  const days=['일','월','화','수','목','금','토'];
+  const todayEl=document.getElementById('today');
+  if(todayEl)todayEl.textContent=now.getFullYear()+'년 '+(now.getMonth()+1)+'월 '+now.getDate()+'일 ('+days[now.getDay()]+')';
+
   const overlay=document.getElementById('loading-overlay');
   overlay.style.display='flex';
   try{
@@ -976,6 +1043,7 @@ async function initApp(){
     overlay.style.display='none';
     var navDept=localStorage.getItem('sbs_nav_dept');
     if(navDept&&DEPTS.indexOf(navDept)!==-1){TAB=navDept;localStorage.removeItem('sbs_nav_dept');}
+    initSidebar();
     window.addEventListener('hashchange',renderApp);
     renderApp();
   }catch(e){
