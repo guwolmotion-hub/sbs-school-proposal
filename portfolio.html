@@ -341,12 +341,18 @@ function saveItem(){
   if(fileInput&&fileInput.files&&fileInput.files[0]){
     var file=fileInput.files[0];
     var fname=file.name;
-    var itemId=uid();
     showToast('업로드 중...',60000);
-    var storageRef=_storage.ref('portfolio/'+itemId+'_'+fname);
-    storageRef.put(file).then(function(snap){return snap.ref.getDownloadURL();}).then(function(downloadUrl){
-      _commit({id:itemId,type:type,url:downloadUrl,title:title||fname,category:category,addedAt:Date.now()});
-    }).catch(function(e){showToast('업로드 실패: '+e.message,5000);});
+    var fd=new FormData();
+    fd.append('file',file);
+    fd.append('upload_preset','Portfolio');
+    var rt=file.type.startsWith('video/')?'video':'image';
+    fetch('https://api.cloudinary.com/v1_1/ditmabkad/'+rt+'/upload',{method:'POST',body:fd})
+      .then(function(r){return r.json();})
+      .then(function(data){
+        if(data.error)throw new Error(data.error.message);
+        _commit({id:uid(),type:type,url:data.secure_url,title:title||fname,category:category,addedAt:Date.now()});
+      })
+      .catch(function(e){showToast('업로드 실패: '+e.message,5000);});
   }else if(url){
     _commit({id:uid(),type:type,url:url,title:title||url,category:category,addedAt:Date.now()});
   }else{

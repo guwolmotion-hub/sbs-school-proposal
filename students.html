@@ -860,11 +860,18 @@ function openAddLink(sid,date){
 function _commitMedia(sid,date,item,file){
   if(file){
     showToast('업로드 중...',60000);
-    const ref=_storage.ref('feedback/'+sid+'/'+date+'/'+Date.now()+'_'+file.name);
-    ref.put(file).then(snap=>snap.ref.getDownloadURL()).then(url=>{
-      item.url=url;
-      _doCommitMedia(sid,date,item);
-    }).catch(()=>showToast('업로드 실패. URL을 사용하거나 파일 크기를 줄여주세요.',5000));
+    const fd=new FormData();
+    fd.append('file',file);
+    fd.append('upload_preset','Portfolio');
+    const rt=file.type.startsWith('video/')?'video':'image';
+    fetch('https://api.cloudinary.com/v1_1/ditmabkad/'+rt+'/upload',{method:'POST',body:fd})
+      .then(r=>r.json())
+      .then(data=>{
+        if(data.error)throw new Error(data.error.message);
+        item.url=data.secure_url;
+        _doCommitMedia(sid,date,item);
+      })
+      .catch(e=>showToast('업로드 실패: '+e.message,5000));
   }else{
     _doCommitMedia(sid,date,item);
   }
