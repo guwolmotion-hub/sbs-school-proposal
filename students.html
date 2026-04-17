@@ -691,6 +691,19 @@ function openAddStudent(){
       </div>
       <div class="field"><label>포폴 주제</label><input id="f-topic" placeholder="포트폴리오 주제"></div>
       <div class="field"><label>진행 단계</label><select id="f-stage"><option value="plan">기획중</option><option value="making" selected>제작중</option><option value="revise">수정중</option><option value="done">완성</option></select></div>
+      <div class="field">
+        <label>수업일 (MM-DD 형식, 빈칸은 제외됨)</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:5px">
+          <input id="fd-1" placeholder="1일차 예) 03-17">
+          <input id="fd-2" placeholder="2일차 예) 03-19">
+          <input id="fd-3" placeholder="3일차 예) 03-24">
+          <input id="fd-4" placeholder="4일차 예) 03-26">
+          <input id="fd-5" placeholder="5일차 예) 04-02">
+          <input id="fd-6" placeholder="6일차 예) 04-07">
+          <input id="fd-7" placeholder="7일차 예) 04-09">
+          <input id="fd-8" placeholder="8일차 예) 04-14">
+        </div>
+      </div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-outline" onclick="closeModal()">취소</button>
@@ -710,9 +723,18 @@ function saveNewStudent(){
   const newYear=parseInt(document.getElementById('f-year').value)||2026;
   const newMonth=parseInt(document.getElementById('f-month').value)||4;
   const d=DB.get();
-  const days=JSON.parse(JSON.stringify(BASE_DAYS));
-  const fb={},att={};
-  days.forEach(day=>{fb[day.date]={text:'',media:[]};att[day.date]=day.holiday?'holiday':'pending';});
+  const DAY_NAMES=['일','월','화','수','목','금','토'];
+  const days=[],fb={},att={};
+  for(let i=1;i<=8;i++){
+    const dateVal=(document.getElementById('fd-'+i).value||'').trim();
+    if(!dateVal)continue;
+    const parts=dateVal.split('-');
+    const m=parseInt(parts[0]),day=parseInt(parts[1]);
+    const dow=new Date(newYear,m-1,day).getDay();
+    days.push({date:dateVal,day:DAY_NAMES[dow],holiday:false});
+    att[dateVal]='pending';
+    fb[dateVal]={text:'',media:[]};
+  }
   d.students.push({
     id,name,dept:newDept,type,goal,year:newYear,month:newMonth,
     mentor,age:parseInt(document.getElementById('f-age').value)||0,
