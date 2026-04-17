@@ -30,11 +30,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .sb-item:hover .sb-item-name,.sb-item.active .sb-item-name{color:#fff}
 .sb-chevron{margin-left:auto;font-size:10px;color:rgba(255,255,255,.35);transition:transform .18s}
 .sb-item.active .sb-chevron{color:rgba(255,255,255,.7)}
-.sb-year-list{display:none;padding:2px 10px 6px 32px}
+.sb-year-list{display:none;padding:2px 10px 4px 28px}
 .sb-year-list.open{display:block}
-.sb-year-item{padding:6px 10px;border-radius:8px;font-size:12px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;transition:all .15s;margin-bottom:1px}
+.sb-year-item{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;transition:all .15s;margin-bottom:1px}
 .sb-year-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
-.sb-year-item.active{background:rgba(58,123,213,.35);color:#60a5fa;font-weight:700}
+.sb-year-item.active{background:rgba(58,123,213,.25);color:#93c5fd;font-weight:700}
+.sb-chevron-sm{font-size:9px;opacity:.5}
+.sb-month-list{display:none;padding:2px 0 4px 12px}
+.sb-month-list.open{display:block}
+.sb-month-item{display:flex;align-items:center;justify-content:space-between;padding:5px 10px;border-radius:7px;font-size:12px;font-weight:500;color:rgba(255,255,255,.45);cursor:pointer;transition:all .15s;margin-bottom:1px}
+.sb-month-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.8)}
+.sb-month-item.active{background:rgba(58,123,213,.4);color:#fff;font-weight:700}
+.sb-month-cnt{font-size:10px;font-weight:600;background:rgba(255,255,255,.1);border-radius:20px;padding:1px 7px;min-width:28px;text-align:center}
+.sb-month-item.active .sb-month-cnt{background:rgba(255,255,255,.2)}
 .sb-year-add{padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;color:rgba(255,255,255,.3);cursor:pointer;transition:all .15s;margin-top:3px;border:1px dashed rgba(255,255,255,.15);text-align:center}
 .sb-year-add:hover{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.05)}
 .sb-foot{margin-top:auto;padding:16px 10px;border-top:1px solid rgba(255,255,255,.07)}
@@ -428,35 +436,50 @@ function initSidebar(){
   const list=document.getElementById('sb-dept-list');
   if(!list)return;
   list.innerHTML='';
+  const allStudents=DB.get().students;
   const DEPT_COLORS={'영상/모션2D':'#3a7bd5','영상/모션3D':'#7c3aed','시각편집':'#e8562a','아트웍':'#059669','인테리어':'#d97706','CG/마야':'#dc2626','웹':'#0891b2'};
   DEPTS.forEach(dept=>{
-    const isActive=TAB===dept;
+    const isDeptActive=TAB===dept;
     const color=DEPT_COLORS[dept]||'#3a7bd5';
     // dept row
     const el=document.createElement('div');
-    el.className='sb-item'+(isActive?' active':'');
+    el.className='sb-item'+(isDeptActive?' active':'');
     el.id='sb-dept-'+dept;
-    el.innerHTML=`<span class="sb-item-dot" style="background:${color}"></span><span class="sb-item-name">${dept}</span><span class="sb-chevron">${isActive?'▾':'▸'}</span>`;
+    el.innerHTML=`<span class="sb-item-dot" style="background:${color}"></span><span class="sb-item-name">${dept}</span><span class="sb-chevron">${isDeptActive?'▾':'▸'}</span>`;
     el.onclick=()=>{setTab(dept);};
     list.appendChild(el);
-    // year sub-list
-    const sub=document.createElement('div');
-    sub.className='sb-year-list'+(isActive?' open':'');
-    sub.id='sb-years-'+dept;
+    // year container
+    const yearCon=document.createElement('div');
+    yearCon.className='sb-year-list'+(isDeptActive?' open':'');
     YEARS.forEach(y=>{
-      const yb=document.createElement('div');
-      yb.className='sb-year-item'+(isActive&&YEAR===y?' active':'');
-      yb.dataset.year=y;
-      yb.textContent=y+'년';
-      yb.onclick=(e)=>{e.stopPropagation();setYear(y);};
-      sub.appendChild(yb);
+      const isYearActive=isDeptActive&&YEAR===y;
+      const yrow=document.createElement('div');
+      yrow.className='sb-year-item'+(isYearActive?' active':'');
+      yrow.dataset.year=y;
+      yrow.innerHTML=`<span>${y}년</span><span class="sb-chevron-sm">${isYearActive?'▾':'▸'}</span>`;
+      yrow.onclick=(e)=>{e.stopPropagation();setYear(y);};
+      yearCon.appendChild(yrow);
+      // month container (under active year)
+      const monthCon=document.createElement('div');
+      monthCon.className='sb-month-list'+(isYearActive?' open':'');
+      [1,2,3,4,5,6,7,8,9,10,11,12].forEach(m=>{
+        const cnt=allStudents.filter(s=>(s.dept||'영상/모션2D')===dept&&(s.year||2026)===y&&(s.month||3)===m).length;
+        const mb=document.createElement('div');
+        mb.className='sb-month-item'+(isYearActive&&MONTH===m?' active':'');
+        mb.dataset.month=m;
+        mb.innerHTML=`<span>${m}월</span><span class="sb-month-cnt">${cnt}명</span>`;
+        mb.onclick=(e)=>{e.stopPropagation();setMonth(m);};
+        monthCon.appendChild(mb);
+      });
+      yearCon.appendChild(monthCon);
     });
+    // add year button
     const addBtn=document.createElement('div');
     addBtn.className='sb-year-add';
     addBtn.textContent='+ 년도 추가';
     addBtn.onclick=(e)=>{e.stopPropagation();addYear();};
-    sub.appendChild(addBtn);
-    list.appendChild(sub);
+    yearCon.appendChild(addBtn);
+    list.appendChild(yearCon);
   });
 }
 
@@ -502,10 +525,12 @@ function renderList(){
 
   let innerHtml='';
   if(MONTH===null){
-    innerHtml=`<div class="ym-row">
-      <span class="ym-label">월</span>
-      ${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>`<button class="mbtn" onclick="setMonth(${m})">${m}월</button>`).join('')}
-    </div>`;
+    innerHtml=`
+      <div style="text-align:center;padding:60px 20px;color:var(--sub)">
+        <div style="font-size:36px;margin-bottom:14px">📅</div>
+        <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:7px">월을 선택하세요</div>
+        <div style="font-size:13px">왼쪽 사이드바에서 월을 선택하세요</div>
+      </div>`;
   }else{
     const deptStudents=allStudents.filter(s=>(s.dept||'영상/모션2D')===TAB&&(s.year||2026)===YEAR&&(s.month||3)===MONTH);
     const admCnt=deptStudents.filter(s=>s.type==='admission').length;
@@ -516,10 +541,6 @@ function renderList(){
     else if(SUBTAB==='employ')list=deptStudents.filter(s=>s.type==='employ'&&s.goal!=='편입');
     else list=deptStudents.filter(s=>s.type==='employ'&&s.goal==='편입');
     innerHtml=`
-      <div class="ym-row">
-        <span class="ym-label">월</span>
-        ${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>`<button class="mbtn ${MONTH===m?'ma':''}" onclick="setMonth(${m})">${m}월</button>`).join('')}
-      </div>
       <div class="subtabs">
         <button class="subtab ${SUBTAB==='admission'?'sta':''}" onclick="setSubTab('admission')">🎨 입시반 <span class="scnt">${admCnt}</span></button>
         <button class="subtab ${SUBTAB==='employ'?'ste':''}" onclick="setSubTab('employ')">💼 취업반 <span class="scnt">${empCnt}</span></button>
@@ -577,13 +598,16 @@ function setTab(t){
 }
 function setYear(y){
   YEAR=y;MONTH=null;
-  // update year active in sidebar
-  document.querySelectorAll('.sb-year-item').forEach(el=>{
-    el.classList.toggle('active',parseInt(el.dataset.year)===y);
+  initSidebar();
+  renderList();
+}
+function setMonth(m){
+  MONTH=m;
+  document.querySelectorAll('.sb-month-item').forEach(el=>{
+    el.classList.toggle('active',parseInt(el.dataset.month)===m);
   });
   renderList();
 }
-function setMonth(m){MONTH=m;renderList();}
 function setSubTab(t){SUBTAB=t;renderList();}
 
 /* ═══════ STUDENT DETAIL ═══════ */
