@@ -29,52 +29,68 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .topbar{background:#fff;border-bottom:1px solid var(--border);padding:13px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 8px rgba(15,31,61,.05)}
 .topbar-left{font-size:13px;color:var(--sub);font-weight:500}
 .topbar-right{font-size:13px;color:var(--sub);font-weight:600}
-.content{padding:32px 36px 64px;flex:1}
+.content{padding:32px 36px 64px;flex:1;max-width:1100px}
 .hero-main{border-radius:14px;background:linear-gradient(160deg,#0a1628 0%,#0f2245 100%);padding:32px 36px;margin-bottom:28px;box-shadow:0 4px 20px rgba(10,22,40,.15)}
 .hero-badge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:3px 10px;font-size:10px;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:12px;letter-spacing:1.5px;text-transform:uppercase}
 .hero-title{font-size:26px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:8px}
-.hero-title em{font-style:normal;color:#60a5fa}
 .hero-sub{font-size:13px;color:rgba(255,255,255,.5);line-height:1.8}
-/* 섹션 */
-.sec-title{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
-.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px}
-.card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:22px 24px;box-shadow:0 1px 6px rgba(15,31,61,.05)}
-.card-label{font-size:10px;font-weight:700;color:var(--sub);letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px}
-.card-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:7px}
-.card-desc{font-size:13px;color:var(--sub);line-height:1.75}
-.card-accent{border-top:2px solid var(--accent)}
-.card-tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:10px}
-.tag-blue{background:#dbeafe;color:#1d4ed8}
-.tag-red{background:#fee2e2;color:#dc2626}
-.tag-green{background:#d1fae5;color:#059669}
-/* 표 */
-.tbl-wrap{background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 6px rgba(15,31,61,.05);margin-bottom:28px}
-table{width:100%;border-collapse:collapse}
-thead th{background:var(--navy);color:rgba(255,255,255,.8);font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:12px 18px;text-align:left}
-tbody tr{border-bottom:1px solid var(--border)}
-tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:#f8faff}
-tbody td{padding:13px 18px;font-size:13px;color:var(--text);vertical-align:middle}
-.td-label{font-weight:600}
-/* 프로세스 */
-.process{display:flex;gap:0;margin-bottom:28px}
-.process-step{flex:1;background:var(--card);border:1px solid var(--border);padding:20px 18px;position:relative;text-align:center}
-.process-step:first-child{border-radius:14px 0 0 14px}
-.process-step:last-child{border-radius:0 14px 14px 0}
+.hero-contact{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);display:flex;gap:24px;flex-wrap:wrap}
+.hero-contact-item{font-size:13px;color:rgba(255,255,255,.7)}
+.hero-contact-item strong{color:#60a5fa;margin-right:6px}
+.sec-title{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.mb28{margin-bottom:28px}
+
+/* 수강 대상 태그 */
+.target-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.target-tag{padding:8px 18px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-weight:600;color:var(--text);box-shadow:0 1px 4px rgba(15,31,61,.05)}
+.target-tag.hl{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* 3대 시스템 */
+.system-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.system-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:24px 22px;box-shadow:0 1px 6px rgba(15,31,61,.05);border-top:2px solid var(--accent)}
+.system-num{font-size:11px;font-weight:800;color:var(--accent);letter-spacing:1.5px;font-family:monospace;margin-bottom:10px}
+.system-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4}
+.system-desc{font-size:13px;color:var(--sub);line-height:1.75}
+
+/* 취업지원 프로세스 */
+.process{display:flex;gap:0;margin-bottom:28px;overflow-x:auto}
+.process-step{flex:1;min-width:120px;background:var(--card);border:1px solid var(--border);padding:18px 14px;position:relative;text-align:center}
+.process-step:first-child{border-radius:12px 0 0 12px}
+.process-step:last-child{border-radius:0 12px 12px 0}
 .process-step+.process-step{border-left:none}
-.process-num{font-size:11px;font-weight:800;color:var(--accent);letter-spacing:1px;margin-bottom:8px;font-family:monospace}
-.process-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px}
-.process-desc{font-size:12px;color:var(--sub);line-height:1.6}
-.process-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--border);z-index:1;background:var(--bg);padding:2px}
+.process-num{font-size:10px;font-weight:800;color:var(--accent);letter-spacing:1px;margin-bottom:7px;font-family:monospace}
+.process-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.process-desc{font-size:11px;color:var(--sub);line-height:1.5}
+.process-arrow{position:absolute;right:-10px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--accent);z-index:1;background:var(--bg);width:20px;text-align:center}
+
+/* 학과 카드 */
+.dept-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+.dept-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:18px 20px;box-shadow:0 1px 4px rgba(15,31,61,.04)}
+.dept-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:middle;flex-shrink:0}
+.dept-name-row{display:flex;align-items:center;margin-bottom:6px}
+.dept-card-name{font-size:14px;font-weight:700;color:var(--text)}
+.dept-goal{font-size:12px;color:var(--sub);margin-bottom:10px;line-height:1.6}
+.dept-tools{display:flex;flex-wrap:wrap;gap:5px}
+.tool-tag{padding:2px 8px;border-radius:4px;background:#f0f4fa;font-size:11px;font-weight:600;color:var(--sub)}
+
+/* 자격증 표 */
+.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px}
+.cert-item{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:14px 16px;box-shadow:0 1px 4px rgba(15,31,61,.04)}
+.cert-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.cert-desc{font-size:11px;color:var(--sub)}
+
+/* 안내 박스 */
+.notice-box{background:#eaf3ff;border:1px solid #bfdbfe;border-radius:12px;padding:16px 20px;margin-bottom:28px;font-size:13px;color:#1d4ed8;line-height:1.7;font-weight:500}
+
 /* FAQ */
 .faq-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.faq-item{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:18px 20px;box-shadow:0 1px 4px rgba(15,31,61,.04)}
+.faq-item{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:18px 20px}
 .faq-q{font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;gap:10px}
 .faq-q-mark{color:var(--accent);font-weight:800;flex-shrink:0}
 .faq-a{font-size:13px;color:var(--sub);line-height:1.75;padding-left:20px}
-@media(max-width:960px){:root{--sw:210px}.content{padding:22px 22px 52px}.grid-3{grid-template-columns:1fr 1fr}}
-@media(max-width:700px){.sb{display:none}.main{margin-left:0}.grid-3,.grid-2{grid-template-columns:1fr}.process{flex-direction:column}.process-step{border-radius:10px!important;border-left:1px solid var(--border)!important}.process-arrow{display:none}}
+
+@media(max-width:960px){:root{--sw:210px}.content{padding:22px 22px 52px}.system-grid{grid-template-columns:1fr 1fr}.dept-row{grid-template-columns:1fr}.cert-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.sb{display:none}.main{margin-left:0}.content{padding:16px 14px 48px}.system-grid{grid-template-columns:1fr}.process{flex-direction:column}.process-step{border-radius:10px!important;border-left:1px solid var(--border)!important;min-width:unset}.process-arrow{display:none}}
 @media print{.sb,.topbar{display:none!important}.main{margin-left:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
@@ -114,93 +130,114 @@ tbody td{padding:13px 18px;font-size:13px;color:var(--text);vertical-align:middl
     <div class="hero-main">
       <div class="hero-badge">Course Information</div>
       <div class="hero-title">수강안내</div>
-      <div class="hero-sub">입시반 · 취업반 · 편입반 수강 정보를 안내합니다</div>
-    </div>
-
-    <!-- 반 유형 -->
-    <div class="sec-title">반 유형</div>
-    <div class="grid-3">
-      <div class="card card-accent">
-        <div class="card-tag tag-blue">입시반</div>
-        <div class="card-title">입시 포트폴리오반</div>
-        <div class="card-desc">대학 진학을 목표로 하는 수험생을 위한 과정. 학과별 입시 경향 분석 및 포트폴리오 제작 집중 지도.</div>
-      </div>
-      <div class="card card-accent" style="border-top-color:#e8562a">
-        <div class="card-tag tag-red">취업반</div>
-        <div class="card-title">취업 포트폴리오반</div>
-        <div class="card-desc">실무 역량 강화와 취업 포트폴리오 완성을 목표로 하는 과정. 현직자 멘토링 및 현장 실무 중심 교육.</div>
-      </div>
-      <div class="card card-accent" style="border-top-color:#059669">
-        <div class="card-tag tag-green">편입반</div>
-        <div class="card-title">편입 준비반</div>
-        <div class="card-desc">대학 편입을 준비하는 학생을 위한 과정. 편입 실기 대비 및 목표 대학 맞춤 포트폴리오 지도.</div>
+      <div class="hero-sub">getting better, being best.<br>기초부터 취업까지, 실무 맞춤형 교육과정</div>
+      <div class="hero-contact">
+        <span class="hero-contact-item"><strong>TEL</strong>032-212-0777</span>
+        <span class="hero-contact-item"><strong>WEB</strong>guwol.sbsart.com</span>
+        <span class="hero-contact-item"><strong>위치</strong>인천광역시 남동구 구월지점</span>
       </div>
     </div>
 
-    <!-- 수강 일정 -->
-    <div class="sec-title">수강 일정 및 시간</div>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>구분</th><th>수업 요일</th><th>수업 시간</th><th>수업 횟수</th><th>비고</th></tr></thead>
-        <tbody>
-          <tr><td class="td-label">평일반 A</td><td>월·수</td><td>14:00 – 18:00</td><td>주 2회</td><td>일반 수강생</td></tr>
-          <tr><td class="td-label">평일반 B</td><td>화·목</td><td>14:00 – 18:00</td><td>주 2회</td><td>일반 수강생</td></tr>
-          <tr><td class="td-label">저녁반</td><td>월·수 또는 화·목</td><td>18:30 – 21:30</td><td>주 2회</td><td>직장인 가능</td></tr>
-          <tr><td class="td-label">주말반</td><td>토·일</td><td>10:00 – 14:00</td><td>주 2회</td><td>재직자 / 재학생</td></tr>
-          <tr><td class="td-label">집중반</td><td>월~금</td><td>10:00 – 17:00</td><td>주 5회</td><td>입시 시즌 한정 운영</td></tr>
-        </tbody>
-      </table>
+    <!-- 수강 대상 -->
+    <div class="sec-title">수강 대상</div>
+    <div class="target-row mb28">
+      <div class="target-tag hl">취업 / 이직</div>
+      <div class="target-tag hl">진학</div>
+      <div class="target-tag">비전공자</div>
+      <div class="target-tag">전공자</div>
+      <div class="target-tag">자기계발</div>
+      <div class="target-tag">자격증 취득</div>
     </div>
 
-    <!-- 수강료 -->
-    <div class="sec-title">수강료 안내</div>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>학과</th><th>월 수강료</th><th>3개월</th><th>6개월</th><th>재료비</th></tr></thead>
-        <tbody>
-          <tr><td class="td-label">영상/모션2D</td><td>350,000원</td><td>990,000원</td><td>1,890,000원</td><td>별도 없음</td></tr>
-          <tr><td class="td-label">영상/모션3D</td><td>370,000원</td><td>1,050,000원</td><td>2,010,000원</td><td>별도 없음</td></tr>
-          <tr><td class="td-label">시각편집</td><td>330,000원</td><td>940,000원</td><td>1,800,000원</td><td>별도 없음</td></tr>
-          <tr><td class="td-label">아트웍</td><td>340,000원</td><td>960,000원</td><td>1,840,000원</td><td>재료비 실비</td></tr>
-          <tr><td class="td-label">인테리어</td><td>360,000원</td><td>1,020,000원</td><td>1,950,000원</td><td>별도 없음</td></tr>
-          <tr><td class="td-label">CG/마야</td><td>370,000원</td><td>1,050,000원</td><td>2,010,000원</td><td>별도 없음</td></tr>
-          <tr><td class="td-label">웹</td><td>320,000원</td><td>910,000원</td><td>1,740,000원</td><td>별도 없음</td></tr>
-        </tbody>
-      </table>
+    <!-- 안내 박스 -->
+    <div class="notice-box">
+      모든 포트폴리오 과정은 전문 상담을 통해 교육기간이 결정됩니다. 수강 전 방문 또는 전화 상담(032-212-0777)을 통해 개인별 맞춤 교육 계획을 수립해드립니다.
     </div>
 
-    <!-- 등록 절차 -->
-    <div class="sec-title">등록 절차</div>
-    <div class="process">
-      <div class="process-step">
-        <div class="process-num">01</div>
-        <div class="process-name">상담 신청</div>
-        <div class="process-desc">전화·방문·온라인으로 상담 예약</div>
-        <div class="process-arrow">›</div>
+    <!-- 3대 관리 시스템 -->
+    <div class="sec-title">3대 관리 시스템</div>
+    <div class="system-grid">
+      <div class="system-card">
+        <div class="system-num">01</div>
+        <div class="system-title">학과별 전임강사제도 실시</div>
+        <div class="system-desc">기존 학원의 시간강사 제도와 달리 주요 학과에 전임강사진을 배치하여 철저한 책임 관리를 통한 높은 교육 완성도를 실현합니다.</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">02</div>
-        <div class="process-name">수준 확인</div>
-        <div class="process-desc">현재 실력 및 목표 파악 후 반 배정</div>
-        <div class="process-arrow">›</div>
+      <div class="system-card">
+        <div class="system-num">02</div>
+        <div class="system-title">전임강사 책임관리 · 멘토 1:1 관리제도</div>
+        <div class="system-desc">등록부터 교육 진행, 취업까지 전문 멘토링. 학생의 출결부터 진로상담까지 전임강사와 함께 일원화된 관리 시스템을 운영합니다.</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">03</div>
-        <div class="process-name">수강 등록</div>
-        <div class="process-desc">수강료 납부 및 학습 계획 수립</div>
-        <div class="process-arrow">›</div>
+      <div class="system-card">
+        <div class="system-num">03</div>
+        <div class="system-title">전략적 포트폴리오 1:1 지도</div>
+        <div class="system-desc">정규과정 후 진행되는 업그레이드 취업 과정으로, 최신 트렌드와 취업 시장 분석이 접목된 실무 중심 1:1 포트폴리오 지도를 제공합니다.</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">04</div>
-        <div class="process-name">수업 시작</div>
-        <div class="process-desc">담당 멘토 배정 후 수업 개시</div>
-        <div class="process-arrow">›</div>
+    </div>
+
+    <!-- 학과 안내 -->
+    <div class="sec-title">학과 안내</div>
+    <div class="dept-row">
+      <div class="dept-card">
+        <div class="dept-name-row"><span class="dept-dot" style="background:#e8562a"></span><span class="dept-card-name">시각/편집 디자인학과</span></div>
+        <div class="dept-goal">모든 디자인의 기초. 타이포그래피·레이아웃·컬러 등 체계적인 디자인 표현법과 AI를 포함한 방법론을 교육합니다.</div>
+        <div class="dept-tools"><span class="tool-tag">Photoshop</span><span class="tool-tag">Illustrator</span><span class="tool-tag">InDesign</span><span class="tool-tag">Blender</span><span class="tool-tag">Figma</span><span class="tool-tag">AI</span></div>
       </div>
-      <div class="process-step">
-        <div class="process-num">05</div>
-        <div class="process-name">포트폴리오 완성</div>
-        <div class="process-desc">중간 점검·수정·최종 완성</div>
+      <div class="dept-card">
+        <div class="dept-name-row"><span class="dept-dot" style="background:#0891b2"></span><span class="dept-card-name">웹 디자인학과</span></div>
+        <div class="dept-goal">HTML·CSS 기반 크로스브라우징·반응형·웹접근성 기술과 최적화된 웹디자인 방법론을 습득. 웹퍼블리셔·웹디자이너 양성.</div>
+        <div class="dept-tools"><span class="tool-tag">Photoshop</span><span class="tool-tag">Illustrator</span><span class="tool-tag">Blender</span><span class="tool-tag">Figma</span><span class="tool-tag">HTML5</span><span class="tool-tag">CSS</span><span class="tool-tag">JavaScript</span></div>
       </div>
+      <div class="dept-card">
+        <div class="dept-name-row"><span class="dept-dot" style="background:#059669"></span><span class="dept-card-name">아트웍학과</span></div>
+        <div class="dept-goal">발상과 표현·구도·인체·평면·입체 조형·컬러·스토리보드 이론 교육. 2D~3D 아트웍 기본 소양을 익히는 필수 학습 과정.</div>
+        <div class="dept-tools"><span class="tool-tag">Photoshop</span><span class="tool-tag">Illustrator</span><span class="tool-tag">InDesign</span><span class="tool-tag">Blender</span><span class="tool-tag">AI(Stable Diffusion)</span></div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name-row"><span class="dept-dot" style="background:#3a7bd5"></span><span class="dept-card-name">영상/모션 디자인학과</span></div>
+        <div class="dept-goal">레이아웃·컬러·타이포·모션·카메라워킹·편집 등 기본기가 탄탄한 영상/모션그래픽 디자이너 양성. 비전공자도 2D~3D 체계적 교육.</div>
+        <div class="dept-tools"><span class="tool-tag">After Effects</span><span class="tool-tag">Premiere</span><span class="tool-tag">Blender</span><span class="tool-tag">C4D</span><span class="tool-tag">Octane</span><span class="tool-tag">Unreal Engine</span><span class="tool-tag">Substance</span></div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name-row"><span class="dept-dot" style="background:#dc2626"></span><span class="dept-card-name">CG/마야학과</span></div>
+        <div class="dept-goal">영화·애니메이션 등 사실적인 인물·배경·특수효과를 CG로 구현. 3D 형태·질감·조명·카메라워킹 전문 지식과 스킬을 습득.</div>
+        <div class="dept-tools"><span class="tool-tag">Maya</span><span class="tool-tag">Z-Brush</span><span class="tool-tag">Substance</span><span class="tool-tag">V-Ray</span><span class="tool-tag">Nuke</span><span class="tool-tag">Unreal Engine</span></div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name-row"><span class="dept-dot" style="background:#d97706"></span><span class="dept-card-name">인테리어 디자인학과</span></div>
+        <div class="dept-goal">현장분석 자료·전문지식 기반 설계도 작성, 그래픽 시각화, 실내건축 제반 지식 및 시공 내용 학습과 전문 자격증 취득 병행.</div>
+        <div class="dept-tools"><span class="tool-tag">AutoCAD</span><span class="tool-tag">SketchUp</span><span class="tool-tag">3Ds Max</span><span class="tool-tag">Revit</span><span class="tool-tag">Enscape</span><span class="tool-tag">V-Ray</span></div>
+      </div>
+    </div>
+
+    <!-- 취업지원 시스템 -->
+    <div class="sec-title">취업지원 시스템</div>
+    <div style="font-size:13px;color:var(--sub);margin-bottom:14px;line-height:1.8">
+      수강생이 학업을 진행하는 동안 전문적인 취업지원을 해드립니다. 취업카드 작성부터 이력서·자기소개서 작성방법 컨설팅, 취업현황 PT, 면접 컨설팅 및 모의면접을 진행합니다. 산학협력을 통해 기업과 단체와 지속적인 협력관계를 유지하며, 항시 대기 중인 취업지원팀을 통해 학업 중 취업과 진로에 대한 모든 상담을 받을 수 있습니다.
+    </div>
+    <div class="process mb28">
+      <div class="process-step"><div class="process-num">01</div><div class="process-name">취업카드 작성</div><div class="process-desc">개인별 취업 목표 및 역량 정리</div><div class="process-arrow">›</div></div>
+      <div class="process-step"><div class="process-num">02</div><div class="process-name">이력서 작성방법</div><div class="process-desc">이력서·자기소개서 컨설팅</div><div class="process-arrow">›</div></div>
+      <div class="process-step"><div class="process-num">03</div><div class="process-name">분야 조사</div><div class="process-desc">취업 시장 동향 및 목표 기업 분석</div><div class="process-arrow">›</div></div>
+      <div class="process-step"><div class="process-num">04</div><div class="process-name">취업 추천</div><div class="process-desc">산학협력 기업 연계 취업 추천</div><div class="process-arrow">›</div></div>
+      <div class="process-step"><div class="process-num">05</div><div class="process-name">면접 컨설팅</div><div class="process-desc">모의면접 및 면접 전략 수립</div><div class="process-arrow">›</div></div>
+      <div class="process-step"><div class="process-num">06</div><div class="process-name">취업 성공</div><div class="process-desc">최종 취업 연결 및 사후 관리</div></div>
+    </div>
+
+    <!-- 자격증 -->
+    <div class="sec-title">취득 가능 자격증</div>
+    <div class="cert-grid">
+      <div class="cert-item"><div class="cert-name">ACP 포토샵 / 일러스트 / 인디자인 / 프리미어</div><div class="cert-desc">어도비 주관 국제 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">GTQ 포토샵 / 일러스트 1급</div><div class="cert-desc">국가공인 / 국제 인증 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">웹디자인개발기능사</div><div class="cert-desc">웹디자인 국가기술 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">컴퓨터그래픽기능사</div><div class="cert-desc">시각디자인 국가기술 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">전산응용기계제도기능사</div><div class="cert-desc">기계 캐드 국가공인 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">전산응용건축제도기능사</div><div class="cert-desc">건축 캐드 국가공인 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">실내건축기능사 / 산업기사 / 기사</div><div class="cert-desc">실내건축 국가공인 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">CAT 2급</div><div class="cert-desc">캐드 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">컴퓨터활용능력 1급 / 2급</div><div class="cert-desc">대한상공회의소 국가기술 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">MOS 365</div><div class="cert-desc">마이크로소프트 국제 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">전산회계 1급 / 전산세무 2급</div><div class="cert-desc">한국세무사회 국가공인 자격증</div></div>
+      <div class="cert-item"><div class="cert-name">FAT 1급 / TAT 2급</div><div class="cert-desc">한국공인회계사회 국가공인 자격증</div></div>
     </div>
 
     <!-- FAQ -->
@@ -208,23 +245,23 @@ tbody td{padding:13px 18px;font-size:13px;color:var(--text);vertical-align:middl
     <div class="faq-list">
       <div class="faq-item">
         <div class="faq-q"><span class="faq-q-mark">Q.</span>처음 시작하는데 기초부터 배울 수 있나요?</div>
-        <div class="faq-a">네, 완전 초보자도 기초부터 체계적으로 배울 수 있습니다. 수준별 맞춤 지도를 진행합니다.</div>
+        <div class="faq-a">네, 완전 초보자도 기초부터 체계적으로 배울 수 있습니다. 상담을 통해 개인 수준에 맞는 커리큘럼을 설계해 드립니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-mark">Q.</span>교육 기간은 어떻게 결정되나요?</div>
+        <div class="faq-a">모든 포트폴리오 과정은 전문 상담을 통해 개인별 교육기간이 결정됩니다. 목표(입시·취업·자격증)와 현재 수준에 따라 달라집니다.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q"><span class="faq-q-mark">Q.</span>수업 중 결석하면 어떻게 되나요?</div>
-        <div class="faq-a">사전 연락 후 보강 수업을 진행합니다. 보강은 담당 멘토와 협의하여 일정을 조율합니다.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-mark">Q.</span>환불은 언제까지 가능한가요?</div>
-        <div class="faq-a">수강 시작 후 1개월 이내 잔여 수강료 환불 가능합니다. 학원법 기준 환불 규정에 따릅니다.</div>
+        <div class="faq-a">사전 연락 후 보강 수업을 진행합니다. 담당 멘토와 협의하여 일정을 조율합니다.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q"><span class="faq-q-mark">Q.</span>노트북이나 태블릿이 없어도 되나요?</div>
-        <div class="faq-a">학원 내 실습용 데스크탑이 구비되어 있습니다. 개인 장비 지참도 가능합니다.</div>
+        <div class="faq-a">학원 내 실습용 PC가 구비되어 있습니다. 개인 장비 지참도 가능합니다.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-mark">Q.</span>수강 중 학과 변경이 가능한가요?</div>
-        <div class="faq-a">수강 시작 후 2주 이내에 한해 학과 변경이 가능합니다. 담당자와 상담 후 진행합니다.</div>
+        <div class="faq-q"><span class="faq-q-mark">Q.</span>취업지원은 언제부터 받을 수 있나요?</div>
+        <div class="faq-a">수강 기간 중 언제든지 취업지원팀을 통한 상담이 가능합니다. 포트폴리오 완성 단계에서 취업 추천 및 면접 컨설팅을 집중 지원합니다.</div>
       </div>
     </div>
 
