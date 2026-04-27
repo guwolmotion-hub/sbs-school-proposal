@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>오시는길 | SBS아카데미컴퓨터아트학원 구월지점</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0f1f3d;--accent:#3a7bd5;--bg:#f0f4fa;--card:#fff;--border:#e0e6f0;--text:#1a2540;--sub:#6b7a99;--sw:256px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+.sb{width:var(--sw);min-height:100vh;background:linear-gradient(180deg,#080f1e 0%,#0d1a30 60%,#0f2040 100%);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;overflow-y:auto}
+.sb-brand{padding:26px 20px 22px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo{display:flex;align-items:center;gap:11px;margin-bottom:5px}
+.sb-logo-mark{width:40px;height:40px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-.5px}
+.sb-logo-text{font-size:12px;font-weight:800;color:#fff;line-height:1.4}
+.sb-point{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
+.sb-sec{padding:18px 20px 8px;font-size:10px;font-weight:700;color:rgba(255,255,255,.28);letter-spacing:1.8px;text-transform:uppercase}
+.sb-nav{padding:0 10px 10px}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-decoration:none;transition:all .18s;margin-bottom:1px}
+.sb-link:hover{background:rgba(255,255,255,.07);color:#fff}
+.sb-link.active{background:rgba(58,123,213,.25);color:#fff;font-weight:600}
+.sb-link-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0}
+.sb-link.active .sb-link-dot{background:var(--accent)}
+.sb-foot{margin-top:auto;padding:16px 10px;border-top:1px solid rgba(255,255,255,.07)}
+.sb-foot-link{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:10px;color:rgba(255,255,255,.4);font-size:13px;font-weight:500;text-decoration:none;transition:all .18s}
+.sb-foot-link:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:13px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 8px rgba(15,31,61,.05)}
+.topbar-left{font-size:13px;color:var(--sub);font-weight:500}
+.topbar-right{font-size:13px;color:var(--sub);font-weight:600}
+.content{padding:32px 36px 64px;flex:1}
+.hero-main{border-radius:14px;background:linear-gradient(160deg,#0a1628 0%,#0f2245 100%);padding:32px 36px;margin-bottom:28px;box-shadow:0 4px 20px rgba(10,22,40,.15)}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:3px 10px;font-size:10px;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:12px;letter-spacing:1.5px;text-transform:uppercase}
+.hero-title{font-size:26px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:8px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);line-height:1.8}
+.sec-title{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:22px 24px;box-shadow:0 1px 6px rgba(15,31,61,.05)}
+.card-accent{border-top:2px solid var(--accent)}
+/* 주소 카드 */
+.address-card{background:var(--navy);border-radius:14px;padding:28px 30px;margin-bottom:28px;color:#fff}
+.address-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.address-main{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.5}
+.address-detail{font-size:13px;color:rgba(255,255,255,.5);line-height:1.8}
+.address-contact{display:flex;gap:24px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1)}
+.address-contact-item{font-size:13px;color:rgba(255,255,255,.6)}
+.address-contact-item strong{color:#fff;display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
+/* 지도 플레이스홀더 */
+.map-wrap{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:28px;box-shadow:0 1px 6px rgba(15,31,61,.05)}
+.map-placeholder{height:280px;background:linear-gradient(135deg,#e8edf5,#f0f4fa);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--sub)}
+.map-pin{width:36px;height:36px;background:var(--accent);border-radius:50% 50% 50% 0;transform:rotate(-45deg);margin-bottom:4px;position:relative}
+.map-pin::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:14px;height:14px;background:#fff;border-radius:50%}
+.map-label{font-size:13px;font-weight:600;color:var(--sub)}
+.map-addr{font-size:12px;color:var(--sub);opacity:.7}
+.map-footer{background:#f8faff;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.map-footer-addr{font-size:13px;font-weight:600;color:var(--text)}
+.map-btn{padding:7px 16px;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;text-decoration:none;transition:background .2s}
+.map-btn:hover{background:#2d6bc4}
+/* 교통 수단 */
+.transport-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:22px 24px;margin-bottom:12px;box-shadow:0 1px 4px rgba(15,31,61,.04)}
+.transport-type{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.transport-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.5px}
+.badge-subway{background:#1d4ed8;color:#fff}
+.badge-bus{background:#059669;color:#fff}
+.badge-car{background:#6b7280;color:#fff}
+.transport-name{font-size:15px;font-weight:700;color:var(--text)}
+.transport-rows{display:flex;flex-direction:column;gap:8px}
+.transport-row{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--sub);line-height:1.6}
+.transport-row-label{font-weight:700;color:var(--text);white-space:nowrap;min-width:60px;flex-shrink:0}
+/* 운영시간 */
+.hours-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.hours-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:18px;text-align:center}
+.hours-day{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase}
+.hours-time{font-size:15px;font-weight:700;color:var(--text)}
+.hours-note{font-size:11px;color:var(--sub);margin-top:4px}
+@media(max-width:960px){:root{--sw:210px}.content{padding:22px 22px 52px}.grid-2{grid-template-columns:1fr}.hours-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.sb{display:none}.main{margin-left:0}.content{padding:16px 14px 48px}.hours-grid{grid-template-columns:1fr 1fr}}
+@media print{.sb,.topbar{display:none!important}.main{margin-left:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<aside class="sb">
+  <div class="sb-brand">
+    <div class="sb-logo">
+      <div class="sb-logo-mark">S</div>
+      <div class="sb-logo-text">SBS아카데미<br>컴퓨터아트학원</div>
+    </div>
+    <div class="sb-point">구월지점</div>
+  </div>
+  <div class="sb-sec">안내</div>
+  <div class="sb-nav">
+    <a href="course-info.html" class="sb-link"><span class="sb-link-dot"></span>수강안내</a>
+    <a href="directions.html" class="sb-link active"><span class="sb-link-dot"></span>오시는길</a>
+    <a href="curriculum.html" class="sb-link"><span class="sb-link-dot"></span>학과별 커리큘럼</a>
+  </div>
+  <div class="sb-sec">관리</div>
+  <div class="sb-nav">
+    <a href="students.html" class="sb-link"><span class="sb-link-dot"></span>수강생 관리</a>
+    <a href="portfolio.html" class="sb-link"><span class="sb-link-dot"></span>포트폴리오</a>
+    <a href="portfolio-status.html" class="sb-link"><span class="sb-link-dot"></span>포트폴리오 업로드 현황</a>
+  </div>
+  <div class="sb-foot">
+    <a href="main.html" class="sb-foot-link">← 홈으로</a>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">SBS아카데미컴퓨터아트학원 구월지점</div>
+    <div class="topbar-right" id="today"></div>
+  </div>
+  <div class="content">
+
+    <div class="hero-main">
+      <div class="hero-badge">Location</div>
+      <div class="hero-title">오시는길</div>
+      <div class="hero-sub">SBS아카데미컴퓨터아트학원 구월지점 위치 및 교통편 안내</div>
+    </div>
+
+    <!-- 주소 -->
+    <div class="address-card">
+      <div class="address-label">Address</div>
+      <div class="address-main">인천광역시 남동구 구월동</div>
+      <div class="address-detail">SBS아카데미컴퓨터아트학원 구월지점<br>※ 정확한 주소는 상담 시 안내드립니다</div>
+      <div class="address-contact">
+        <div class="address-contact-item"><strong>전화</strong>032-000-0000</div>
+        <div class="address-contact-item"><strong>이메일</strong>guwol.motion@gmail.com</div>
+        <div class="address-contact-item"><strong>운영시간</strong>월~토 10:00 – 21:00</div>
+      </div>
+    </div>
+
+    <!-- 지도 -->
+    <div class="sec-title">위치 지도</div>
+    <div class="map-wrap">
+      <div class="map-placeholder">
+        <div class="map-pin"></div>
+        <div class="map-label">SBS아카데미컴퓨터아트학원 구월지점</div>
+        <div class="map-addr">인천광역시 남동구 구월동</div>
+      </div>
+      <div class="map-footer">
+        <span class="map-footer-addr">인천광역시 남동구 구월동 SBS아카데미컴퓨터아트학원 구월지점</span>
+        <a href="https://map.naver.com" target="_blank" class="map-btn">네이버지도</a>
+      </div>
+    </div>
+
+    <!-- 대중교통 -->
+    <div class="sec-title">대중교통</div>
+    <div class="transport-card">
+      <div class="transport-type">
+        <span class="transport-badge badge-subway">지하철</span>
+        <span class="transport-name">인천 지하철</span>
+      </div>
+      <div class="transport-rows">
+        <div class="transport-row"><span class="transport-row-label">인천 1호선</span>구월역 하차 후 도보 5분</div>
+        <div class="transport-row"><span class="transport-row-label">수인분당선</span>인천논현역 하차 후 버스 환승</div>
+      </div>
+    </div>
+    <div class="transport-card">
+      <div class="transport-type">
+        <span class="transport-badge badge-bus">버스</span>
+        <span class="transport-name">버스 노선</span>
+      </div>
+      <div class="transport-rows">
+        <div class="transport-row"><span class="transport-row-label">간선버스</span>구월동 방면 버스 이용 — 구월로 정류장 하차</div>
+        <div class="transport-row"><span class="transport-row-label">마을버스</span>남동구 순환 노선 이용 — 학원 앞 정류장 하차</div>
+      </div>
+    </div>
+    <div class="transport-card" style="margin-bottom:28px">
+      <div class="transport-type">
+        <span class="transport-badge badge-car">자가용</span>
+        <span class="transport-name">주차 안내</span>
+      </div>
+      <div class="transport-rows">
+        <div class="transport-row"><span class="transport-row-label">주차장</span>건물 내 주차장 이용 가능 (2시간 무료)</div>
+        <div class="transport-row"><span class="transport-row-label">인근 주차</span>구월동 공영주차장 이용 가능 (도보 3분)</div>
+      </div>
+    </div>
+
+    <!-- 운영시간 -->
+    <div class="sec-title">운영시간</div>
+    <div class="hours-grid">
+      <div class="hours-card">
+        <div class="hours-day">월 – 금</div>
+        <div class="hours-time">10:00 – 21:00</div>
+        <div class="hours-note">평일 정규 운영</div>
+      </div>
+      <div class="hours-card">
+        <div class="hours-day">토요일</div>
+        <div class="hours-time">10:00 – 18:00</div>
+        <div class="hours-note">주말반 운영</div>
+      </div>
+      <div class="hours-card">
+        <div class="hours-day">일요일</div>
+        <div class="hours-time">휴무</div>
+        <div class="hours-note">일부 시즌 제외</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+var now=new Date(),days=['일','월','화','수','목','금','토'];
+document.getElementById('today').textContent=now.getFullYear()+'년 '+(now.getMonth()+1)+'월 '+now.getDate()+'일 ('+days[now.getDay()]+')';
+</script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>학과별 커리큘럼 | SBS아카데미컴퓨터아트학원 구월지점</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0f1f3d;--accent:#3a7bd5;--bg:#f0f4fa;--card:#fff;--border:#e0e6f0;--text:#1a2540;--sub:#6b7a99;--sw:256px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+.sb{width:var(--sw);min-height:100vh;background:linear-gradient(180deg,#080f1e 0%,#0d1a30 60%,#0f2040 100%);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;overflow-y:auto}
+.sb-brand{padding:26px 20px 22px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo{display:flex;align-items:center;gap:11px;margin-bottom:5px}
+.sb-logo-mark{width:40px;height:40px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-.5px}
+.sb-logo-text{font-size:12px;font-weight:800;color:#fff;line-height:1.4}
+.sb-point{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
+.sb-sec{padding:18px 20px 8px;font-size:10px;font-weight:700;color:rgba(255,255,255,.28);letter-spacing:1.8px;text-transform:uppercase}
+.sb-nav{padding:0 10px 10px}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-decoration:none;transition:all .18s;margin-bottom:1px}
+.sb-link:hover{background:rgba(255,255,255,.07);color:#fff}
+.sb-link.active{background:rgba(58,123,213,.25);color:#fff;font-weight:600}
+.sb-link-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0}
+.sb-link.active .sb-link-dot{background:var(--accent)}
+.sb-foot{margin-top:auto;padding:16px 10px;border-top:1px solid rgba(255,255,255,.07)}
+.sb-foot-link{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:10px;color:rgba(255,255,255,.4);font-size:13px;font-weight:500;text-decoration:none;transition:all .18s}
+.sb-foot-link:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:13px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 8px rgba(15,31,61,.05)}
+.topbar-left{font-size:13px;color:var(--sub);font-weight:500}
+.topbar-right{font-size:13px;color:var(--sub);font-weight:600}
+.content{padding:32px 36px 64px;flex:1}
+.hero-main{border-radius:14px;background:linear-gradient(160deg,#0a1628 0%,#0f2245 100%);padding:32px 36px;margin-bottom:28px;box-shadow:0 4px 20px rgba(10,22,40,.15)}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:3px 10px;font-size:10px;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:12px;letter-spacing:1.5px;text-transform:uppercase}
+.hero-title{font-size:26px;font-weight:800;color:#fff;line-height:1.3;margin-bottom:8px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);line-height:1.8}
+.sec-title{font-size:11px;font-weight:700;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+/* 학과 카드 */
+.dept-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px}
+.dept-card{background:var(--card);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 12px rgba(15,31,61,.07)}
+.dept-card-header{padding:20px 22px 16px;position:relative}
+.dept-card-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.dept-tag{display:inline-block;padding:3px 10px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;color:#fff;opacity:.85}
+.dept-name{font-size:18px;font-weight:800;color:#fff;margin-bottom:4px}
+.dept-sub{font-size:12px;color:rgba(255,255,255,.55)}
+.dept-card-body{padding:18px 22px;background:#fff}
+/* 커리큘럼 단계 */
+.curri-steps{display:flex;flex-direction:column;gap:10px}
+.curri-step{display:flex;align-items:flex-start;gap:12px}
+.step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;margin-top:1px}
+.step-body{flex:1;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.curri-step:last-child .step-body{border-bottom:none;padding-bottom:0}
+.step-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.step-desc{font-size:12px;color:var(--sub);line-height:1.6}
+.step-period{font-size:10px;font-weight:700;color:var(--sub);letter-spacing:.5px;float:right;margin-top:1px}
+/* 프로그램 표 */
+.tbl-wrap{background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 6px rgba(15,31,61,.05);margin-bottom:28px}
+table{width:100%;border-collapse:collapse}
+thead th{background:var(--navy);color:rgba(255,255,255,.8);font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:12px 18px;text-align:left}
+tbody tr{border-bottom:1px solid var(--border)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#f8faff}
+tbody td{padding:13px 18px;font-size:13px;color:var(--text);vertical-align:middle}
+.td-label{font-weight:600}
+.dept-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:middle}
+@media(max-width:1100px){.dept-grid{grid-template-columns:1fr}}
+@media(max-width:960px){:root{--sw:210px}.content{padding:22px 22px 52px}}
+@media(max-width:700px){.sb{display:none}.main{margin-left:0}.content{padding:16px 14px 48px}}
+@media print{.sb,.topbar{display:none!important}.main{margin-left:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.dept-card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<aside class="sb">
+  <div class="sb-brand">
+    <div class="sb-logo">
+      <div class="sb-logo-mark">S</div>
+      <div class="sb-logo-text">SBS아카데미<br>컴퓨터아트학원</div>
+    </div>
+    <div class="sb-point">구월지점</div>
+  </div>
+  <div class="sb-sec">안내</div>
+  <div class="sb-nav">
+    <a href="course-info.html" class="sb-link"><span class="sb-link-dot"></span>수강안내</a>
+    <a href="directions.html" class="sb-link"><span class="sb-link-dot"></span>오시는길</a>
+    <a href="curriculum.html" class="sb-link active"><span class="sb-link-dot"></span>학과별 커리큘럼</a>
+  </div>
+  <div class="sb-sec">관리</div>
+  <div class="sb-nav">
+    <a href="students.html" class="sb-link"><span class="sb-link-dot"></span>수강생 관리</a>
+    <a href="portfolio.html" class="sb-link"><span class="sb-link-dot"></span>포트폴리오</a>
+    <a href="portfolio-status.html" class="sb-link"><span class="sb-link-dot"></span>포트폴리오 업로드 현황</a>
+  </div>
+  <div class="sb-foot">
+    <a href="main.html" class="sb-foot-link">← 홈으로</a>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">SBS아카데미컴퓨터아트학원 구월지점</div>
+    <div class="topbar-right" id="today"></div>
+  </div>
+  <div class="content">
+
+    <div class="hero-main">
+      <div class="hero-badge">Curriculum</div>
+      <div class="hero-title">학과별 커리큘럼</div>
+      <div class="hero-sub">각 학과의 단계별 교육 과정을 확인하세요</div>
+    </div>
+
+    <!-- 개요 표 -->
+    <div class="sec-title">학과 개요</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>학과</th><th>주요 툴</th><th>과정 기간</th><th>목표</th></tr></thead>
+        <tbody>
+          <tr><td><span class="dept-dot" style="background:#3a7bd5"></span><span class="td-label">영상/모션2D</span></td><td>After Effects · Premiere</td><td>3 – 6개월</td><td>모션그래픽 포트폴리오 완성</td></tr>
+          <tr><td><span class="dept-dot" style="background:#7c3aed"></span><span class="td-label">영상/모션3D</span></td><td>Cinema 4D · Blender</td><td>4 – 8개월</td><td>3D 모션 포트폴리오 완성</td></tr>
+          <tr><td><span class="dept-dot" style="background:#e8562a"></span><span class="td-label">시각편집</span></td><td>Illustrator · Photoshop · InDesign</td><td>3 – 6개월</td><td>편집 디자인 포트폴리오 완성</td></tr>
+          <tr><td><span class="dept-dot" style="background:#059669"></span><span class="td-label">아트웍</span></td><td>Procreate · Clip Studio · Photoshop</td><td>3 – 6개월</td><td>일러스트/컨셉아트 포트폴리오</td></tr>
+          <tr><td><span class="dept-dot" style="background:#d97706"></span><span class="td-label">인테리어</span></td><td>AutoCAD · SketchUp · 3ds Max</td><td>4 – 8개월</td><td>실내디자인 포트폴리오 완성</td></tr>
+          <tr><td><span class="dept-dot" style="background:#dc2626"></span><span class="td-label">CG/마야</span></td><td>Maya · ZBrush · Substance</td><td>6 – 12개월</td><td>CG 캐릭터/배경 포트폴리오</td></tr>
+          <tr><td><span class="dept-dot" style="background:#0891b2"></span><span class="td-label">웹</span></td><td>HTML · CSS · JavaScript · Figma</td><td>3 – 6개월</td><td>반응형 웹 포트폴리오 완성</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 학과별 커리큘럼 카드 -->
+    <div class="sec-title">학과별 단계별 과정</div>
+    <div class="dept-grid">
+
+      <!-- 영상/모션2D -->
+      <div class="dept-card">
+        <div class="dept-card-header" style="background:linear-gradient(135deg,#1d3d6e,#3a7bd5)">
+          <div class="dept-card-header" style="position:static;padding:0;background:none"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:#3a7bd5"></div></div>
+          <div class="dept-tag" style="background:rgba(58,123,213,.3)">Motion 2D</div>
+          <div class="dept-name">영상/모션2D</div>
+          <div class="dept-sub">After Effects · Premiere Pro</div>
+        </div>
+        <div class="dept-card-body">
+          <div class="curri-steps">
+            <div class="curri-step"><div class="step-num" style="background:#3a7bd5">1</div><div class="step-body"><div class="step-name">기초 툴 습득 <span class="step-period">4주</span></div><div class="step-desc">After Effects 인터페이스, 레이어 개념, 기본 애니메이션 원리</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#3a7bd5">2</div><div class="step-body"><div class="step-name">모션그래픽 기초 <span class="step-period">4주</span></div><div class="step-desc">타이포 모션, 트랜지션, 이펙트 표현 기법</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#3a7bd5">3</div><div class="step-body"><div class="step-name">포트폴리오 기획 <span class="step-period">2주</span></div><div class="step-desc">컨셉 설정, 스토리보드, 스타일프레임 작업</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#3a7bd5">4</div><div class="step-body"><div class="step-name">작품 제작 <span class="step-period">6주</span></div><div class="step-desc">뮤직비디오/광고/타이틀시퀀스 등 실제 작품 제작</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#3a7bd5">5</div><div class="step-body"><div class="step-name">수정 및 완성 <span class="step-period">4주</span></div><div class="step-desc">피드백 반영, 후보정, 렌더링 및 최종 정리</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 영상/모션3D -->
+      <div class="dept-card">
+        <div class="dept-card-header" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#7c3aed"></div>
+          <div class="dept-tag" style="background:rgba(124,58,237,.3)">Motion 3D</div>
+          <div class="dept-name">영상/모션3D</div>
+          <div class="dept-sub">Cinema 4D · Blender · After Effects</div>
+        </div>
+        <div class="dept-card-body">
+          <div class="curri-steps">
+            <div class="curri-step"><div class="step-num" style="background:#7c3aed">1</div><div class="step-body"><div class="step-name">3D 소프트웨어 기초 <span class="step-period">4주</span></div><div class="step-desc">Cinema 4D / Blender 인터페이스, 기본 모델링 개념</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#7c3aed">2</div><div class="step-body"><div class="step-name">모델링 & 텍스처링 <span class="step-period">4주</span></div><div class="step-desc">오브젝트 모델링, UV 매핑, 재질 표현</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#7c3aed">3</div><div class="step-body"><div class="step-name">조명 & 렌더링 <span class="step-period">3주</span></div><div class="step-desc">3점 조명, 렌더 세팅, 후보정 합성</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#7c3aed">4</div><div class="step-body"><div class="step-name">3D 모션 애니메이션 <span class="step-period">4주</span></div><div class="step-desc">키프레임, 물리 시뮬레이션, 파티클 이펙트</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#7c3aed">5</div><div class="step-body"><div class="step-name">포트폴리오 완성 <span class="step-period">9주</span></div><div class="step-desc">기획부터 완성까지 포트폴리오 작품 제작</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 시각편집 -->
+      <div class="dept-card">
+        <div class="dept-card-header" style="background:linear-gradient(135deg,#7c1d08,#e8562a)">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#e8562a"></div>
+          <div class="dept-tag" style="background:rgba(232,86,42,.3)">Visual Design</div>
+          <div class="dept-name">시각편집</div>
+          <div class="dept-sub">Illustrator · Photoshop · InDesign</div>
+        </div>
+        <div class="dept-card-body">
+          <div class="curri-steps">
+            <div class="curri-step"><div class="step-num" style="background:#e8562a">1</div><div class="step-body"><div class="step-name">그래픽 툴 기초 <span class="step-period">4주</span></div><div class="step-desc">Illustrator 벡터 드로잉, Photoshop 기초 보정</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#e8562a">2</div><div class="step-body"><div class="step-name">타이포그래피 <span class="step-period">3주</span></div><div class="step-desc">폰트 원리, 레이아웃 그리드, 가독성 설계</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#e8562a">3</div><div class="step-body"><div class="step-name">편집 디자인 <span class="step-period">4주</span></div><div class="step-desc">브로셔, 포스터, 잡지 레이아웃 실습</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#e8562a">4</div><div class="step-body"><div class="step-name">브랜드 아이덴티티 <span class="step-period">3주</span></div><div class="step-desc">로고 디자인, BI 시스템, 브랜드 가이드</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#e8562a">5</div><div class="step-body"><div class="step-name">포트폴리오 완성 <span class="step-period">6주</span></div><div class="step-desc">실전 프로젝트 포트폴리오 제작 및 완성</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 아트웍 -->
+      <div class="dept-card">
+        <div class="dept-card-header" style="background:linear-gradient(135deg,#064e3b,#059669)">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#059669"></div>
+          <div class="dept-tag" style="background:rgba(5,150,105,.3)">Artwork</div>
+          <div class="dept-name">아트웍</div>
+          <div class="dept-sub">Procreate · Clip Studio · Photoshop</div>
+        </div>
+        <div class="dept-card-body">
+          <div class="curri-steps">
+            <div class="curri-step"><div class="step-num" style="background:#059669">1</div><div class="step-body"><div class="step-name">드로잉 기초 <span class="step-period">4주</span></div><div class="step-desc">기초 선 연습, 형태 이해, 명암 표현</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#059669">2</div><div class="step-body"><div class="step-name">디지털 페인팅 <span class="step-period">4주</span></div><div class="step-desc">레이어 구조, 브러시 설정, 채색 기법</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#059669">3</div><div class="step-body"><div class="step-name">컨셉아트 제작 <span class="step-period">4주</span></div><div class="step-desc">캐릭터/배경 컨셉, 세계관 표현</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#059669">4</div><div class="step-body"><div class="step-name">포트폴리오 완성 <span class="step-period">8주</span></div><div class="step-desc">시리즈 작품 제작 및 포트폴리오 구성</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 인테리어 -->
+      <div class="dept-card">
+        <div class="dept-card-header" style="background:linear-gradient(135deg,#78350f,#d97706)">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#d97706"></div>
+          <div class="dept-tag" style="background:rgba(217,119,6,.3)">Interior</div>
+          <div class="dept-name">인테리어</div>
+          <div class="dept-sub">AutoCAD · SketchUp · 3ds Max</div>
+        </div>
+        <div class="dept-card-body">
+          <div class="curri-steps">
+            <div class="curri-step"><div class="step-num" style="background:#d97706">1</div><div class="step-body"><div class="step-name">AutoCAD 기초 <span class="step-period">4주</span></div><div class="step-desc">2D 도면 작성, 평면도/입면도/단면도</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#d97706">2</div><div class="step-body"><div class="step-name">3D 공간 모델링 <span class="step-period">4주</span></div><div class="step-desc">SketchUp 공간 구성, 3ds Max 인테리어 모델링</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#d97706">3</div><div class="step-body"><div class="step-name">실내디자인 이론 <span class="step-period">3주</span></div><div class="step-desc">색채 계획, 가구 배치, 조명 이론</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#d97706">4</div><div class="step-body"><div class="step-name">렌더링 & 비주얼 <span class="step-period">3주</span></div><div class="step-desc">V-Ray 렌더링, 후보정, 프레젠테이션 제작</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#d97706">5</div><div class="step-body"><div class="step-name">포트폴리오 완성 <span class="step-period">10주</span></div><div class="step-desc">주거/상업공간 포트폴리오 프로젝트 완성</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CG/마야 -->
+      <div class="dept-card">
+        <div class="dept-card-header" style="background:linear-gradient(135deg,#7f1d1d,#dc2626)">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#dc2626"></div>
+          <div class="dept-tag" style="background:rgba(220,38,38,.3)">CG / Maya</div>
+          <div class="dept-name">CG/마야</div>
+          <div class="dept-sub">Maya · ZBrush · Substance Painter</div>
+        </div>
+        <div class="dept-card-body">
+          <div class="curri-steps">
+            <div class="curri-step"><div class="step-num" style="background:#dc2626">1</div><div class="step-body"><div class="step-name">Maya 기초 <span class="step-period">4주</span></div><div class="step-desc">Maya 인터페이스, 기본 모델링, 폴리곤 편집</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#dc2626">2</div><div class="step-body"><div class="step-name">캐릭터 모델링 <span class="step-period">4주</span></div><div class="step-desc">인체 구조 이해, 하이폴리/로우폴리 모델링</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#dc2626">3</div><div class="step-body"><div class="step-name">리깅 & 스킨 <span class="step-period">3주</span></div><div class="step-desc">본 구조, 스키닝, 기본 리깅 세팅</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#dc2626">4</div><div class="step-body"><div class="step-name">텍스처 & 쉐이딩 <span class="step-period">3주</span></div><div class="step-desc">Substance Painter 텍스처, PBR 재질</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#dc2626">5</div><div class="step-body"><div class="step-name">포트폴리오 완성 <span class="step-period">10주</span></div><div class="step-desc">캐릭터/배경/소품 포트폴리오 제작 및 렌더</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 웹 -->
+      <div class="dept-card" style="grid-column:1/-1;max-width:600px">
+        <div class="dept-card-header" style="background:linear-gradient(135deg,#164e63,#0891b2)">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#0891b2"></div>
+          <div class="dept-tag" style="background:rgba(8,145,178,.3)">Web Design</div>
+          <div class="dept-name">웹 디자인</div>
+          <div class="dept-sub">HTML · CSS · JavaScript · Figma</div>
+        </div>
+        <div class="dept-card-body">
+          <div class="curri-steps">
+            <div class="curri-step"><div class="step-num" style="background:#0891b2">1</div><div class="step-body"><div class="step-name">HTML/CSS 기초 <span class="step-period">4주</span></div><div class="step-desc">웹 구조 이해, 시맨틱 태그, Flexbox/Grid 레이아웃</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#0891b2">2</div><div class="step-body"><div class="step-name">UI 디자인 (Figma) <span class="step-period">3주</span></div><div class="step-desc">와이어프레임, 프로토타이핑, 컴포넌트 시스템</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#0891b2">3</div><div class="step-body"><div class="step-name">JavaScript 기초 <span class="step-period">4주</span></div><div class="step-desc">DOM 조작, 이벤트 처리, 인터랙션 구현</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#0891b2">4</div><div class="step-body"><div class="step-name">반응형 웹 <span class="step-period">3주</span></div><div class="step-desc">미디어 쿼리, 모바일 최적화, 크로스브라우징</div></div></div>
+            <div class="curri-step"><div class="step-num" style="background:#0891b2">5</div><div class="step-body"><div class="step-name">포트폴리오 완성 <span class="step-period">6주</span></div><div class="step-desc">실제 웹사이트 구현 및 포트폴리오 배포</div></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+var now=new Date(),days=['일','월','화','수','목','금','토'];
+document.getElementById('today').textContent=now.getFullYear()+'년 '+(now.getMonth()+1)+'월 '+now.getDate()+'일 ('+days[now.getDay()]+')';
+</script>
+</body>
+</html>
