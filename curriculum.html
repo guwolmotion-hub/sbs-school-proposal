@@ -45,6 +45,41 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 /* ── SEC TITLE ── */
 .sec-label{font-size:10px;font-weight:700;color:var(--sub);letter-spacing:1.6px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
 
+/* ── PDF CARD ── */
+.pdf-card{display:flex;gap:24px;align-items:flex-start;background:var(--card);border-radius:16px;border:1px solid var(--border);padding:22px 24px;margin-bottom:28px;box-shadow:0 2px 12px rgba(15,31,61,.07);cursor:pointer;transition:box-shadow .2s}
+.pdf-card:hover{box-shadow:0 8px 28px rgba(15,31,61,.13)}
+.pdf-thumb-wrap{position:relative;flex-shrink:0;border-radius:10px;overflow:hidden;border:1px solid var(--border);box-shadow:0 2px 8px rgba(15,31,61,.1);width:180px}
+.pdf-thumb-wrap img{width:100%;display:block}
+.pdf-thumb-overlay{position:absolute;inset:0;background:rgba(15,31,61,.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.pdf-card:hover .pdf-thumb-overlay{opacity:1}
+.pdf-thumb-play{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center}
+.pdf-info{flex:1;min-width:0}
+.pdf-info-badge{display:inline-block;background:#f0f4fa;border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-size:10px;font-weight:700;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.pdf-info-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:6px;line-height:1.35}
+.pdf-info-desc{font-size:13px;color:var(--sub);line-height:1.75;margin-bottom:16px}
+.pdf-info-meta{display:flex;gap:16px;flex-wrap:wrap}
+.pdf-meta-item{font-size:12px;color:var(--sub);display:flex;align-items:center;gap:5px}
+.pdf-meta-item strong{color:var(--text);font-weight:700}
+.pdf-actions{display:flex;gap:8px;margin-top:16px}
+.pdf-btn{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
+.pdf-btn-primary{background:var(--accent);color:#fff}
+.pdf-btn-primary:hover{background:#2d6bc4}
+.pdf-btn-secondary{background:#f0f4fa;color:var(--text);border:1px solid var(--border)}
+.pdf-btn-secondary:hover{background:var(--border)}
+
+/* ── PDF MODAL ── */
+.pdf-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,10,20,.82);backdrop-filter:blur(4px);align-items:center;justify-content:center}
+.pdf-modal.open{display:flex}
+.pdf-modal-inner{background:#1a2540;border-radius:14px;overflow:hidden;width:90vw;max-width:960px;height:88vh;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.pdf-modal-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.pdf-modal-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.8)}
+.pdf-modal-actions{display:flex;align-items:center;gap:8px}
+.pdf-modal-btn{padding:6px 14px;border-radius:7px;font-size:12px;font-weight:700;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;font-family:inherit;transition:opacity .18s}
+.pdf-modal-btn:hover{opacity:.8}
+.pdf-modal-open{background:var(--accent);color:#fff}
+.pdf-modal-close{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
+.pdf-modal-frame{flex:1;width:100%;border:none;background:#2a3550}
+
 /* ── OVERVIEW TABLE ── */
 .tbl-wrap{background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 6px rgba(15,31,61,.05);margin-bottom:32px}
 table{width:100%;border-collapse:collapse}
@@ -150,6 +185,52 @@ tbody td{padding:12px 18px;font-size:13px;color:var(--text);vertical-align:middl
       <div class="hero-badge">Curriculum Road Map</div>
       <div class="hero-title">학과별 <em>커리큘럼 로드맵</em></div>
       <div class="hero-sub">각 학과의 단계별 교육 과정과 사용 툴, 목표 포트폴리오를 확인하세요.<br>모든 포트폴리오 과정은 전문 상담을 통해 교육기간이 결정됩니다.</div>
+    </div>
+
+    <!-- PDF 카드 -->
+    <div class="pdf-card" onclick="openPdf()">
+      <div class="pdf-thumb-wrap">
+        <img src="assets/roadmap-thumb.jpg" alt="로드맵 PDF 미리보기" loading="lazy"/>
+        <div class="pdf-thumb-overlay">
+          <div class="pdf-thumb-play">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="#1a2540"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="pdf-info">
+        <div class="pdf-info-badge">PDF Document</div>
+        <div class="pdf-info-title">SBS아카데미 구월지점<br>교육 로드맵</div>
+        <div class="pdf-info-desc">학과별 단계별 교육 과정, 사용 툴, 자격증, AI 트랙이 모두 담긴 공식 로드맵 자료입니다. 썸네일 클릭 또는 아래 버튼으로 전체 내용을 확인하세요.</div>
+        <div class="pdf-info-meta">
+          <div class="pdf-meta-item"><strong>갱신</strong>2026년 4월</div>
+          <div class="pdf-meta-item"><strong>대상</strong>6개 학과 + OA/자격증</div>
+          <div class="pdf-meta-item"><strong>용량</strong>274 KB</div>
+        </div>
+        <div class="pdf-actions" onclick="event.stopPropagation()">
+          <button class="pdf-btn pdf-btn-primary" onclick="openPdf()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 3l14 9-14 9V3z" fill="#fff"/></svg>
+            PDF 열기
+          </button>
+          <a class="pdf-btn pdf-btn-secondary" href="assets/roadmap.pdf" download="SBS아카데미_구월지점_로드맵.pdf">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4h14v-2H5v2z" fill="currentColor"/></svg>
+            다운로드
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF 모달 -->
+    <div class="pdf-modal" id="pdfModal" onclick="closePdfIfBg(event)">
+      <div class="pdf-modal-inner">
+        <div class="pdf-modal-bar">
+          <span class="pdf-modal-title">SBS아카데미 구월지점 — 교육 로드맵.pdf</span>
+          <div class="pdf-modal-actions">
+            <a class="pdf-modal-btn pdf-modal-open" href="assets/roadmap.pdf" target="_blank">새탭으로 열기</a>
+            <button class="pdf-modal-btn pdf-modal-close" onclick="closePdf()">닫기 ✕</button>
+          </div>
+        </div>
+        <iframe id="pdfFrame" class="pdf-modal-frame" src="" title="로드맵 PDF"></iframe>
+      </div>
     </div>
 
     <!-- 개요 표 -->
@@ -785,6 +866,19 @@ tbody td{padding:12px 18px;font-size:13px;color:var(--text);vertical-align:middl
 <script>
 var now=new Date(),days=['일','월','화','수','목','금','토'];
 document.getElementById('today').textContent=now.getFullYear()+'년 '+(now.getMonth()+1)+'월 '+now.getDate()+'일 ('+days[now.getDay()]+')';
+
+function openPdf(){
+  document.getElementById('pdfFrame').src='assets/roadmap.pdf';
+  document.getElementById('pdfModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closePdf(){
+  document.getElementById('pdfModal').classList.remove('open');
+  document.getElementById('pdfFrame').src='';
+  document.body.style.overflow='';
+}
+function closePdfIfBg(e){if(e.target===document.getElementById('pdfModal'))closePdf();}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePdf();});
 </script>
 </body>
 </html>
