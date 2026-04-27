@@ -60,6 +60,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .nav-card-icon{width:54px;height:54px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:18px}
 .ic-blue{background:linear-gradient(135deg,#dbeafe,#bfdbfe)}
 .ic-indigo{background:linear-gradient(135deg,#e0e7ff,#c7d2fe)}
+.ic-green{background:linear-gradient(135deg,#d1fae5,#a7f3d0)}
+.ic-orange{background:linear-gradient(135deg,#fef3c7,#fde68a)}
 .nav-card-title{font-size:19px;font-weight:700;color:var(--text);margin-bottom:7px}
 .nav-card-desc{font-size:13px;color:var(--sub);line-height:1.7;margin-bottom:20px}
 .nav-card-go{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--accent)}
@@ -99,21 +101,32 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <div class="sb-point">구월지점</div>
   </div>
 
-  <div class="sb-sec">페이지</div>
+  <div class="sb-sec">관리</div>
   <div class="sb-depts">
-    <a href="school-intro.html" class="sb-dept">
+    <a href="students.html" class="sb-dept">
       <span class="sb-dept-dot" style="background:#3a7bd5"></span>
-      <span class="sb-dept-name">학교 연계 소개서</span>
+      <span class="sb-dept-name">수강생 관리</span>
     </a>
-    <a href="index.html" class="sb-dept">
+    <a href="portfolio.html" class="sb-dept">
       <span class="sb-dept-dot" style="background:#7c3aed"></span>
-      <span class="sb-dept-name">대학주도형 협업 제안</span>
+      <span class="sb-dept-name">포트폴리오</span>
+    </a>
+    <a href="portfolio-status.html" class="sb-dept">
+      <span class="sb-dept-dot" style="background:#059669"></span>
+      <span class="sb-dept-name">지점 포트폴리오 업로드 현황</span>
     </a>
   </div>
 
-  <div class="sb-foot">
-    <a href="students.html" class="sb-foot-link"><span>👥</span> 수강생 관리</a>
-    <a href="portfolio.html" class="sb-foot-link"><span>🎬</span> 포트폴리오</a>
+  <div class="sb-sec">자료</div>
+  <div class="sb-depts">
+    <a href="school-intro.html" class="sb-dept">
+      <span class="sb-dept-dot" style="background:#d97706"></span>
+      <span class="sb-dept-name">학교 연계 소개서</span>
+    </a>
+    <a href="index.html" class="sb-dept">
+      <span class="sb-dept-dot" style="background:#dc2626"></span>
+      <span class="sb-dept-name">대학주도형 협업 제안</span>
+    </a>
   </div>
 </aside>
 
@@ -143,6 +156,18 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         <div class="nav-card-icon ic-indigo">🎬</div>
         <div class="nav-card-title">포트폴리오</div>
         <div class="nav-card-desc">수업 작업물 갤러리,<br>이미지 · 영상 업로드 및 상담 자료 활용</div>
+        <div class="nav-card-go">바로가기 <span class="nav-card-arrow">→</span></div>
+      </a>
+      <a href="portfolio-status.html" class="nav-card">
+        <div class="nav-card-icon ic-green">📊</div>
+        <div class="nav-card-title">지점 포트폴리오 업로드 현황</div>
+        <div class="nav-card-desc">학과별 포트폴리오 업로드 현황 및<br>대표 링크 모음</div>
+        <div class="nav-card-go">바로가기 <span class="nav-card-arrow">→</span></div>
+      </a>
+      <a href="school-intro.html" class="nav-card">
+        <div class="nav-card-icon ic-orange">🏫</div>
+        <div class="nav-card-title">학교 연계 소개서</div>
+        <div class="nav-card-desc">학교 연계 프로그램 소개 및<br>협업 제안 자료</div>
         <div class="nav-card-go">바로가기 <span class="nav-card-arrow">→</span></div>
       </a>
     </div>
