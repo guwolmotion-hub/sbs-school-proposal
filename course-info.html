@@ -91,6 +91,27 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 @media(max-width:960px){:root{--sw:210px}.content{padding:22px 22px 52px}.system-grid{grid-template-columns:1fr 1fr}.dept-row{grid-template-columns:1fr}.cert-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.sb{display:none}.main{margin-left:0}.content{padding:16px 14px 48px}.system-grid{grid-template-columns:1fr}.process{flex-direction:column}.process-step{border-radius:10px!important;border-left:1px solid var(--border)!important;min-width:unset}.process-arrow{display:none}}
+/* 학과별 로드맵 탭 */
+.rdm-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.rdm-tab{padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;transition:all .18s;white-space:nowrap;font-family:inherit;line-height:1}
+.rdm-panel{display:none}
+.rdm-panel.on{display:block}
+.rdm-flow{display:flex;align-items:stretch;overflow-x:auto;padding-bottom:6px;gap:0;scrollbar-width:thin}
+.rdm-step{display:flex;align-items:center;flex-shrink:0}
+.rdm-box{background:#f8faff;border:1px solid var(--border);border-radius:10px;padding:10px 13px;min-width:108px;max-width:138px;flex-shrink:0}
+.rdm-box-lbl{font-size:9px;font-weight:700;color:var(--sub);letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px}
+.rdm-box-name{font-size:12px;font-weight:700;color:var(--text);line-height:1.35}
+.rdm-box-period{font-size:10px;color:var(--sub);margin-top:2px}
+.rdm-arr{padding:0 5px;color:var(--sub);font-size:14px;flex-shrink:0;align-self:center}
+.rdm-goal{border-radius:10px;padding:10px 14px;min-width:110px;max-width:130px;flex-shrink:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+.rdm-goal-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px}
+.rdm-goal-name{font-size:12px;font-weight:800;color:#fff;line-height:1.4}
+.rdm-cert .rdm-box{background:#f0fdf4;border-color:#86efac}
+.rdm-cert .rdm-box-lbl{color:#15803d}
+.rdm-cert .rdm-box-name{color:#15803d}
+.rdm-ai .rdm-box{background:#eff6ff;border-color:#93c5fd}
+.rdm-ai .rdm-box-lbl{color:#1d4ed8}
+.rdm-ai .rdm-box-name{color:#1d4ed8}
 @media print{.sb,.topbar{display:none!important}.main{margin-left:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
@@ -209,6 +230,92 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
     </div>
 
+    <!-- 학과별 로드맵 -->
+    <div class="sec-title">학과별 로드맵</div>
+    <div class="rdm-tabs">
+      <button class="rdm-tab" style="background:#e8562a;border-color:#e8562a;color:#fff" onclick="rdm(this,'r1')">시각/편집</button>
+      <button class="rdm-tab" onclick="rdm(this,'r2')">웹디자인</button>
+      <button class="rdm-tab" onclick="rdm(this,'r3')">아트웍</button>
+      <button class="rdm-tab" onclick="rdm(this,'r4')">영상/모션</button>
+      <button class="rdm-tab" onclick="rdm(this,'r5')">마야/CG</button>
+      <button class="rdm-tab" onclick="rdm(this,'r6')">인테리어/BIM</button>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:28px;box-shadow:0 1px 6px rgba(15,31,61,.05)">
+
+      <div id="r1" class="rdm-panel on">
+        <div class="rdm-flow">
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 1</div><div class="rdm-box-name">핸드드로잉</div><div class="rdm-box-period">기초 선·형태·명암</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 2</div><div class="rdm-box-name">포토샵 · 일러스트</div><div class="rdm-box-period">Ps · Ai 기초~심화</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 3</div><div class="rdm-box-name">블렌더 · 인디자인</div><div class="rdm-box-period">Blender · InDesign</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 4</div><div class="rdm-box-name">그래픽디자인 · UXUI</div><div class="rdm-box-period">편집·브랜딩·UI</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-cert"><div class="rdm-box"><div class="rdm-box-lbl">자격증</div><div class="rdm-box-name">ACP · GTQ1급<br>컴그기능사</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-ai"><div class="rdm-box"><div class="rdm-box-lbl">AI 트랙</div><div class="rdm-box-name">AI자격증<br>AI크리에이터</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-goal" style="background:linear-gradient(135deg,#7c1d08,#e8562a)"><div class="rdm-goal-lbl">GOAL</div><div class="rdm-goal-name">시각/편집<br>포트폴리오</div></div>
+        </div>
+      </div>
+
+      <div id="r2" class="rdm-panel">
+        <div class="rdm-flow">
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 1</div><div class="rdm-box-name">포토샵 · 일러스트</div><div class="rdm-box-period">그래픽 기초</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 2</div><div class="rdm-box-name">HTML5 · CSS · JS</div><div class="rdm-box-period">웹 기초 코딩</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 3</div><div class="rdm-box-name">Figma · UXUI</div><div class="rdm-box-period">반응형 디자인</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 4</div><div class="rdm-box-name">실전 웹사이트<br>제작</div><div class="rdm-box-period">포트폴리오 기획</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-cert"><div class="rdm-box"><div class="rdm-box-lbl">자격증</div><div class="rdm-box-name">웹디자인기능사<br>GTQ · ACP</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-ai"><div class="rdm-box"><div class="rdm-box-lbl">AI 트랙</div><div class="rdm-box-name">AI바이브코딩<br>AI에이전트</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-goal" style="background:linear-gradient(135deg,#164e63,#0891b2)"><div class="rdm-goal-lbl">GOAL</div><div class="rdm-goal-name">웹<br>포트폴리오</div></div>
+        </div>
+      </div>
+
+      <div id="r3" class="rdm-panel">
+        <div class="rdm-flow">
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 1</div><div class="rdm-box-name">핸드드로잉</div><div class="rdm-box-period">기초 선·형태</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 2</div><div class="rdm-box-name">심화드로잉<br>기초디자인</div><div class="rdm-box-period">인체·컨셉·채색</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 3</div><div class="rdm-box-name">다-드로잉</div><div class="rdm-box-period">디지털 페인팅</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 4</div><div class="rdm-box-name">포트폴리오<br>기획 · 제작</div><div class="rdm-box-period">시리즈 작품 구성</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-ai"><div class="rdm-box"><div class="rdm-box-lbl">AI 트랙</div><div class="rdm-box-name">AI크리에이터<br>아트웍</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 5</div><div class="rdm-box-name">영상크리에이터<br>서브스탠스</div><div class="rdm-box-period">AE 기초</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-goal" style="background:linear-gradient(135deg,#064e3b,#059669)"><div class="rdm-goal-lbl">GOAL</div><div class="rdm-goal-name">2D모션<br>포트폴리오</div></div>
+        </div>
+      </div>
+
+      <div id="r4" class="rdm-panel">
+        <div class="rdm-flow">
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 1</div><div class="rdm-box-name">포토샵 · 일러스트<br>핸드드로잉</div><div class="rdm-box-period">그래픽 기초</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 2</div><div class="rdm-box-name">블렌더<br>After Effects</div><div class="rdm-box-period">2D 모션 기초</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 3</div><div class="rdm-box-name">C4D · Octane</div><div class="rdm-box-period">3D 모션 그래픽</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 4</div><div class="rdm-box-name">서브스탠스<br>언리얼엔진</div><div class="rdm-box-period">Substance · Unreal</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-cert"><div class="rdm-box"><div class="rdm-box-lbl">자격증</div><div class="rdm-box-name">ACP · GTQ1급<br>컴그기능사</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-ai"><div class="rdm-box"><div class="rdm-box-lbl">AI 트랙</div><div class="rdm-box-name">AI자격증<br>AI크리에이터</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-goal" style="background:linear-gradient(135deg,#1d3d6e,#3a7bd5)"><div class="rdm-goal-lbl">GOAL</div><div class="rdm-goal-name">2D/3D모션<br>포트폴리오</div></div>
+        </div>
+      </div>
+
+      <div id="r5" class="rdm-panel">
+        <div class="rdm-flow">
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 1</div><div class="rdm-box-name">포토샵 · 일러스트<br>핸드드로잉</div><div class="rdm-box-period">그래픽 기초</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 2</div><div class="rdm-box-name">마야 1–6단계</div><div class="rdm-box-period">Maya 모델링·리깅</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 3</div><div class="rdm-box-name">Asset · ZBrush<br>서브스탠스</div><div class="rdm-box-period">텍스처·PBR</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 4</div><div class="rdm-box-name">언리얼엔진<br>Nuke · V-Ray</div><div class="rdm-box-period">합성·렌더링</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-cert"><div class="rdm-box"><div class="rdm-box-lbl">자격증</div><div class="rdm-box-name">ACP · GTQ1급<br>컴그기능사</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-ai"><div class="rdm-box"><div class="rdm-box-lbl">AI 트랙</div><div class="rdm-box-name">AI크리에이터<br>CG마야</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-goal" style="background:linear-gradient(135deg,#7f1d1d,#dc2626)"><div class="rdm-goal-lbl">GOAL</div><div class="rdm-goal-name">CG마야포폴<br>언리얼/AI</div></div>
+        </div>
+      </div>
+
+      <div id="r6" class="rdm-panel">
+        <div class="rdm-flow">
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 1</div><div class="rdm-box-name">포토샵 · 일러스트</div><div class="rdm-box-period">그래픽 기초</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 2</div><div class="rdm-box-name">AutoCAD</div><div class="rdm-box-period">2D 도면·평면/입면</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 3</div><div class="rdm-box-name">SketchUp · Enscape</div><div class="rdm-box-period">3D 공간·렌더</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step"><div class="rdm-box"><div class="rdm-box-lbl">STEP 4</div><div class="rdm-box-name">3DS Max · V-Ray<br>Revit · BIM</div><div class="rdm-box-period">인테리어 렌더링</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-cert"><div class="rdm-box"><div class="rdm-box-lbl">자격증</div><div class="rdm-box-name">실내건축기능사<br>산업기사·기사</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-step rdm-ai"><div class="rdm-box"><div class="rdm-box-lbl">AI 트랙</div><div class="rdm-box-name">AI크리에이터<br>뷰티라이팅/AI</div></div></div><div class="rdm-arr">→</div>
+          <div class="rdm-goal" style="background:linear-gradient(135deg,#78350f,#d97706)"><div class="rdm-goal-lbl">GOAL</div><div class="rdm-goal-name">인테리어<br>포트폴리오</div></div>
+        </div>
+      </div>
+
+    </div>
+
     <!-- 취업지원 시스템 -->
     <div class="sec-title">취업지원 시스템</div>
     <div style="font-size:13px;color:var(--sub);margin-bottom:14px;line-height:1.8">
@@ -270,6 +377,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <script>
 var now=new Date(),days=['일','월','화','수','목','금','토'];
 document.getElementById('today').textContent=now.getFullYear()+'년 '+(now.getMonth()+1)+'월 '+now.getDate()+'일 ('+days[now.getDay()]+')';
+var _rdmColors={r1:'#e8562a',r2:'#0891b2',r3:'#059669',r4:'#3a7bd5',r5:'#dc2626',r6:'#d97706'};
+function rdm(btn,id){
+  document.querySelectorAll('.rdm-tab').forEach(function(t){t.style.background='';t.style.borderColor='';t.style.color=''});
+  document.querySelectorAll('.rdm-panel').forEach(function(p){p.classList.remove('on')});
+  btn.style.background=_rdmColors[id];btn.style.borderColor=_rdmColors[id];btn.style.color='#fff';
+  document.getElementById(id).classList.add('on');
+}
 </script>
 </body>
 </html>

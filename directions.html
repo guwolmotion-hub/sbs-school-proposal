@@ -46,17 +46,16 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .address-contact{display:flex;gap:24px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1)}
 .address-contact-item{font-size:13px;color:rgba(255,255,255,.6)}
 .address-contact-item strong{color:#fff;display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
-/* 지도 플레이스홀더 */
+/* 지도 */
 .map-wrap{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:28px;box-shadow:0 1px 6px rgba(15,31,61,.05)}
-.map-placeholder{height:280px;background:linear-gradient(135deg,#e8edf5,#f0f4fa);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--sub)}
-.map-pin{width:36px;height:36px;background:var(--accent);border-radius:50% 50% 50% 0;transform:rotate(-45deg);margin-bottom:4px;position:relative}
-.map-pin::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:14px;height:14px;background:#fff;border-radius:50%}
-.map-label{font-size:13px;font-weight:600;color:var(--sub)}
-.map-addr{font-size:12px;color:var(--sub);opacity:.7}
-.map-footer{background:#f8faff;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.map-footer{background:#f8faff;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .map-footer-addr{font-size:13px;font-weight:600;color:var(--text)}
-.map-btn{padding:7px 16px;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;text-decoration:none;transition:background .2s}
-.map-btn:hover{background:#2d6bc4}
+.map-btns{display:flex;gap:8px;flex-shrink:0}
+.map-btn{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;transition:opacity .2s;display:inline-block}
+.map-btn:hover{opacity:.85}
+.map-btn-naver{background:#03C75A;color:#fff}
+.map-btn-google{background:var(--accent);color:#fff}
+.map-note{font-size:11px;color:var(--sub);padding:10px 20px;border-top:1px solid var(--border);line-height:1.6}
 /* 교통 수단 */
 .transport-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:22px 24px;margin-bottom:12px;box-shadow:0 1px 4px rgba(15,31,61,.04)}
 .transport-type{display:flex;align-items:center;gap:10px;margin-bottom:12px}
@@ -124,7 +123,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <div class="address-main">인천광역시 남동구 구월동</div>
       <div class="address-detail">SBS아카데미컴퓨터아트학원 구월지점<br>※ 정확한 주소는 상담 시 안내드립니다</div>
       <div class="address-contact">
-        <div class="address-contact-item"><strong>전화</strong>032-000-0000</div>
+        <div class="address-contact-item"><strong>전화</strong>032-212-0777</div>
         <div class="address-contact-item"><strong>이메일</strong>guwol.motion@gmail.com</div>
         <div class="address-contact-item"><strong>운영시간</strong>월~토 10:00 – 21:00</div>
       </div>
@@ -133,15 +132,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <!-- 지도 -->
     <div class="sec-title">위치 지도</div>
     <div class="map-wrap">
-      <div class="map-placeholder">
-        <div class="map-pin"></div>
-        <div class="map-label">SBS아카데미컴퓨터아트학원 구월지점</div>
-        <div class="map-addr">인천광역시 남동구 구월동</div>
-      </div>
+      <iframe
+        src="https://maps.google.com/maps?q=SBS%EC%95%84%EC%B9%B4%EB%8D%B0%EB%AF%B8%EC%BB%B4%ED%93%A8%ED%84%B0%EC%95%84%ED%8A%B8%ED%95%99%EC%9B%90+%EA%B5%AC%EC%9B%94%EC%A7%80%EC%A0%90&output=embed&hl=ko&z=16"
+        width="100%" height="360" style="border:0;display:block" allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="SBS아카데미컴퓨터아트학원 구월지점 지도">
+      </iframe>
       <div class="map-footer">
-        <span class="map-footer-addr">인천광역시 남동구 구월동 SBS아카데미컴퓨터아트학원 구월지점</span>
-        <a href="https://map.naver.com" target="_blank" class="map-btn">네이버지도</a>
+        <span class="map-footer-addr">SBS아카데미컴퓨터아트학원 구월지점 · 인천광역시 남동구</span>
+        <div class="map-btns">
+          <a href="https://map.naver.com/v5/search/SBS%EC%95%84%EC%B9%B4%EB%8D%B0%EB%AF%B8%EC%BB%B4%ED%93%A8%ED%84%B0%EC%95%84%ED%8A%B8%ED%95%99%EC%9B%90%20%EA%B5%AC%EC%9B%94%EC%A7%80%EC%A0%90" target="_blank" class="map-btn map-btn-naver">네이버지도</a>
+          <a href="https://maps.google.com/maps?q=SBS아카데미컴퓨터아트학원+구월지점" target="_blank" class="map-btn map-btn-google">구글지도</a>
+        </div>
       </div>
+      <div class="map-note">지도가 표시되지 않으면 위 버튼을 클릭해 외부 지도 서비스에서 확인하세요. 네이버지도 앱 연동(실시간 길찾기)은 위 <strong>네이버지도</strong> 버튼을 이용해 주세요.</div>
     </div>
 
     <!-- 대중교통 -->
