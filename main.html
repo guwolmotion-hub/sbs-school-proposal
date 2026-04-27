@@ -99,8 +99,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <div class="sb-point">구월지점</div>
   </div>
 
-  <div class="sb-sec">학과</div>
-  <div class="sb-depts" id="dept-list"></div>
+  <div class="sb-sec">페이지</div>
+  <div class="sb-depts">
+    <a href="school-intro.html" class="sb-dept">
+      <span class="sb-dept-dot" style="background:#3a7bd5"></span>
+      <span class="sb-dept-name">학교 연계 소개서</span>
+    </a>
+    <a href="index.html" class="sb-dept">
+      <span class="sb-dept-dot" style="background:#7c3aed"></span>
+      <span class="sb-dept-name">대학주도형 협업 제안</span>
+    </a>
+  </div>
 
   <div class="sb-foot">
     <a href="students.html" class="sb-foot-link"><span>👥</span> 수강생 관리</a>
@@ -159,31 +168,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 </main>
 
 <script>
-var DEPTS=[
-  {name:'영상/모션2D',color:'#3a7bd5'},
-  {name:'영상/모션3D',color:'#7c3aed'},
-  {name:'시각편집',color:'#e8562a'},
-  {name:'아트웍',color:'#059669'},
-  {name:'인테리어',color:'#d97706'},
-  {name:'CG/마야',color:'#dc2626'},
-  {name:'웹',color:'#0891b2'}
-];
-
-// 사이드바 학과 목록
-var dl=document.getElementById('dept-list');
-DEPTS.forEach(function(d){
-  var a=document.createElement('a');
-  a.className='sb-dept';
-  a.href='#';
-  a.innerHTML='<span class="sb-dept-dot" style="background:'+d.color+'"></span><span class="sb-dept-name">'+d.name+'</span>';
-  a.onclick=function(e){
-    e.preventDefault();
-    localStorage.setItem('sbs_nav_dept',d.name);
-    location.href='students.html';
-  };
-  dl.appendChild(a);
-});
-
 // 날짜
 var now=new Date();
 var days=['일','월','화','수','목','금','토'];
