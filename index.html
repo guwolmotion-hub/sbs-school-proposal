@@ -391,6 +391,9 @@ html, body {
   h1, .s-title { page-break-after: avoid; }
   a[href]::after { content: none !important; }
 }
+
+#nav-pill .home-btn { background: rgba(255,255,255,.12); border: none; color: #fff; padding: 5px 13px; border-radius: 50px; cursor: pointer; font-size: 0.78rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 5px; transition: background .2s; white-space: nowrap; }
+#nav-pill .home-btn:hover { background: rgba(255,255,255,.28); }
 </style>
 </head>
 <body>
@@ -410,6 +413,7 @@ html, body {
 </div>
 
 <div id="nav-pill">
+  <a href="main.html" class="home-btn">🏠 홈</a>
   <button onclick="prevSlide()">&#8592;</button>
   <div id="slide-counter">1 / 9</div>
   <button onclick="nextSlide()">&#8594;</button>
