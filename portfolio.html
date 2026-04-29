@@ -130,6 +130,20 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .yt-lb iframe{width:100%;height:100%;border:none;display:block}
 .lb-bottom{position:absolute;bottom:0;left:0;right:0;padding:14px 20px;background:linear-gradient(transparent,rgba(0,0,0,.55));text-align:center;z-index:10}
 .lb-counter{color:rgba(255,255,255,.4);font-size:13px}
+/* BEST */
+.best-section-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.best-badge-label{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;letter-spacing:.5px}
+.best-count{font-size:12px;color:var(--sub);font-weight:500}
+.best-grid{margin-bottom:24px}
+.best-grid .gallery-item{box-shadow:0 4px 22px rgba(245,158,11,.22)}
+.g-best-badge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:800;letter-spacing:.5px;z-index:2;pointer-events:none}
+.g-star{background:rgba(255,255,255,.15);color:rgba(255,255,255,.55);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;line-height:1}
+.g-star.on{background:rgba(245,158,11,.85);color:#fff}
+.g-star:hover{background:rgba(245,158,11,.6);color:#fff}
+.g-edit{background:rgba(58,123,213,.75);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0}
+.g-edit:hover{background:rgba(58,123,213,1)}
+.sec-divider{display:flex;align-items:center;gap:12px;margin:20px 0 18px;color:var(--sub);font-size:12px;font-weight:600;letter-spacing:.3px}
+.sec-divider::before,.sec-divider::after{content:'';flex:1;height:1px;background:var(--border)}
 /* TOAST */
 #toast{position:fixed;bottom:22px;right:22px;background:var(--navy);color:#fff;padding:11px 18px;border-radius:11px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(15,31,61,.3);z-index:600;display:none;animation:slideUp .2s ease}
 @keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
@@ -267,30 +281,30 @@ function renderApp(){
   var all=d.items||[];
   var list=TAB==='전체'?all:all.filter(function(x){return x.category===TAB;});
   var counts={};
-  for(var i=0;i<CATS.length;i++){
-    var c=CATS[i];
-    counts[c]=c==='전체'?all.length:all.filter(function(x){return x.category===c;}).length;
-  }
-
+  for(var i=0;i<CATS.length;i++){var c=CATS[i];counts[c]=c==='전체'?all.length:all.filter(function(x){return x.category===c;}).length;}
   var tabsHtml='';
-  for(var i=0;i<CATS.length;i++){
-    var c=CATS[i];
-    tabsHtml+='<button class="tab '+(TAB===c?'ta':'')+'" onclick="setTab(\''+esc(c)+'\')">'+esc(c)+'<span class="tcnt">'+counts[c]+'</span></button>';
-  }
-
+  for(var i=0;i<CATS.length;i++){var c=CATS[i];tabsHtml+='<button class="tab '+(TAB===c?'ta':'')+'" onclick="setTab(\''+esc(c)+'\')">'+esc(c)+'<span class="tcnt">'+counts[c]+'</span></button>';}
   var contentHtml='';
   if(list.length>0){
-    var cards='';
-    for(var i=0;i<list.length;i++) cards+=renderCard(list[i],i);
-    contentHtml='<div class="gallery-grid">'+cards+'</div>';
+    var bestItems=list.filter(function(x){return x.best;}).slice(0,10);
+    var regularItems=list.filter(function(x){return !x.best;});
+    if(bestItems.length>0&&TAB!=='전체'){
+      contentHtml+='<div class="best-section-hd"><span class="best-badge-label">★ BEST</span><span class="best-count">'+bestItems.length+'개 고정 (상단 10개까지)</span></div>'
+        +'<div class="gallery-grid best-grid">'+bestItems.map(function(it){return renderCard(it);}).join('')+'</div>';
+      if(regularItems.length>0){
+        contentHtml+='<div class="sec-divider"><span>전체 작업물 ('+list.length+'개)</span></div>'
+          +'<div class="gallery-grid">'+regularItems.map(function(it){return renderCard(it);}).join('')+'</div>';
+      }
+    }else{
+      contentHtml='<div class="gallery-grid">'+list.map(function(it){return renderCard(it);}).join('')+'</div>';
+    }
   }else{
-    contentHtml='<div class="empty"><p>\uD83C\uDFAC</p><span>\uC544\uC9C1 \uC5C5\uB85C\uB4DC\uB41C \uC791\uC5C5\uBB3C\uC774 \uC5C6\uC2B5\uB2C8\uB2E4</span><button class="btn btn-primary" onclick="openAddModal()">+ \uC791\uC5C5\uBB3C \uCD94\uAC00</button></div>';
+    contentHtml='<div class="empty"><p>🎬</p><span>아직 업로드된 작업물이 없습니다</span><button class="btn btn-primary" onclick="openAddModal()">+ 작업물 추가</button></div>';
   }
-
   document.getElementById('app').innerHTML='<div class="wrap"><div class="tabs">'+tabsHtml+'</div>'+contentHtml+'</div>';
 }
 
-function renderCard(item,idx){
+function renderCard(item){
   var isVideo=item.type==='video';
   var vid=isVideo?ytId(item.url):null;
   var thumb='';
@@ -299,19 +313,24 @@ function renderCard(item,idx){
   }else if(vid){
     thumb='<img src="https://img.youtube.com/vi/'+vid+'/mqdefault.jpg" alt="'+esc(item.title||'')+'">';
   }else{
-    thumb='<div class="gallery-vbg"><div class="gv-play">\u25B6</div><div class="gv-title">'+esc(item.title||'\uC601\uC0C1')+'</div></div>';
+    thumb='<div class="gallery-vbg"><div class="gv-play">▶</div><div class="gv-title">'+esc(item.title||'영상')+'</div></div>';
   }
-  var playIcon=isVideo?'<div class="g-play-icon">\u25B6</div>':'';
-  return '<div class="gallery-item" onclick="openLightbox('+idx+')">'
-    +thumb
-    +playIcon
+  var playIcon=isVideo?'<div class="g-play-icon">▶</div>':'';
+  var bestBadge=item.best?'<div class="g-best-badge">BEST</div>':'';
+  var starCls='g-star'+(item.best?' on':'');
+  return '<div class="gallery-item" onclick="openLightbox(\''+esc(item.id)+'\')">'
+    +bestBadge+thumb+playIcon
     +'<div class="gallery-overlay">'
-    +'<div class="g-title">'+esc(item.title||'\uC81C\uBAA9 \uC5C6\uC74C')+'</div>'
+    +'<div class="g-title">'+esc(item.title||'제목 없음')+'</div>'
     +'<div class="g-meta">'
     +'<span class="g-cat">'+esc(item.category||'')+'</span>'
-    +'<button class="g-del" onclick="event.stopPropagation();deleteItem(\''+esc(item.id)+'\')">\u2715</button>'
-    +'</div></div></div>';
+    +'<div style="display:flex;gap:5px">'
+    +'<button class="'+starCls+'" onclick="event.stopPropagation();toggleBest(\''+esc(item.id)+'\')" title="브스트">★</button>'
+    +'<button class="g-edit" onclick="event.stopPropagation();openEditModal(\''+esc(item.id)+'\')" title="수정">✎</button>'
+    +'<button class="g-del" onclick="event.stopPropagation();deleteItem(\''+esc(item.id)+'\')">×</button>'
+    +'</div></div></div></div>';
 }
+
 
 /* ── SIDEBAR INIT ── */
 function initSidebar(){
@@ -450,25 +469,81 @@ function _commit(item){
 }
 
 function deleteItem(id){
-  if(!confirm('\uC774 \uC791\uC5C5\uBB3C\uC744 \uC0AD\uC81C\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?'))return;
+  if(!confirm('이 작업물을 삭제하시겠습니까?'))return;
   var d=DB.get();
   d.items=(d.items||[]).filter(function(x){return x.id!==id;});
-  DB.save(d);renderApp();showToast('\uC0AD\uC81C\uB428');
+  DB.save(d);renderApp();showToast('삭제됨');
+}
+
+function toggleBest(id){
+  var d=DB.get();
+  var item=(d.items||[]).find(function(x){return x.id===id;});
+  if(!item)return;
+  if(!item.best){
+    var cnt=(d.items||[]).filter(function(x){return x.category===item.category&&x.best;}).length;
+    if(cnt>=10){showToast('브스트는 학과당 최대 10개입니다',3000);return;}
+  }
+  item.best=!item.best;
+  DB.save(d);renderApp();
+  showToast(item.best?'브스트 지정 ★':'브스트 해제');
+}
+
+function openEditModal(id){
+  var d=DB.get();
+  var item=(d.items||[]).find(function(x){return x.id===id;});
+  if(!item)return;
+  var catOpts=CATS.filter(function(c){return c!=='전체';}).map(function(c){
+    return '<option value="'+c+'"'+(c===item.category?' selected':'')+'>'+c+'</option>';
+  }).join('');
+  var html='<div class="modal-hd"><h3>작업물 수정</h3><button class="modal-close" onclick="closeModal()">×</button></div>'
+    +'<div class="modal-body">'
+    +'<div class="field"><label>제목</label><input id="ef-title" value="'+esc(item.title||'')+'"></div>'
+    +'<div class="field"><label>학과 / 카테고리</label><select id="ef-cat">'+catOpts+'</select></div>'
+    +'<div class="field" style="display:flex;align-items:center;gap:10px;padding:8px 0">'
+    +'<input type="checkbox" id="ef-best"'+(item.best?' checked':'')+' style="width:18px;height:18px;accent-color:var(--accent);cursor:pointer">'
+    +'<label for="ef-best" style="font-size:14px;font-weight:600;color:var(--text);cursor:pointer;text-transform:none;letter-spacing:0;margin:0">브스트 고정 (학과당 최대 10개)</label>'
+    +'</div></div>'
+    +'<div class="modal-foot">'
+    +'<button class="btn btn-outline" onclick="closeModal()">취소</button>'
+    +'<button class="btn btn-primary" onclick="saveEdit(\''+esc(id)+'\')">저장</button>'
+    +'</div>';
+  openModal(html);
+}
+
+function saveEdit(id){
+  var d=DB.get();
+  var item=(d.items||[]).find(function(x){return x.id===id;});
+  if(!item)return;
+  var newBest=document.getElementById('ef-best').checked;
+  if(newBest&&!item.best){
+    var cnt=(d.items||[]).filter(function(x){return x.category===item.category&&x.best;}).length;
+    if(cnt>=10){showToast('브스트는 학과당 최대 10개입니다',3000);return;}
+  }
+  item.title=(document.getElementById('ef-title').value||'').trim()||item.title;
+  item.category=document.getElementById('ef-cat').value;
+  item.best=newBest;
+  DB.save(d);closeModal();renderApp();showToast('수정됨 ✓');
 }
 
 /* ── LIGHTBOX ── */
-function openLightbox(idx){
+function openLightbox(id){
   var d=DB.get();
   var all=d.items||[];
-  LB_ITEMS=TAB==='전체'?all.slice():all.filter(function(x){return x.category===TAB;});
-  LB_IDX=idx;
+  var list=TAB==='전체'?all.slice():all.filter(function(x){return x.category===TAB;});
+  var best=list.filter(function(x){return x.best;}).slice(0,10);
+  var regular=list.filter(function(x){return !x.best;});
+  LB_ITEMS=TAB!=='전체'?best.concat(regular):list;
+  LB_IDX=LB_ITEMS.findIndex(function(x){return x.id===id;});
+  if(LB_IDX<0)LB_IDX=0;
   renderLightbox();
   document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
 }
 
 function closeLightbox(){
   document.getElementById('lightbox').classList.remove('open');
   document.getElementById('lb-content').innerHTML='';
+  document.body.style.overflow='';
 }
 
 function lbNav(dir){
