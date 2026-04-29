@@ -325,7 +325,7 @@ function renderCard(item){
     +'<div class="g-meta">'
     +'<span class="g-cat">'+esc(item.category||'')+'</span>'
     +'<div style="display:flex;gap:5px">'
-    +'<button class="'+starCls+'" onclick="event.stopPropagation();toggleBest(\''+esc(item.id)+'\')" title="브스트">★</button>'
+    +'<button class="'+starCls+'" onclick="event.stopPropagation();toggleBest(\''+esc(item.id)+'\')" title="베스트 고정">★</button>'
     +'<button class="g-edit" onclick="event.stopPropagation();openEditModal(\''+esc(item.id)+'\')" title="수정">✎</button>'
     +'<button class="g-del" onclick="event.stopPropagation();deleteItem(\''+esc(item.id)+'\')">×</button>'
     +'</div></div></div></div>';
@@ -481,11 +481,11 @@ function toggleBest(id){
   if(!item)return;
   if(!item.best){
     var cnt=(d.items||[]).filter(function(x){return x.category===item.category&&x.best;}).length;
-    if(cnt>=10){showToast('브스트는 학과당 최대 10개입니다',3000);return;}
+    if(cnt>=10){showToast('베스트는 학과당 최대 10개입니다',3000);return;}
   }
   item.best=!item.best;
   DB.save(d);renderApp();
-  showToast(item.best?'브스트 지정 ★':'브스트 해제');
+  showToast(item.best?'베스트 지정 ★':'베스트 해제');
 }
 
 function openEditModal(id){
@@ -495,13 +495,18 @@ function openEditModal(id){
   var catOpts=CATS.filter(function(c){return c!=='전체';}).map(function(c){
     return '<option value="'+c+'"'+(c===item.category?' selected':'')+'>'+c+'</option>';
   }).join('');
+  var typeLabel=item.type==='video'?'영상 URL (YouTube 포함)':'이미지 URL';
   var html='<div class="modal-hd"><h3>작업물 수정</h3><button class="modal-close" onclick="closeModal()">×</button></div>'
     +'<div class="modal-body">'
     +'<div class="field"><label>제목</label><input id="ef-title" value="'+esc(item.title||'')+'"></div>'
+    +'<div class="field"><label>'+typeLabel+'</label>'
+    +'<input id="ef-url" value="'+esc(item.url||'')+'" placeholder="https://...">'
+    +'<div style="font-size:11px;color:var(--sub);margin-top:5px;line-height:1.5">파일로 업로드된 항목은 URL만 변경됩니다. 새 파일을 올리려면 삭제 후 다시 추가하세요.</div>'
+    +'</div>'
     +'<div class="field"><label>학과 / 카테고리</label><select id="ef-cat">'+catOpts+'</select></div>'
     +'<div class="field" style="display:flex;align-items:center;gap:10px;padding:8px 0">'
     +'<input type="checkbox" id="ef-best"'+(item.best?' checked':'')+' style="width:18px;height:18px;accent-color:var(--accent);cursor:pointer">'
-    +'<label for="ef-best" style="font-size:14px;font-weight:600;color:var(--text);cursor:pointer;text-transform:none;letter-spacing:0;margin:0">브스트 고정 (학과당 최대 10개)</label>'
+    +'<label for="ef-best" style="font-size:14px;font-weight:600;color:var(--text);cursor:pointer;text-transform:none;letter-spacing:0;margin:0">베스트 고정 (학과당 최대 10개)</label>'
     +'</div></div>'
     +'<div class="modal-foot">'
     +'<button class="btn btn-outline" onclick="closeModal()">취소</button>'
@@ -517,9 +522,11 @@ function saveEdit(id){
   var newBest=document.getElementById('ef-best').checked;
   if(newBest&&!item.best){
     var cnt=(d.items||[]).filter(function(x){return x.category===item.category&&x.best;}).length;
-    if(cnt>=10){showToast('브스트는 학과당 최대 10개입니다',3000);return;}
+    if(cnt>=10){showToast('베스트는 학과당 최대 10개입니다',3000);return;}
   }
   item.title=(document.getElementById('ef-title').value||'').trim()||item.title;
+  var newUrl=(document.getElementById('ef-url').value||'').trim();
+  if(newUrl)item.url=newUrl;
   item.category=document.getElementById('ef-cat').value;
   item.best=newBest;
   DB.save(d);closeModal();renderApp();showToast('수정됨 ✓');
